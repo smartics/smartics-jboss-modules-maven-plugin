@@ -54,14 +54,6 @@
     <menu name="Overview">
       <item name="Introduction"          href="index.html"/>
       <item name="Goals"                 href="plugin-info.html"/>
-      <item name="Usage" href="" collapse="false">
-        <item name="Basic"               href="usage.html"/>
-        <item name="Extensions"          href="extensions.html"/>
-        <item name="Report"              href="report.html"/>
-      </item>
-      <item name="Tips"                href="tips.html"/>
-      <item name="Example"             href="example.html"/>
-      <item name="alias XSD"           href="alias-doc.html"/>
       <item name="Project Blog"        href="${webroot-projects}/productivity-a-ware/${project.artifactId}"/>
       <item name="Accessing Artifacts" href="http://www.smartics.de/projects/accessing-artifacts"/>
       <item name="All Versions"        href="${webroot}/${project.groupId}/${project.artifactId}/"/>
