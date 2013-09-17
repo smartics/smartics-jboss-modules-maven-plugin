@@ -11,7 +11,7 @@
 
   <groupId>de.smartics.maven.plugin</groupId>
   <artifactId>smartics-jboss-modules-maven-plugin</artifactId>
-  <version>0.1.0-a1-SNAPSHOT</version>
+  <version>0.1.0-a1</version>
   <packaging>maven-plugin</packaging>
 
   <name>${project.artifactId}</name>
@@ -31,9 +31,9 @@
   </licenses>
 
   <scm>
-    <connection>scm:svn:https://www.smartics.eu/svn/public/maven/smartics-jboss-modules-maven-plugin-0.1.0-a1/trunk</connection>
-    <developerConnection>scm:svn:https://www.smartics.eu/svn/public/maven/smartics-jboss-modules-maven-plugin-0.1.0-a1/trunk</developerConnection>
-    <url>https://www.smartics.eu/svn/public/maven/smartics-jboss-modules-maven-plugin-0.1.0-a1/trunk</url>
+    <connection>scm:svn:https://www.smartics.eu/svn/public/maven/smartics-jboss-modules-maven-plugin-0.1.0-a1/tags/smartics-jboss-modules-maven-plugin-0.1.0-a1</connection>
+    <developerConnection>scm:svn:https://www.smartics.eu/svn/public/maven/smartics-jboss-modules-maven-plugin-0.1.0-a1/tags/smartics-jboss-modules-maven-plugin-0.1.0-a1</developerConnection>
+    <url>https://www.smartics.eu/svn/public/maven/smartics-jboss-modules-maven-plugin-0.1.0-a1/tags/smartics-jboss-modules-maven-plugin-0.1.0-a1</url>
   </scm>
 
   <distributionManagement>
