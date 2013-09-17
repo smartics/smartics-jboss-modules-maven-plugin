@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2013 smartics, Kronseder & Reiner GmbH
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<project name="${project.artifactId}">
+  <!--
+    The icon for the project is designed by
+              Mattahan (Paul Davey, http://mattahan.deviantart.com)
+    as part of the icon set
+              Buuf (http://findicons.com/pack/50/buuf)
+    and used under
+        Creative Commons Attribution Non-commercial Share Alike (by-nc-sa)
+               (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+
+    Origin: http://mattahan.deviantart.com/art/Buuf-37966044
+              thepngs/Benders/Open Ended/Cabinets.png
+   -->
+  <bannerLeft>
+    <name>${project.name}</name>
+    <src>images/logos/logo.png</src>
+    <href>index.html</href>
+  </bannerLeft>
+  <bannerRight>
+    <name>smartics website</name>
+    <src>images/logos/smartics-logo.png</src>
+    <href>http://www.smartics.de/</href>
+  </bannerRight>
+
+  <body>
+    <head>
+      <link rel="SHORTCUT ICON" href="${project.url}/images/logos/favicon.ico"/>
+    </head>
+
+    <breadcrumbs>
+      <item name="home" href="http://www.smartics.de/"/>
+      <item name="projects" href="${webroot-projects}"/>
+      <item name="${project.artifactId}" href="${project.url}/index.html"/>
+    </breadcrumbs>
+
+    <menu name="Overview">
+      <item name="Introduction"          href="index.html"/>
+      <item name="Goals"                 href="plugin-info.html"/>
+      <item name="Usage" href="" collapse="false">
+        <item name="Basic"               href="usage.html"/>
+        <item name="Extensions"          href="extensions.html"/>
+        <item name="Report"              href="report.html"/>
+      </item>
+      <item name="Tips"                href="tips.html"/>
+      <item name="Example"             href="example.html"/>
+      <item name="alias XSD"           href="alias-doc.html"/>
+      <item name="Project Blog"        href="${webroot-projects}/productivity-a-ware/${project.artifactId}"/>
+      <item name="Accessing Artifacts" href="http://www.smartics.de/projects/accessing-artifacts"/>
+      <item name="All Versions"        href="${webroot}/${project.groupId}/${project.artifactId}/"/>
+    </menu>
+
+    <menu name="Release Information">
+      <item name="New and Noteworthy"  href="new-and-noteworthy.html"/>
+      <item name="Release Notes"       href="release-notes-report.html"/>
+      <item name="Breaking News"       href="breaking-news.html"/>
+      <item name="Release Plan"        href="release-plan-report.html"/>
+    </menu>
+
+    <menu name="Project Documentation">
+      <item name="Project Information"  href="project-info.html" collapse="true">
+        <item name="Summary"            href="project-summary.html"/>
+        <item name="Build Report"       href="build-report.html"/>
+        <item name="Team"               href="team-list.html"/>
+        <item name="License"            href="license.html"/>
+      </item>
+      <item name="Project Dependencies" href="project-info.html" collapse="true">
+        <item name="Dependencies"       href="dependencies.html"/>
+        <item name="Plugins"            href="plugin-management.html"/>
+      </item>
+    <item name="Information Systems"  href="project-info.html" collapse="true">
+        <item name="Source Repository" href="source-repository.html"/>
+        <item name="Issue Management"  href="issue-tracking.html"/>
+        <item name="CI Server"         href="integration.html"/>
+        <item name="Sonar"             href="${sonar-url-project}"/>
+      </item>
+
+      <item name="Source File Reports"  href="project-reports.html" collapse="true">
+        <!-- <item name="JavaDocs"           href="apidocs/index.html"/> -->
+        <item name="Source"             href="xref/index.html"/>
+        <item name="Taglist"            href="taglist.html"/>
+      </item>
+      <item name="Analysis and Metrics" href="project-reports.html" collapse="true">
+        <item name="Checkstyle"         href="checkstyle.html"/>
+        <item name="PMD"                href="pmd.html"/>
+        <item name="FindBugs"           href="findbugs.html"/>
+        <item name="NCSS"               href="javancss.html"/>
+        <item name="CPD"                href="cpd.html"/>
+        <item name="JDepend"            href="jdepend-report.html"/>
+        <!-- <item name="Javadoc Messages"   href="apidoc-report.html"/> -->
+        </item>
+      <item name="Test Reports"    href="project-reports.html" collapse="true">
+        <item name="Test Report"   href="surefire-report.html"/>
+        <item name="Code Coverage" href="cobertura/index.html"/>
+        <item name="Javadocs"      href="testapidocs/index.html"/>
+        <item name="Sources"       href="xref-test/index.html"/>
+      </item>
+
+      <item name="Credits" href="credits.html"/>
+    </menu>
+  </body>
+</project>

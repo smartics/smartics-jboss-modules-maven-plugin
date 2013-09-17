@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2013 smartics, Kronseder & Reiner GmbH
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<document>
+  <properties>
+    <title>Credits</title>
+  </properties>
+
+  <body>
+    <section name="Credits">
+      <subsection name="Project Icon">
+        <a style="float: right;" href="http://mattahan.deviantart.com/art/Buuf-37966044">
+          <img src="images/logos/icon-128x128.png" alt="Cabinets"/>
+        </a>
+        <p>
+          The icon for the project is
+          designed by
+          <a href="http://mattahan.deviantart.com">Mattahan (Paul Davey)</a> as
+          part of the icon set <a href="http://mattahan.deviantart.com/art/Buuf-37966044">Buuf</a>
+          and used under
+          <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution Non-commercial Share Alike (by-nc-sa)</a>.
+        </p>
+      </subsection>
+      <subsection name="Libraries">
+        <p>
+          The libraries and licenses for those libraries used by this project
+          are listed under <a href="dependencies.html">Project Dependencies</a>.
+        </p>
+      </subsection>
+    </section>
+  </body>
+</document>

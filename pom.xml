@@ -1,0 +1,435 @@
+<?xml version="1.0"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>de.smartics.config.pom</groupId>
+    <artifactId>pom-java</artifactId>
+    <version>32.1.0</version>
+  </parent>
+
+  <groupId>de.smartics.maven.plugin</groupId>
+  <artifactId>smartics-jboss-modules-maven-plugin</artifactId>
+  <version>0.1.0-a1</version>
+  <packaging>maven-plugin</packaging>
+
+  <name>${project.artifactId}</name>
+  <description>
+    Generates an archive of modules to be copied to an JBoss 7 installation.
+  </description>
+  <url>${weburl}</url>
+  <inceptionYear>2013</inceptionYear>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+      <distribution>repo</distribution>
+      <comments>Copyright 2013 Kronseder &amp; Reiner GmbH, smartics</comments>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:svn:https://www.smartics.eu/svn/public/maven/tags/smartics-jboss-modules-maven-plugin-0.1.0-a1</connection>
+    <developerConnection>scm:svn:https://www.smartics.eu/svn/public/maven/tags/smartics-jboss-modules-maven-plugin-0.1.0-a1</developerConnection>
+    <url>https://www.smartics.eu/svn/public/maven/tags/smartics-jboss-modules-maven-plugin-0.1.0-a1</url>
+  </scm>
+
+  <distributionManagement>
+    <site>
+      <id>${project-visibility}-site</id>
+      <name>documentation site</name>
+      <url>${site.root}/${project.groupId}/${project.artifactId}/${project.version}</url>
+    </site>
+  </distributionManagement>
+
+  <properties>
+    <issues-product>${project.artifactId}</issues-product>
+    <issues-component />
+
+    <donationId>ZNFSBTAQJ49HA</donationId>
+    <twitterId>smartics</twitterId>
+
+    <maven.version>3.0.5</maven.version>
+    <maven.project.version>2.2.1</maven.project.version>
+    <maven-plugin-plugin.version>3.2</maven-plugin-plugin.version>
+    <aether.version>1.13.1</aether.version>
+
+    <smartics-commons.version>0.5.1</smartics-commons.version>
+
+    <testdoc.version>0.4.0</testdoc.version>
+  </properties>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>de.smartics.util</groupId>
+      <artifactId>smartics-commons</artifactId>
+      <version>${smartics-commons.version}</version>
+    </dependency>
+
+
+    <!--  ... maven ....................................................... -->
+
+    <dependency>
+      <groupId>de.smartics.util</groupId>
+      <artifactId>smartics-maven-utils</artifactId>
+      <version>0.6.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.maven.plugin-tools</groupId>
+      <artifactId>maven-plugin-annotations</artifactId>
+      <version>3.2</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-utils</artifactId>
+      <version>3.0.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-project</artifactId>
+      <version>${maven.project.version}</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-core</artifactId>
+      <version>${maven.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-settings</artifactId>
+      <version>${maven.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-plugin-api</artifactId>
+      <version>${maven.version}</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-archiver</artifactId>
+      <version>2.5</version>
+    </dependency>
+
+<!--
+    <dependency>
+      <groupId>org.sonatype.aether</groupId>
+      <artifactId>aether-api</artifactId>
+      <version>${aether.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.sonatype.aether</groupId>
+      <artifactId>aether-util</artifactId>
+      <version>${aether.version}</version>
+    </dependency>
+ -->
+    <dependency>
+      <groupId>org.sonatype.aether</groupId>
+      <artifactId>aether-connector-wagon</artifactId>
+      <version>${aether.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.sonatype.aether</groupId>
+      <artifactId>aether-connector-file</artifactId>
+      <version>${aether.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven.wagon</groupId>
+      <artifactId>wagon-http-lightweight</artifactId>
+      <version>2.0</version>
+    </dependency>
+
+
+    <!-- ... other ........................................................ -->
+
+    <dependency>
+      <groupId>org.jdom</groupId>
+      <artifactId>jdom2</artifactId>
+      <version>2.0.4</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>14.0.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-jdk14</artifactId>
+      <version>1.6.4</version>
+    </dependency>
+
+    <!-- ... test ......................................................... -->
+
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-all</artifactId>
+      <version>1.3</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>de.smartics.testdoc</groupId>
+      <artifactId>testdoc-core</artifactId>
+      <version>${testdoc.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.smartics.testdoc</groupId>
+      <artifactId>testdoc-annotations</artifactId>
+      <version>${testdoc.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>de.smartics.maven.plugin</groupId>
+          <artifactId>bugzilla-maven-plugin</artifactId>
+          <configuration>
+            <classification>Build Management</classification>
+            <initialOwner>${user.email}</initialOwner>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>default-testCompile</id>
+            <configuration>
+              <annotationProcessors>
+                <annotationProcessor>de.smartics.testdoc.collect.processor.TestDocProcessor</annotationProcessor>
+              </annotationProcessors>
+              <testCompilerArgument>-Atdoc.exporter.baseDir=${project.build.directory}/testdoc/ser</testCompilerArgument>
+            </configuration>
+          </execution>
+        </executions>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-clean-plugin</artifactId>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>src/it</directory>
+              <includes>
+                <include>**/build.log</include>
+              </includes>
+              <followSymlinks>false</followSymlinks>
+            </fileset>
+          </filesets>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <inherited>true</inherited>
+        <configuration>
+          <reportPlugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-project-info-reports-plugin</artifactId>
+            </plugin>
+            <plugin>
+              <groupId>de.smartics.maven.plugin</groupId>
+              <artifactId>issues-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+              <groupId>de.smartics.maven.plugin</groupId>
+              <artifactId>issues-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+              <groupId>de.smartics.maven.plugin</groupId>
+              <artifactId>buildmetadata-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>cobertura-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-surefire-report-plugin</artifactId>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-javadoc-plugin</artifactId>
+              <configuration>
+                <skip>true</skip>
+              </configuration>
+            </plugin>
+            <plugin>
+              <groupId>de.smartics.maven.plugin</groupId>
+              <artifactId>apidoc-maven-plugin</artifactId>
+              <configuration>
+                <skip>true</skip>
+              </configuration>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-jxr-plugin</artifactId>
+            </plugin>
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>jdepend-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>javancss-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-checkstyle-plugin</artifactId>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-pmd-plugin</artifactId>
+            </plugin>
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>findbugs-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>taglist-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-plugin-plugin</artifactId>
+              <version>${maven-plugin-plugin.version}</version>
+            </plugin>
+          </reportPlugins>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-plugin-plugin</artifactId>
+        <version>${maven-plugin-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>mojo-descriptor</id>
+            <goals>
+              <goal>descriptor</goal>
+            </goals>
+          </execution>
+          <!--
+          <execution>
+            <id>help-goal</id>
+            <goals>
+              <goal>helpmojo</goal>
+            </goals>
+          </execution>
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-site-plugin:3.1:site (default-site)
+        on project smartics-properties-maven-plugin: failed to get report
+        for org.codehaus.mojo:cobertura-maven-plugin: Failed to execute
+        goal org.apache.maven.plugins:maven-plugin-plugin:3.2:descriptor (mojo-descriptor)
+        on project smartics-properties-maven-plugin:
+          Error extracting plugin descriptor: 'Goal: help already exists in the plugin descriptor for prefix: smartics-properties
+[ERROR] Existing implementation is: de.smartics.properties.maven.HelpMojo
+[ERROR] Conflicting implementation is: HelpMojo'
+          -->
+        </executions>
+        <configuration>
+          <!-- see http://jira.codehaus.org/browse/MNG-5346 -->
+          <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <!-- Required until update to pom-root: 30.1.2 -->
+        <groupId>com.mycila.maven-license-plugin</groupId>
+        <artifactId>maven-license-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <excludes>
+            <exclude>**/.externalToolBuilders/**</exclude>
+            <exclude>**/.factorypath</exclude>
+            <exclude>**/.apt_generated/**</exclude>
+            <exclude>**/.fbprefs</exclude>
+            <exclude>**/.pmd</exclude>
+            <exclude>**/.checkstyle</exclude>
+            <exclude>**/.ruleset</exclude>
+            <exclude>**/COPYRIGHT.txt</exclude>
+            <exclude>**/LICENSE.txt</exclude>
+            <exclude>**/LICENSE-*</exclude>
+            <exclude>**/*.xcf</exclude>
+            <exclude>**/*.uml</exclude>
+            <exclude>**/*.umlusc</exclude>
+            <exclude>**/javadoc.xml</exclude>
+            <exclude>**/header.txt</exclude>
+            <exclude>**/goals.txt</exclude> <!-- shitty plugin -->
+            <exclude>**/build.log</exclude> <!-- shitty plugin -->
+          </excludes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>it</id>
+
+      <!-- run with: mvn -Dit
+            Note that the version in the integration test project POMs is not
+            automatically updated!
+
+            http://mojo.codehaus.org/shitty-maven-plugin/index.html
+      -->
+      <build>
+        <defaultGoal>install</defaultGoal>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>shitty-maven-plugin</artifactId>
+            <version>1.0-alpha-3</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>clean</goal>
+                  <goal>install</goal>
+                  <goal>test</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>
