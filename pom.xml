@@ -11,7 +11,7 @@
 
   <groupId>de.smartics.maven.plugin</groupId>
   <artifactId>smartics-jboss-modules-maven-plugin</artifactId>
-  <version>0.1.0-a1-SNAPSHOT</version>
+  <version>0.1.0-a1</version>
   <packaging>maven-plugin</packaging>
 
   <name>${project.artifactId}</name>
