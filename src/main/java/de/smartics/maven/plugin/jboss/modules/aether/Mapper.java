@@ -105,6 +105,21 @@ public final class Mapper
     return aetherArtifact;
   }
 
+  /**
+   * Maps a Maven artifact to an Aether artifact.
+   *
+   * @param mavenArtifact the Maven artifact to map.
+   * @return the mapped Aether artifact.
+   */
+  public Artifact map(final org.apache.maven.artifact.Artifact mavenArtifact)
+  {
+    final Artifact aetherArtifact =
+        new DefaultArtifact(mavenArtifact.getGroupId(),
+            mavenArtifact.getArtifactId(), mavenArtifact.getClassifier(),
+            mavenArtifact.getType(), mavenArtifact.getVersion());
+    return aetherArtifact.setFile(mavenArtifact.getFile());
+  }
+
   // --- object basics --------------------------------------------------------
 
 }

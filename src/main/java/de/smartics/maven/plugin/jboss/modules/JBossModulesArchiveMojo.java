@@ -44,6 +44,7 @@ import org.codehaus.plexus.archiver.Archiver;
 import org.codehaus.plexus.archiver.jar.JarArchiver;
 import org.sonatype.aether.RepositorySystem;
 import org.sonatype.aether.RepositorySystemSession;
+import org.sonatype.aether.artifact.Artifact;
 import org.sonatype.aether.collection.DependencySelector;
 import org.sonatype.aether.graph.Dependency;
 import org.sonatype.aether.graph.DependencyFilter;
@@ -339,6 +340,16 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
 
     logDependencies(rootDependencies, dependencies);
 
+    final boolean isPomProject = "pom".equals(project.getPackaging());
+    if (!isPomProject)
+    {
+      final Mapper mapper = new Mapper();
+      final Artifact projectArtifact = mapper.map(project.getArtifact());
+      final Dependency projectAsDependency =
+          new Dependency(projectArtifact, "compile");
+      dependencies.add(0, projectAsDependency);
+    }
+
     final ExecutionContext context = createContext(dependencies);
     for (final Entry<Module, List<Dependency>> entry : context.getModuleMap()
         .toMap().entrySet())
@@ -369,7 +380,6 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
     {
       try
       {
-
         FileUtils.writeStringToFile(new File(project.getBasedir(),
             "target/root-dependencies.txt"), rootDependencies.toString());
         FileUtils.writeStringToFile(new File(project.getBasedir(),
@@ -468,12 +478,16 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
         project.getDependencies();
     addMappedDependencies(rootDependencies, projectDependencies);
 
-    final DependencyManagement management = project.getDependencyManagement();
-    if (management != null)
+    final boolean isPomProject = "pom".equals(project.getPackaging());
+    if (isPomProject)
     {
-      final List<org.apache.maven.model.Dependency> managedDependencies =
-          management.getDependencies();
-      addMappedDependencies(rootDependencies, managedDependencies);
+      final DependencyManagement management = project.getDependencyManagement();
+      if (management != null)
+      {
+        final List<org.apache.maven.model.Dependency> managedDependencies =
+            management.getDependencies();
+        addMappedDependencies(rootDependencies, managedDependencies);
+      }
     }
 
     return rootDependencies;
