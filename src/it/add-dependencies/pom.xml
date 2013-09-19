@@ -7,7 +7,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>de.smartics.maven.plugin</groupId>
-  <artifactId>exclude-transitive</artifactId>
+  <artifactId>add-depenendencies</artifactId>
   <version>testing</version>
   <packaging>pom</packaging>
 
