@@ -13,11 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-def base = 'target/jboss-modules/org/jgroups/main'
-def artifactFile = new File(basedir, base + '/jgroups-3.2.7.Final.jar')
-assert artifactFile.exists()
-
-
-def optionalBase = 'target/jboss-modules/org/beanshell/bsh/main'
-def file = new File(basedir, optionalBase + '/bsh-2.0b5.jar')
-assert !file.exists()
+def base = 'target/jboss-modules/de/smartics/util/smartics-commons/main'
+def artifactFile = new File(basedir, base + '/smartics-commons-0.5.2.Final.jar')
+assert !artifactFile.exists()

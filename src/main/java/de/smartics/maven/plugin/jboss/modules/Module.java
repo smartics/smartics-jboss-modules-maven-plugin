@@ -15,6 +15,7 @@
  */
 package de.smartics.maven.plugin.jboss.modules;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -446,6 +447,105 @@ public class Module
       }
     }
     return Services.NONE;
+  }
+
+  /**
+   * Merges the dependencies, properties, port and export of the given module
+   * with this one.
+   *
+   * @param module the module to merge with this instance.
+   * @throws NullPointerException if {@code module} is <code>null</code>.
+   */
+  public void merge(final Module module)
+  {
+    if (!ObjectUtils.equals(name, module.name)
+        || !ObjectUtils.equals(slot, module.slot))
+    {
+      throw new IllegalArgumentException(String.format(
+          "Cannot merge different modules: %s:%s vs %s:%s.", name, slot,
+          module.name, module.slot));
+    }
+
+    mergeDependencies(module);
+    mergeProperties(module);
+    mergePort(module);
+    mergeExport(module);
+    skip |= module.skip;
+  }
+
+  private void mergeDependencies(final Module module)
+  {
+    final List<Dependency> otherDependencies = module.getDependencies();
+    if (dependencies != null && otherDependencies != null)
+    {
+      for (final Dependency current : otherDependencies)
+      {
+        if (!dependencies.contains(current))
+        {
+          dependencies.add(current);
+        }
+      }
+    }
+    else if (dependencies == null)
+    {
+      dependencies = otherDependencies;
+    }
+  }
+
+  private void mergeProperties(final Module module)
+  {
+    final Map<String, String> otherProperties = module.properties;
+    if (properties != null && otherProperties != null)
+    {
+      properties.putAll(otherProperties);
+    }
+    else if (properties == null)
+    {
+      properties = otherProperties;
+    }
+  }
+
+  private void mergePort(final Module module)
+  {
+    final List<Services> otherPort = module.getPort();
+    if (port != null && otherPort != null)
+    {
+      final List<Services> newPort = new ArrayList<Services>(otherPort.size());
+      c: for (final Services current : otherPort)
+      {
+        final String currentValue = current.getValue();
+        for (final Services stored : port)
+        {
+          final String storedValue = stored.getValue();
+          if (ObjectUtils.equals(currentValue, storedValue))
+          {
+            stored.merge(current);
+            continue c;
+          }
+        }
+
+        newPort.add(current);
+      }
+
+      port.addAll(newPort);
+    }
+    else if (port == null)
+    {
+      port = otherPort;
+    }
+  }
+
+  private void mergeExport(final Module module)
+  {
+    final Export otherExport = module.export;
+    if (export != null && otherExport != null)
+    {
+      export.merge(otherExport);
+    }
+    else if (export == null)
+    {
+      export = otherExport;
+    }
   }
 
   // --- object basics --------------------------------------------------------

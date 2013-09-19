@@ -269,6 +269,16 @@ public final class ModuleMap
   {
     if (!module.isSkip())
     {
+      if (module2Dependencies.containsKey(module))
+      {
+        for (final Module current : module2Dependencies.keySet())
+        {
+          if (module.equals(current))
+          {
+            current.merge(module);
+          }
+        }
+      }
       module2Dependencies.put(module, dependency);
       dependency2Module.put(new DependencyKey(dependency), module);
     }

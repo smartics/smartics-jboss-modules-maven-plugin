@@ -197,6 +197,21 @@ public abstract class AbstractModuleNameMatcher
     return false;
   }
 
+  /**
+   * Merges the includes and excludes of the given matcher with this one.
+   *
+   * @param matcher the matcher to merge with this instance.
+   * @throws NullPointerException if {@code matcher} is <code>null</code>.
+   */
+  public void merge(final AbstractModuleNameMatcher matcher)
+    throws NullPointerException
+  {
+    includes.addAll(matcher.includes);
+    includeExpressions.addAll(matcher.includeExpressions);
+    excludes.addAll(matcher.excludes);
+    excludeExpressions.addAll(matcher.excludeExpressions);
+  }
+
   // --- object basics --------------------------------------------------------
 
 }
