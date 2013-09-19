@@ -6,12 +6,12 @@
   <parent>
     <groupId>de.smartics.config.pom</groupId>
     <artifactId>pom-java</artifactId>
-    <version>32.1.0</version>
+    <version>32.1.1</version>
   </parent>
 
   <groupId>de.smartics.maven.plugin</groupId>
   <artifactId>smartics-jboss-modules-maven-plugin</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>0.1.0-a2-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
 
   <name>${project.artifactId}</name>
