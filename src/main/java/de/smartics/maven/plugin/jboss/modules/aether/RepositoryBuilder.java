@@ -85,6 +85,13 @@ public interface RepositoryBuilder
    */
   List<Dependency> getManagedDependencies();
 
+  /**
+   * Returns the generator of traversers used to prune dependency branches.
+   *
+   * @return the generator of traversers used to prune dependency branches.
+   */
+  DependencyTraverserGenerator getTraverserGenerator();
+
   // --- business -------------------------------------------------------------
 
   // --- object basics --------------------------------------------------------

@@ -65,6 +65,7 @@ import de.smartics.maven.plugin.jboss.modules.aether.filter.TestScopeFilter;
 import de.smartics.maven.plugin.jboss.modules.domain.ExecutionContext;
 import de.smartics.maven.plugin.jboss.modules.domain.ModuleBuilder;
 import de.smartics.maven.plugin.jboss.modules.domain.ModuleMap;
+import de.smartics.maven.plugin.jboss.modules.domain.PrunerGenerator;
 import de.smartics.maven.plugin.jboss.modules.domain.SlotStrategy;
 import de.smartics.maven.plugin.jboss.modules.domain.TransitiveDependencyResolver;
 import edu.emory.mathcs.backport.java.util.Collections;
@@ -527,12 +528,14 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
   private TransitiveDependencyResolver createResolver(
       final List<Dependency> managedDependencies)
   {
+    final PrunerGenerator prunerGenerator =
+        new PrunerGenerator(dependencyExcludes, modules);
     final List<DependencyFilter> dependencyFilters = createDependencyFilters();
     final MojoRepositoryBuilder builder = new MojoRepositoryBuilder();
     builder.with(repositorySystem).with(repositorySession).with(remoteRepos)
         .withDependencyFilters(dependencyFilters)
         .withManagedDependencies(managedDependencies).withOffline(offline)
-        .build();
+        .withTraverserGenerator(prunerGenerator).build();
     final MavenRepository repository = builder.build();
 
     return new DefaultTransitiveDependencyResolver(repository);

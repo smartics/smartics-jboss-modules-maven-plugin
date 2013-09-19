@@ -66,6 +66,11 @@ public final class MojoRepositoryBuilder implements RepositoryBuilder
    */
   private boolean offline;
 
+  /**
+   * The generator of traversers used to prune dependency branches.
+   */
+  private DependencyTraverserGenerator traverserGenerator;
+
   // ****************************** Initializer *******************************
 
   // ****************************** Constructors ******************************
@@ -195,6 +200,26 @@ public final class MojoRepositoryBuilder implements RepositoryBuilder
   public MojoRepositoryBuilder withOffline(final boolean offline)
   {
     this.offline = offline;
+    return this;
+  }
+
+  @Override
+  public DependencyTraverserGenerator getTraverserGenerator()
+  {
+    return traverserGenerator;
+  }
+
+  /**
+   * Sets the generator of traversers used to prune dependency branches.
+   *
+   * @param traverserGenerator the generator of traversers used to prune
+   *          dependency branches.
+   * @return a reference to this builder.
+   */
+  public MojoRepositoryBuilder withTraverserGenerator(
+      final DependencyTraverserGenerator traverserGenerator)
+  {
+    this.traverserGenerator = traverserGenerator;
     return this;
   }
 

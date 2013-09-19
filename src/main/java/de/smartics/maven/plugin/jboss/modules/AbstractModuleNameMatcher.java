@@ -206,10 +206,41 @@ public abstract class AbstractModuleNameMatcher
   public void merge(final AbstractModuleNameMatcher matcher)
     throws NullPointerException
   {
-    includes.addAll(matcher.includes);
-    includeExpressions.addAll(matcher.includeExpressions);
-    excludes.addAll(matcher.excludes);
-    excludeExpressions.addAll(matcher.excludeExpressions);
+    if (includes != null && matcher.includes != null)
+    {
+      includes.addAll(matcher.includes);
+    }
+    else if (includes == null)
+    {
+      includes = matcher.includes;
+    }
+
+    if (includeExpressions != null && matcher.includeExpressions != null)
+    {
+      includeExpressions.addAll(matcher.includeExpressions);
+    }
+    else if (includeExpressions == null)
+    {
+      includeExpressions = matcher.includeExpressions;
+    }
+
+    if (excludes != null && matcher.excludes != null)
+    {
+      excludes.addAll(matcher.excludes);
+    }
+    else if (excludes == null)
+    {
+      excludes = matcher.excludes;
+    }
+
+    if (excludeExpressions != null && matcher.excludeExpressions != null)
+    {
+      excludeExpressions.addAll(matcher.excludeExpressions);
+    }
+    else if (excludeExpressions == null)
+    {
+      excludeExpressions = matcher.excludeExpressions;
+    }
   }
 
   // --- object basics --------------------------------------------------------

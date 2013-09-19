@@ -22,6 +22,7 @@ import org.sonatype.aether.RepositorySystem;
 import org.sonatype.aether.RepositorySystemSession;
 import org.sonatype.aether.artifact.Artifact;
 import org.sonatype.aether.collection.CollectRequest;
+import org.sonatype.aether.collection.DependencyTraverser;
 import org.sonatype.aether.graph.Dependency;
 import org.sonatype.aether.graph.DependencyFilter;
 import org.sonatype.aether.graph.DependencyNode;
@@ -81,6 +82,11 @@ public final class MavenRepository
    */
   private final boolean offline;
 
+  /**
+   * The generator of traversers used to prune dependency branches.
+   */
+  private final DependencyTraverserGenerator traverserGenerator;
+
   // ****************************** Initializer *******************************
 
   // ****************************** Constructors ******************************
@@ -93,6 +99,7 @@ public final class MavenRepository
     this.dependencyFilters = builder.getDependencyFilters();
     this.managedDependencies = builder.getManagedDependencies();
     this.offline = builder.isOffline();
+    this.traverserGenerator = builder.getTraverserGenerator();
   }
 
   // ****************************** Inner Classes *****************************
@@ -196,8 +203,13 @@ public final class MavenRepository
   {
     try
     {
+      final DependencyTraverser traverser =
+          traverserGenerator.createDependencyTraverser(session
+              .getDependencyTraverser());
+      final FilterSession filterSession = new FilterSession(session, traverser);
       final DependencyResult result =
-          repositorySystem.resolveDependencies(session, dependencyRequest);
+          repositorySystem
+              .resolveDependencies(filterSession, dependencyRequest);
       final DependencyNode rootNode = result.getRoot();
       final PreorderNodeListGenerator generator =
           new PreorderNodeListGenerator();
