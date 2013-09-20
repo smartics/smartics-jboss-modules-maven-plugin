@@ -15,6 +15,7 @@
  */
 package de.smartics.maven.plugin.jboss.modules;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
@@ -212,6 +213,32 @@ public class Dependency
   // --- business -------------------------------------------------------------
 
   // --- object basics --------------------------------------------------------
+
+  @Override
+  public int hashCode()
+  {
+    return ObjectUtils.hashCode(name);
+  }
+
+  @Override
+  public boolean equals(final Object object)
+  {
+    if (this == object)
+    {
+      return true;
+    }
+    else if (object == null || getClass() != object.getClass())
+    {
+      return false;
+    }
+
+    final Dependency other = (Dependency) object;
+
+    return (ObjectUtils.equals(name, other.name) && export == other.export
+            && optional == other.optional
+            && ObjectUtils.equals(services, other.services) && ObjectUtils
+        .equals(slot, other.slot));
+  }
 
   @Override
   public String toString()

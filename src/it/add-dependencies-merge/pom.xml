@@ -76,6 +76,7 @@
               </includes>
               <dependencies>
                 <dependency>
+                  <name>javax.api</name> <!-- Duplicate to eliminate. -->
                   <name>javax.xml.stream.api</name>
                 </dependency>
               </dependencies>
