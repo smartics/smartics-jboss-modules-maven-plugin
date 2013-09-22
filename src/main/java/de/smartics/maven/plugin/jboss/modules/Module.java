@@ -56,14 +56,6 @@ public class Module
   private String slot;
 
   /**
-   * The path to store the <code>module.xml</code> and all its resources. If not
-   * given, the path defaults to the groupId and artifactId in case the groupId
-   * does not end with the artifactId. If it does, it defaults to the groupId
-   * alone.
-   */
-  private String basePath;
-
-  /**
    * The list of inclusions.
    */
   private List<Clusion> includes;
@@ -120,7 +112,6 @@ public class Module
   public Module(final Module originalModule)
   {
     this.slot = originalModule.slot;
-    this.basePath = originalModule.basePath;
     this.includes = originalModule.includes;
     this.excludes = originalModule.excludes;
     this.dependencies = originalModule.dependencies;
@@ -179,32 +170,6 @@ public class Module
   public void setSlot(final String slot)
   {
     this.slot = slot;
-  }
-
-  /**
-   * Returns the path to store the <code>module.xml</code> and all its
-   * resources. If not given, the path defaults to the groupId and artifactId in
-   * case the groupId does not end with the artifactId. If it does, it defaults
-   * to the groupId alone.
-   *
-   * @return the path to store the module.
-   */
-  public String getBasePath()
-  {
-    return basePath;
-  }
-
-  /**
-   * Sets the path to store the <code>module. xml</code> and all its resources.
-   * If not given, the path defaults to the groupId and artifactId in case the
-   * groupId does not end with the artifactId. If it does, it defaults to the
-   * groupId alone.
-   *
-   * @param basePath the path to store the module.
-   */
-  public void setBasePath(final String basePath)
-  {
-    this.basePath = basePath;
   }
 
   /**

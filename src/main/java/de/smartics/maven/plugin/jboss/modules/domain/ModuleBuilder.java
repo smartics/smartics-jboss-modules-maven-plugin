@@ -110,11 +110,7 @@ public final class ModuleBuilder
 
   private File createModuleFolder() throws IOException
   {
-    String path = module.getBasePath();
-    if (path == null)
-    {
-      path = module.getName().replace('.', '/');
-    }
+    final String path = module.getName().replace('.', '/');
 
     final File folder = new File(context.getTargetFolder(), path);
     final File slotFolder = new File(folder, calcSlot());
