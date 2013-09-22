@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2013 smartics, Kronseder & Reiner GmbH
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<document>
+    <head profile="http://dublincore.org/documents/dcq-html/">
+      <title>Module Section</title>
+
+      <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/>
+      <link rel="DC.rights copyright" href="license.html" />
+
+      <meta name="keywords" content="module descriptor, JBoss modules, archive, maven plugin, maven"/>
+      <meta name="description" content="Shows the outline of a module descriptor."/>
+      <meta name="author" content="smartics"/>
+
+      <meta name="DC.title" content="Module Outline"/>
+      <meta name="DC.creator" content="smartics"/>
+      <meta name="DC.subject" content="Tutorial on module descriptors for the JBoss modules Maven plugin"/>
+      <meta name="DC.description" content="Shows the outline of a module descriptor."/>
+      <meta name="DC.publisher" content="smartics"/>
+      <meta name="DC.rights" content="Copyright 2013 smartics"/>
+    </head>
+	<body>
+    <section name="Module Section">
+      <p>
+        Shows the structure of the module element within the plugin
+        configuration. This information allows to construct a
+        <code>module.xml</code> as specified by
+        <a href="https://docs.jboss.org/author/display/MODULES/Module+descriptors">Module descriptors</a>.
+      </p>
+      <p>
+        The module element matches with the <code>includes</code> and
+        <code>excludes</code> sections a Maven dependency defined in the POM.
+        Once matched, the rules defined in the module (e.g. should it be
+        <code>skip</code>ped or <code>export</code>ed) are applied.
+      </p>
+      <p>
+        It is important to note that the sequence of module elements is
+        significant. The matcher applies the modules in the order given.
+        Therefore you have to specify the most restrictive modules first
+        (this is like the order of the exceptions in the catch blocks in Java,
+        the most specific come first):
+      </p>
+      <subsection name="Outline">
+        <p>
+          This is the complete outline of a modules element to be specified
+          within the plugin configuration (please refer to <a href="usage.html">Usage</a>
+          for details):
+        </p>
+        <source><![CDATA[<module>
+    <name></name>
+    <slot></slot>
+    <skip></skip>
+    <includes>
+      <include>
+        <groupId></groupId>
+        <artifactId></artifactId>
+      </include>
+      ...
+      <include>
+        <groupId></groupId>
+        <artifactId></artifactId>
+      </include>
+    </includes>
+    <excludes>
+      <exclude>
+        <groupId></groupId>
+        <artifactId></artifactId>
+      </exclude>
+      ...
+      <exclude>
+        <groupId></groupId>
+        <artifactId></artifactId>
+      </exclude>
+    </excludes>
+    <properties>
+      <one>two</one>
+      <three>four</three>
+      ...
+    </properties>
+    <dependencies>
+      <dependency>
+        <name></name>
+        <slot></slot>
+        <export></export>
+        <services></services>
+        <optional></optional>
+      </dependency>
+      ...
+    </dependencies>
+
+    <export>
+      <includes>
+        <include></include>
+        ...
+        <include></include>
+      </include>
+      </includes>
+
+      <excludes>
+        <exclude></exclude>
+        ...
+        <exclude></exclude>
+      </excludes>
+    </export>
+
+    <services>
+      <port>
+        <value></value>
+        <includes>
+          <include></include>
+          ...
+          <include></include>
+        </include>
+        </includes>
+
+        <excludes>
+          <exclude></exclude>
+          ...
+          <exclude></exclude>
+        </excludes>
+      </port>
+      ...
+      <port>
+        <value></value>
+        <includes>
+          <include></include>
+          ...
+          <include></include>
+        </include>
+        </includes>
+
+        <excludes>
+          <exclude></exclude>
+          ...
+          <exclude></exclude>
+        </excludes>
+      </port>
+    </services>
+  </module>]]></source>
+      </subsection>
+    </section>
+
+    <section name="Module Elements">
+      <p>
+        This is a short specification of the elements within the <code>module</code>
+        element.
+      </p>
+      <subsection name="Basic Information">
+        <source><![CDATA[<module>
+    <name></name>
+    <slot></slot>
+    <skip></skip>
+    ...
+  </module>]]></source>
+        <p>
+          The name of the module. Is used for the <code>name</code> attribute in
+          the <code>module.xml</code> base element.
+        </p>
+        <p>
+         The slot to write to. If empty, the default slot is provided in the
+         <code>defaultSlot</code> configuration of the Mojo.
+        </p>
+        <p>
+          The path to store the <code>module.xml</code> and all its resources.
+          If not given, the path defaults to the groupId and artifactId in case
+          the groupId does not end with the artifactId. If it does, it defaults
+          to the groupId alone.
+        </p>
+        <p>
+          The flag skip allows to skip the export of the module. With this flag
+          you may rename a dependency to an existing module in JBoss, but not
+          to create a module as a folder.
+        </p>
+      </subsection>
+
+    <subsection name="Matching a Dependency">
+        <p>
+          As mentioned above, a module is matching a dependency declared by
+          the POM with includes an excludes.
+        </p>
+        <source><![CDATA[<module>
+    ...
+    <includes>
+      <include>
+        <groupId></groupId>
+        <artifactId></artifactId>
+      </include>
+      ...
+      <include>
+        <groupId></groupId>
+        <artifactId></artifactId>
+      </include>
+    </includes>
+    <excludes>
+      <exclude>
+        <groupId></groupId>
+        <artifactId></artifactId>
+      </exclude>
+      ...
+      <exclude>
+        <groupId></groupId>
+        <artifactId></artifactId>
+      </exclude>
+    </excludes>
+    ...
+  </module>]]></source>
+        <p>
+          You may specify either the groupId or the artifactId or both to do
+          the match. Each entry is matched as a regular expression.
+        </p>
+        <p>
+          You may also reference a group in your regular expression to be used
+          within the name element.
+        </p>
+        <source><![CDATA[<module>
+  <name>org.apache.commons.$1</name>
+  <includes>
+    <include>
+      <artifactId>commons-(.*)</artifactId>
+    </include>
+  </includes>
+</module>]]></source>
+        <p>
+          This example shows that the first group is to be used in the name.
+          Therfore an artifact <code>commons-lang</code> will be given the name
+          <code>org.apache.commons.lang</code>. The regular expression given
+          is passed to Java's regular expression API.
+        </p>
+        <p>
+          If you use the regular expression in the groupId, add a <code>g</code>
+          to the reference in the name (e.g. my.$g1.$1: this includes the first
+          group in the groupId and the first group of the artifactId).
+        </p>
+      </subsection>
+
+      <subsection name="Properties">
+        <p>
+          A module element allows to specify properties. The information
+          given here is simply copied to the module descriptor.
+        </p>
+        <source><![CDATA[<module>
+    <properties>
+      <one>two</one>
+      <three>four</three>
+      ...
+    </properties>
+    ...
+  </module>]]></source>
+        <p>
+          The name of the property is the name of the element, the value
+          is the content of the element.
+        </p>
+      </subsection>
+
+      <subsection name="Static Dependencies">
+        <p>
+          Dependencies are derived from the Maven dependencies defined
+          in the POM. In case you need to add additional dependencies
+          (like <code>javax.api</code>), this section allows you to name
+          those to be added additionally.
+        </p>
+        <source><![CDATA[<module>
+    ...
+    <dependencies>
+      <dependency>
+        <name></name>
+        <slot></slot>
+        <export></export>
+        <services></services>
+        <optional></optional>
+      </dependency>
+      ...
+    </dependencies>
+    ...
+  </module>]]></source>
+        <p>
+          The elements map to the elements of the module.xml:
+        </p>
+        <table class="confluenceTable">
+          <tbody>
+            <tr>
+              <th class="confluenceTh"> Attribute </th>
+              <th class="confluenceTh"> Type </th>
+              <th class="confluenceTh"> Required? </th>
+              <th class="confluenceTh"> Description </th>
+            </tr>
+            <tr>
+              <td class="confluenceTd"> <tt>name</tt> </td>
+              <td class="confluenceTd"> string </td>
+              <td class="confluenceTd"> <b>Yes</b> </td>
+              <td class="confluenceTd"> The name of the module upon which this module depends. </td>
+            </tr>
+            <tr>
+              <td class="confluenceTd"> <tt>slot</tt> </td>
+              <td class="confluenceTd"> string </td>
+              <td class="confluenceTd"> No </td>
+              <td class="confluenceTd"> The version slot of the module upon which this module depends; defaults to "<tt>main</tt>". </td>
+            </tr>
+            <tr>
+              <td class="confluenceTd"> <tt>export</tt> </td>
+              <td class="confluenceTd"> boolean </td>
+              <td class="confluenceTd"> No </td>
+              <td class="confluenceTd"> Specify whether this dependency is re-exported by default; if not specified, defaults to "<tt>false</tt>". </td>
+            </tr>
+            <tr>
+              <td class="confluenceTd"> <tt>services</tt> </td>
+              <td class="confluenceTd"> enum </td>
+              <td class="confluenceTd"> No </td>
+              <td class="confluenceTd"> Specify whether this dependency's services* are imported and/or exported. Possible values are "none", "import", or "export"; defaults to "none". </td>
+            </tr>
+            <tr>
+              <td class="confluenceTd"> <tt>optional</tt> </td>
+              <td class="confluenceTd"> boolean </td>
+              <td class="confluenceTd"> No </td>
+              <td class="confluenceTd"> Specify whether this dependency is optional; defaults to "<tt>false</tt>". </td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          Source <a href="https://docs.jboss.org/author/display/MODULES/Module+descriptors#Moduledescriptors-Moduledependencies">Module dependencies</a>.
+        </p>
+      </subsection>
+
+      <subsection name="Exports">
+        <p>
+          To export a module, the module's name can be matched with the includes
+          and excludes elements. Please note that you specify the name of
+          modules here (not the group and artifact identifiers as with matching
+          a module). Again you are allowed to use regular expressions for
+          matching.
+        </p>
+        <source><![CDATA[<module>
+    ...
+    <export>
+      <includes>
+        <include></include>
+        ...
+        <include></include>
+      </include>
+      </includes>
+
+      <excludes>
+        <exclude></exclude>
+        ...
+        <exclude></exclude>
+      </excludes>
+    </export>
+    ...
+  </module>]]></source>
+      </subsection>
+
+      <subsection name="Services">
+        <p>
+          The dependency allows to add a services attribute with the values
+          <code>none</code>, <code>import</code>, or <code>export</code>.
+          For each value add a <code>port</code> element and use the
+          <code>value</code> element to specify this value.
+        </p>
+        <source><![CDATA[<module>
+    ...
+    <services>
+      <port>
+        <value></value>
+        <includes>
+          <include></include>
+          ...
+          <include></include>
+        </include>
+        </includes>
+
+        <excludes>
+          <exclude></exclude>
+          ...
+          <exclude></exclude>
+        </excludes>
+      </port>
+      ...
+      <port>
+        <value></value>
+        <includes>
+          <include></include>
+          ...
+          <include></include>
+        </include>
+        </includes>
+
+        <excludes>
+          <exclude></exclude>
+          ...
+          <exclude></exclude>
+        </excludes>
+      </port>
+    </services>
+  </module>]]></source>
+      </subsection>
+
+      <subsection name="Not yet covered">
+        <p>
+          A couple of elements is not yet covered by the configuration. These
+          are
+        </p>
+        <ol>
+          <li>module alias</li>
+          <li>imports/exports with exclude-set</li>
+          <li>resource filters</li>
+          <li>resource path</li>
+          <li>dependencies system element</li>
+        </ol>
+        <p>
+          Support for these element may be provided in future versions of this
+          plugin.
+        </p>
+      </subsection>
+    </section>
+  </body>
+</document>

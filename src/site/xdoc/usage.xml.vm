@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2013 smartics, Kronseder & Reiner GmbH
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<document>
+    <head profile="http://dublincore.org/documents/dcq-html/">
+      <title>Module Outline</title>
+
+      <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/>
+      <link rel="DC.rights copyright" href="license.html" />
+
+      <meta name="keywords" content="module descriptor, JBoss modules, archive, maven plugin, maven"/>
+      <meta name="description" content="Shows the outline of a module descriptor."/>
+      <meta name="author" content="smartics"/>
+
+      <meta name="DC.title" content="Module Outline"/>
+      <meta name="DC.creator" content="smartics"/>
+      <meta name="DC.subject" content="Tutorial on module descriptors for the JBoss modules Maven plugin"/>
+      <meta name="DC.description" content="Shows the outline of a module descriptor."/>
+      <meta name="DC.publisher" content="smartics"/>
+      <meta name="DC.rights" content="Copyright 2013 smartics"/>
+    </head>
+	<body>
+    <section name="Usage">
+      <subsection name="Basic Configuration">
+        <p>
+          The basic usage of the plugin is this:
+        </p>
+        <source><![CDATA[<plugin>
+  <groupId>${project.groupId}</groupId>
+  <artifactId>${project.artifactId}</artifactId>
+  <version>${project.version}</version>
+  <executions>
+    <execution>
+      <id>create-modules-archive</id>
+      <goals>
+        <goal>create-modules-archive</goal>
+      </goals>
+      <phase>package</phase>
+    </execution>
+  </executions>
+  <configuration>
+    ...
+  </configuration>
+</plugin>]]></source>
+    </subsection>
+    <subsection name="Use a Profile">
+      <p>
+        You may want to push the plugin configuration inside a profile. This
+        way you can control when to create the modules folder more easily.
+      </p>
+      <source><![CDATA[<profiles>
+  <profile>
+    <id>attach</id>
+
+    <properties>
+    </properties>
+
+    <build>
+      <plugins>
+        <plugin>
+          <groupId>${project.groupId}</groupId>
+          <artifactId>${project.artifactId}</artifactId>
+          <version>${project.version}</version>
+          <executions>
+            <execution>
+              <id>create-modules-archive</id>
+              <goals>
+                <goal>create-modules-archive</goal>
+              </goals>
+              <phase>package</phase>
+            </execution>
+          </executions>
+          <configuration>
+          </configuration>
+        </plugin>
+      </plugins>
+    </build>
+  </profile>
+</profiles>]]></source>
+      </subsection>
+
+      <subsection name="An Example Configuration">
+      <source><![CDATA[<profiles>
+  <profile>
+    <id>attach</id>
+
+    <properties>
+      <attach.archive>true</attach.archive>
+    </properties>
+
+    <build>
+      <plugins>
+        <plugin>
+          <groupId>${project.groupId}</groupId>
+          <artifactId>${project.artifactId}</artifactId>
+          <version>${project.version}</version>
+          <executions>
+            <execution>
+              <id>create-modules-archive</id>
+              <goals>
+                <goal>create-modules-archive</goal>
+              </goals>
+              <phase>package</phase>
+            </execution>
+          </executions>
+          <configuration>
+            <slotStrategy>main</slotStrategy>
+            <defaultSlot>my-product</defaultSlot>
+            <attach>${attach.archive}</attach>
+
+            <dependencyExcludes>
+              <exclude>
+                <groupId>com\.sun</groupId>
+                <artifactId>tools</artifactId>
+              </exclude>
+              <exclude>
+                <groupId>system</groupId>
+              </exclude>
+            </dependencyExcludes>
+
+            <modules>
+              <module>
+                <name>de.smartics.smart-properties</name>
+                <includes>
+                  <include>
+                    <groupId>de.smartics.properties</groupId>
+                    <artifactId>smart-properties-core</artifactId>
+                  </include>
+                </includes>
+              </module>
+
+              <module>
+                <name>de.smartics.properties</name>
+                <includes>
+                  <include>
+                    <groupId>de.smartics.properties</groupId>
+                  </include>
+                </includes>
+                <dependencies>
+                  <dependency>
+                    <name>javax.api</name>
+                  </dependency>
+                </dependencies>
+                <export>
+                  <excludes>
+                    <exclude>org.infinispan</exclude>
+                    <exclude>com.mysql</exclude>
+                  </excludes>
+                </export>
+                <port>
+                  <services>
+                    <value>import</value>
+                    <includes>
+                      <include>.*</include>
+                    </includes>
+                  </services>
+                </port>
+              </module>
+              <module>
+                <name>de.smartics.exceptions</name>
+                <includes>
+                  <include>
+                    <groupId>de.smartics.exceptions</groupId>
+                  </include>
+                </includes>
+                <export>
+                  <includes>
+                    <include>.+</include>
+                  </includes>
+                </export>
+              </module>
+
+              <module>
+                <name>org.apache.commons.$1</name>
+                <includes>
+                  <include>
+                    <artifactId>commons-(.*)</artifactId>
+                  </include>
+                </includes>
+              </module>
+              <module>
+                <name>com.mysql</name>
+                <includes>
+                  <include>
+                    <artifactId>mysql-connector-java</artifactId>
+                  </include>
+                </includes>
+                <dependencies>
+                  <dependency>
+                    <name>javax.api</name>
+                  </dependency>
+                </dependencies>
+              </module>
+              <module>
+                <name>org.dom4j</name>
+                <includes>
+                  <include>
+                    <artifactId>dom4j</artifactId>
+                  </include>
+                </includes>
+                <skip>true</skip>
+              </module>
+              <module>
+                <name>org.jaxen</name>
+                <includes>
+                  <include>
+                    <artifactId>jaxen</artifactId>
+                  </include>
+                </includes>
+              </module>
+
+              <module>
+                <name>javax.inject.api</name>
+                <slot>main</slot>
+                <includes>
+                  <include>
+                    <groupId>javax.inject</groupId>
+                  </include>
+                </includes>
+                <skip>true</skip>
+              </module>
+              <module>
+                <name>javax.servlet.api</name>
+                <slot>main</slot>
+                <includes>
+                  <include>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>servlet-api</artifactId>
+                  </include>
+                </includes>
+                <skip>true</skip>
+              </module>
+              <module>
+                <name>javax.servlet.jsp.api</name>
+                <slot>main</slot>
+                <includes>
+                  <include>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>jsp-api</artifactId>
+                  </include>
+                </includes>
+                <skip>true</skip>
+              </module>
+              <module>
+                <name>javax.validation.api</name>
+                <slot>main</slot>
+                <includes>
+                  <include>
+                    <groupId>javax.validation</groupId>
+                    <artifactId>validation-api</artifactId>
+                  </include>
+                </includes>
+                <skip>true</skip>
+              </module>
+              <!--
+              <module>
+                <name>$g1.$1</name>
+                <includes>
+                  <include>
+                    <groupId>(javax\..*)</groupId>
+                    <artifactId>(.*)</artifactId>
+                  </include>
+                </includes>
+                <skip>true</skip>
+              </module> -->
+              <module>
+                <name>javax.portlet.api</name>
+                <includes>
+                  <include>
+                    <groupId>portlet-api</groupId>
+                  </include>
+                </includes>
+              </module>
+              <module>
+                <name>org.apache.xalan</name>
+                <slot>main</slot>
+                <includes>
+                  <include>
+                    <groupId>xalan</groupId>
+                    <artifactId>xalan</artifactId>
+                  </include>
+                  <include>
+                    <groupId>xalan</groupId>
+                    <artifactId>serializer</artifactId>
+                  </include>
+                </includes>
+                <dependencies>
+                  <dependency>
+                    <name>javax.api</name>
+                  </dependency>
+                </dependencies>
+                <skip>true</skip>
+              </module>
+              <module>
+                <name>org.apache.xerces</name>
+                <slot>main</slot>
+                <includes>
+                  <include>
+                    <groupId>xerces</groupId>
+                  </include>
+                </includes>
+                <dependencies>
+                  <dependency>
+                    <name>javax.api</name>
+                  </dependency>
+                </dependencies>
+                <skip>true</skip>
+              </module>
+
+              <module>
+                <name>org.javassist</name>
+                <includes>
+                  <include>
+                    <groupId>org.javassist</groupId>
+                    <artifactId>javassist</artifactId>
+                  </include>
+                </includes>
+              </module>
+              <module>
+                <name>org.javassist</name>
+                <includes>
+                  <include>
+                    <groupId>javassist</groupId>
+                    <artifactId>javassist</artifactId>
+                  </include>
+                </includes>
+                <skip>true</skip>
+              </module>
+              <module>
+                <name>org.javassist</name>
+                <includes>
+                  <include>
+                    <groupId>jboss</groupId>
+                    <artifactId>javassist</artifactId>
+                  </include>
+                </includes>
+                <skip>true</skip>
+              </module>
+
+              <module>
+                <name>org.apache.log4j</name>
+                <includes>
+                  <include>
+                    <groupId>log4j</groupId>
+                  </include>
+                </includes>
+              </module>
+
+              <module>
+                <name>org.infinispan</name>
+                <slot>main</slot>
+                <includes>
+                  <include>
+                    <groupId>org.infinispan</groupId>
+                  </include>
+                </includes>
+                <skip>true</skip>
+              </module>
+
+              <module>
+                <name>org.ognl</name>
+                <includes>
+                  <include>
+                    <groupId>ognl</groupId>
+                  </include>
+                </includes>
+                <dependencies>
+                  <dependency>
+                    <name>org.javassist</name>
+                  </dependency>
+                </dependencies>
+                <export>
+                  <includes>
+                    <include>org.javassist</include>
+                  </includes>
+                </export>
+              </module>
+            </modules>
+          </configuration>
+        </plugin>
+      </plugins>
+    </build>
+  </profile>
+</profiles>]]></source>
+      </subsection>
+    </section>
+  </body>
+</document>

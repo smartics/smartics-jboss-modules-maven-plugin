@@ -49,14 +49,6 @@ public final class ModuleBuilder
   private static final String DEFAULT_SLOT = "test";
 
   /**
-   * The default base path found in instances of this builder.
-   * <p>
-   * The value of this constant is {@value}.
-   * </p>
-   */
-  public static final String DEFAULT_BASE_PATH = "eu/smartics/test";
-
-  /**
    * The default property key found in instances of this builder.
    * <p>
    * The value of this constant is {@value}.
@@ -88,14 +80,6 @@ public final class ModuleBuilder
   private String slot;
 
   /**
-   * The path to store the <code>module.xml</code> and all its resources. If not
-   * given, the path defaults to the groupId and artifactId in case the groupId
-   * does not end with the artifactId. If it does, it defaults to the groupId
-   * alone.
-   */
-  private String basePath;
-
-  /**
    * The list of inclusions.
    */
   private List<Clusion> includes;
@@ -120,7 +104,6 @@ public final class ModuleBuilder
 
   private ModuleBuilder(final ModuleBuilder moduleBuilder)
   {
-    this.basePath = moduleBuilder.basePath;
     this.name = moduleBuilder.name;
     this.slot = moduleBuilder.slot;
     this.properties = moduleBuilder.properties;
@@ -169,20 +152,6 @@ public final class ModuleBuilder
   public ModuleBuilder withSlot(final String slot)
   {
     this.slot = slot;
-    return this;
-  }
-
-  /**
-   * Sets the path to store the <code>module. xml</code> and all its resources.
-   * If not given, the path defaults to the groupId and artifactId in case the
-   * groupId does not end with the artifactId. If it does, it defaults to the
-   * groupId alone.
-   *
-   * @param basePath the path to store the module.
-   */
-  public ModuleBuilder withBasePath(final String basePath)
-  {
-    this.basePath = basePath;
     return this;
   }
 
@@ -243,7 +212,6 @@ public final class ModuleBuilder
     final ModuleBuilder builder = a();
 
     builder.withName(DEFAULT_NAME);
-    builder.withBasePath(DEFAULT_BASE_PATH);
     builder.withSlot(DEFAULT_SLOT);
 
     final Map<String, String> properties = new HashMap<String, String>();
@@ -273,7 +241,6 @@ public final class ModuleBuilder
     final Module instance = new Module();
 
     instance.setName(name);
-    instance.setBasePath(basePath);
     instance.setSlot(slot);
     instance.setProperties(properties);
     instance.setIncludes(includes);

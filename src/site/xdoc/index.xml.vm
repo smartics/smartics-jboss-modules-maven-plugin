@@ -38,8 +38,21 @@
     <section name="Overview">
       <p>
         This <a href="http://maven.apache.org/">Maven</a> plugin creates an
-        archive with JBoss modules to be applyable to a JBoss server
-        installation.
+        archive with <a href="https://docs.jboss.org/author/display/MODULES/Home">JBoss modules</a>
+        to be installed to a
+        <a href="https://www.jboss.org/jbossas">JBoss 7</a> server installation.
+      </p>
+      <p>
+        Crafting the modules by hand is more cumbersome than to define a recipe
+        that allows to construct the modules folder with all dependencies
+        already defined by a
+        <a href="http://maven.apache.org/pom.html">Maven POM</a>.
+      </p>
+      <p>
+        Please refer to <a href="usage.html">Usage</a> and <a href="module.html">Module
+        Section</a> for details on how to use this plugin. In
+        <a href="plugin-info.html">Goals</a> you'll find a short description
+        of the goals and its parameters.
       </p>
     </section>
   </body>
