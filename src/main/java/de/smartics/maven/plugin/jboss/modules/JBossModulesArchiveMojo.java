@@ -68,7 +68,6 @@ import de.smartics.maven.plugin.jboss.modules.domain.ModuleMap;
 import de.smartics.maven.plugin.jboss.modules.domain.PrunerGenerator;
 import de.smartics.maven.plugin.jboss.modules.domain.SlotStrategy;
 import de.smartics.maven.plugin.jboss.modules.domain.TransitiveDependencyResolver;
-import edu.emory.mathcs.backport.java.util.Collections;
 
 /**
  * Generates a archive containing modules from a BOM project.
@@ -509,7 +508,6 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
     }
   }
 
-  @SuppressWarnings("unchecked")
   private List<Dependency> resolve(final List<Dependency> rootDependencies)
   {
     final TransitiveDependencyResolver resolver = createResolver(null);
@@ -522,7 +520,7 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
     {
       getLog().error("Cannot resolve dependency: " + e.getMessage());
     }
-    return Collections.emptyList();
+    return new ArrayList<Dependency>();
   }
 
   private TransitiveDependencyResolver createResolver(
