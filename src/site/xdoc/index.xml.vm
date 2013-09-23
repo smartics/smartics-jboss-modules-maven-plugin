@@ -49,9 +49,18 @@
         <a href="http://maven.apache.org/pom.html">Maven POM</a>.
       </p>
       <p>
-        Please refer to <a href="usage.html">Usage</a> and <a href="module.html">Module
-        Section</a> for details on how to use this plugin. In
-        <a href="plugin-info.html">Goals</a> you'll find a short description
+        Please refer to
+      </p>
+      <ul>
+        <li><a href="usage-modules.html">Usage Modules</a></li>
+        <li><a href="module.html">Module Outline</a></li>
+        <li><a href="usage-jandex.html">Usage Jandex</a></li>
+      </ul>
+      <p>
+        for details on how to use this plugin.
+      </p>
+      <p>
+        In <a href="plugin-info.html">Goals</a> you'll find a short description
         of the goals and its parameters.
       </p>
     </section>

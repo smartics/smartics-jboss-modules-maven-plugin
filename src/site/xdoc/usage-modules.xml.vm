@@ -18,7 +18,7 @@
 -->
 <document>
     <head profile="http://dublincore.org/documents/dcq-html/">
-      <title>Module Outline</title>
+      <title>Usage Modules</title>
 
       <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/>
       <link rel="DC.rights copyright" href="license.html" />
@@ -35,7 +35,7 @@
       <meta name="DC.rights" content="Copyright 2013 smartics"/>
     </head>
 	<body>
-    <section name="Usage">
+    <section name="Usage Modules">
       <subsection name="Basic Configuration">
         <p>
           The basic usage of the plugin is this:
