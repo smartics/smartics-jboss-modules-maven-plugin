@@ -18,7 +18,7 @@
 -->
 <document>
     <head profile="http://dublincore.org/documents/dcq-html/">
-      <title>Module Jandex</title>
+      <title>Usage Jandex</title>
 
       <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/>
       <link rel="DC.rights copyright" href="license.html" />
@@ -27,7 +27,7 @@
       <meta name="description" content="Generates the Jandex for a project to be used as modules for JBoss."/>
       <meta name="author" content="smartics"/>
 
-      <meta name="DC.title" content="Module Jandex"/>
+      <meta name="DC.title" content="Usage Jandex"/>
       <meta name="DC.creator" content="smartics"/>
       <meta name="DC.subject" content="Howto for the plugin configuration to generate the Jandex"/>
       <meta name="DC.description" content="Generates the Jandex for a project to be used as modules for JBoss."/>
