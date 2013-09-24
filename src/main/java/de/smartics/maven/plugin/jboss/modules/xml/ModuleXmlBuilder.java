@@ -328,10 +328,14 @@ public final class ModuleXmlBuilder
       return depModuleSlot;
     }
 
-    final String moduleSlot = module.getSlot();
-    if (StringUtils.isNotBlank(moduleSlot))
+    final boolean inheritSlot = module.isInheritSlot();
+    if (inheritSlot)
     {
-      return moduleSlot;
+      final String moduleSlot = module.getSlot();
+      if (StringUtils.isNotBlank(moduleSlot))
+      {
+        return moduleSlot;
+      }
     }
 
     final String defaultSlot = context.getDefaultSlot();
@@ -378,6 +382,7 @@ public final class ModuleXmlBuilder
       }
     }
   }
+
   // CHECKSTYLE:ON
 
   private void addSortedDependencies(final Set<SortElement> sorted,

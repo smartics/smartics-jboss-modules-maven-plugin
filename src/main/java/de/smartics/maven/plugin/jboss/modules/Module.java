@@ -56,6 +56,18 @@ public class Module
   private String slot;
 
   /**
+   * The signal to control, if the slot is to be inherited to the dependencies
+   * if not specified by a dependency otherwise. If set to <code>false</code>,
+   * the default slot will be used instead of the module's slot. Useful to
+   * create extensions that have to reside in the main slot but have to depend
+   * on modules in another slot.
+   * <p>
+   * Defaults to <code>true</code>.
+   * </p>
+   */
+  private boolean inheritSlot = true;
+
+  /**
    * The list of inclusions.
    */
   private List<Clusion> includes;
@@ -112,6 +124,7 @@ public class Module
   public Module(final Module originalModule)
   {
     this.slot = originalModule.slot;
+    this.inheritSlot = originalModule.inheritSlot;
     this.includes = originalModule.includes;
     this.excludes = originalModule.excludes;
     this.dependencies = originalModule.dependencies;
@@ -170,6 +183,42 @@ public class Module
   public void setSlot(final String slot)
   {
     this.slot = slot;
+  }
+
+  /**
+   * Returns the signal to control, if the slot is to be inherited to the
+   * dependencies if not specified by a dependency otherwise. If set to
+   * <code>false</code>, the default slot will be used instead of the module's
+   * slot. Useful to create extensions that have to reside in the main slot but
+   * have to depend on modules in another slot.
+   * <p>
+   * Defaults to <code>true</code>.
+   * </p>
+   *
+   * @return the signal to control, if the slot is to be inherited to the
+   *         dependencies if not specified by a dependency otherwise.
+   */
+  public boolean isInheritSlot()
+  {
+    return inheritSlot;
+  }
+
+  /**
+   * Sets the signal to control, if the slot is to be inherited to the
+   * dependencies if not specified by a dependency otherwise. If set to
+   * <code>false</code>, the default slot will be used instead of the module's
+   * slot. Useful to create extensions that have to reside in the main slot but
+   * have to depend on modules in another slot.
+   * <p>
+   * Defaults to <code>true</code>.
+   * </p>
+   *
+   * @param inheritSlot the signal to control, if the slot is to be inherited to
+   *          the dependencies if not specified by a dependency otherwise.
+   */
+  public void setInheritSlot(final boolean inheritSlot)
+  {
+    this.inheritSlot = inheritSlot;
   }
 
   /**
