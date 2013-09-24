@@ -18,32 +18,32 @@
 -->
 <document>
     <head profile="http://dublincore.org/documents/dcq-html/">
-      <title>Usage Jandex</title>
+      <title>Usage Index</title>
 
       <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/>
       <link rel="DC.rights copyright" href="license.html" />
 
-      <meta name="keywords" content="module Jandex, JBoss modules, archive, maven plugin, maven"/>
-      <meta name="description" content="Generates the Jandex for a project to be used as modules for JBoss."/>
+      <meta name="keywords" content="module index, JBoss modules, archive, maven plugin, maven"/>
+      <meta name="description" content="Generates the index for packages and folders within the classpath of a project for JBoss modules."/>
       <meta name="author" content="smartics"/>
 
-      <meta name="DC.title" content="Usage Jandex"/>
+      <meta name="DC.title" content="Usage Index"/>
       <meta name="DC.creator" content="smartics"/>
-      <meta name="DC.subject" content="Howto for the plugin configuration to generate the Jandex"/>
-      <meta name="DC.description" content="Generates the Jandex for a project to be used as modules for JBoss."/>
+      <meta name="DC.subject" content="Howto for the plugin configuration to generate the package and folder index"/>
+      <meta name="DC.description" content="Generates the index for packages and folders within the classpath of a project for JBoss modules."/>
       <meta name="DC.publisher" content="smartics"/>
       <meta name="DC.rights" content="Copyright 2013 smartics"/>
     </head>
 	<body>
-    <section name="Usage Jandex">
+    <section name="Usage Index">
       <p>
-        The Jandex is an index of annotations found in an artifact to be
-        used as a JBoss module.
+        The mojo generates an index of packages and folders within the classpath
+        of a project. This index is stored within the artifact at
+        <code>META-INF/INDEX.LIST</code>.
       </p>
       <subsection name="Basic Configuration">
         <p>
-          To create the Jandex for all classes of a project, use this
-          configuration:
+          To create the index for a project, use this configuration:
         </p>
         <source><![CDATA[<plugin>
   <groupId>${project.groupId}</groupId>
@@ -51,9 +51,9 @@
   <version>${project.version}</version>
   <executions>
     <execution>
-      <id>jandex</id>
+      <id>index</id>
       <goals>
-        <goal>jandex</goal>
+        <goal>index</goal>
       </goals>
     </execution>
   </executions>
@@ -70,16 +70,16 @@
   <version>${project.version}</version>
   <executions>
     <execution>
-      <id>jandex</id>
+      <id>index</id>
       <goals>
-        <goal>jandex</goal>
+        <goal>index</goal>
       </goals>
       <configuration>
         <fileSets>
           <fileSet>
             <directory>\${project.build.outputDirectory}</directory>
             <excludes>
-              <exclude>some/classes/to/exclude/**</exclude>
+              <exclude>META-INF/**</exclude>
             </excludes>
           </fileSet>
         </fileSets>
@@ -90,9 +90,6 @@
       <p>
         If no <code>directory</code> is given, it defaults to
         <code>project.build.outputDirectory</code>.
-      </p>
-      <p>
-        Please note that only class files are processed.
       </p>
     </subsection>
     </section>
