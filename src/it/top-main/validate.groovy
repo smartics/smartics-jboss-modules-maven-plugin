@@ -15,7 +15,7 @@
  */
 
 def base = 'target/jboss-modules/de/smartics/util/smartics-jboss-utils/main'
-def artifactFile = new File(basedir, base + '/smartics-jboss-utils-0.1.1-SNAPSHOT.jar')
+def artifactFile = new File(basedir, base + '/smartics-jboss-utils-0.1.1.jar')
 assert artifactFile.exists()
 
 def modulesFile = new File(basedir, base + '/module.xml')
@@ -25,7 +25,7 @@ def module = new XmlSlurper().parse(modulesFile)
 <?xml version="1.0" encoding="UTF-8"?>
 <module xmlns="urn:jboss:module:1.1" name="de.smartics.util.smartics-jboss-utils">
   <resources>
-    <resource-root path="smartics-jboss-utils-0.1.1-SNAPSHOT.jar" />
+    <resource-root path="smartics-jboss-utils-0.1.1.jar" />
   </resources>
   <dependencies>
     <module name="de.smartics.util.smartics-commons" slot="other" />
@@ -39,7 +39,7 @@ assert '' ==  module.@slot.text()
 
 def resourceRoots = module.resources."resource-root"
 assert 1 == resourceRoots.size()
-assert 'smartics-jboss-utils-0.1.1-SNAPSHOT.jar' == resourceRoots[0].@path.text()
+assert 'smartics-jboss-utils-0.1.1.jar' == resourceRoots[0].@path.text()
 
 def mods = module.dependencies.module;
 assert 2 == mods.size()
