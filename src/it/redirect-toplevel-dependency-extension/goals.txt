@@ -1,0 +1,1 @@
+jar:jar de.smartics.maven.plugin:smartics-jboss-modules-maven-plugin:create-modules-archive
