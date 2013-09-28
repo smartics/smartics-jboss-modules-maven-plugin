@@ -65,6 +65,23 @@ public class JandexMojo extends AbstractMojo
   /**
    * The set of class files to process. If empty, all class files are processed.
    *
+   * <pre>
+   * <![CDATA[<fileSets>
+   *   <fileSet>
+   *     <directory>${project.build.outputDirectory}</directory>
+   *     <includes>
+   *       <include>some/classes/to</include>
+   *       ...
+   *     </includes>
+   *     <excludes>
+   *       <exclude>some/classes/to/exclude/**</exclude>
+   *       ...
+   *     </excludes>
+   *   </fileSet>
+   *   ...
+   * </fileSets>]]>
+   * </pre>
+   *
    * @since 1.0
    */
   @Parameter

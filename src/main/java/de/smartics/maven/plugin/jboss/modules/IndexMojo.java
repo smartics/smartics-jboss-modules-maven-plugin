@@ -60,6 +60,23 @@ public class IndexMojo extends AbstractMojo
    * The set of packages and folders files to process. If empty, the classpath
    * of the project are processed.
    *
+   * <pre>
+   * <![CDATA[<fileSets>
+   *   <fileSet>
+   *     <directory>${project.build.outputDirectory}</directory>
+   *     <includes>
+   *       <include>some/classes/to</include>
+   *       ...
+   *     </includes>
+   *     <excludes>
+   *       <exclude>some/classes/to/exclude/**</exclude>
+   *       ...
+   *     </excludes>
+   *   </fileSet>
+   *   ...
+   * </fileSets>]]>
+   * </pre>
+   *
    * @since 1.0
    */
   @Parameter
