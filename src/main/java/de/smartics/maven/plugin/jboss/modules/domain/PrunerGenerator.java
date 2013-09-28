@@ -53,6 +53,10 @@ public class PrunerGenerator implements DependencyTraverserGenerator
 
   /**
    * Default constructor.
+   *
+   * @param dependencyExcludes a list of dependencies to be excluded from the
+   *          transitive dependency collection process.
+   * @param modules lost of modules to calculate the skip modules.
    */
   public PrunerGenerator(final List<Clusion> dependencyExcludes,
       final List<Module> modules)
@@ -96,6 +100,7 @@ public class PrunerGenerator implements DependencyTraverserGenerator
    *
    * @param delegate the traverse to delegate to after own check is not
    *          rejecting.
+   * @return the traverser.
    * @throws NullPointerException if {@code delegate} is <code>null</code>.
    */
   public DependencyTraverser createDependencyTraverser(

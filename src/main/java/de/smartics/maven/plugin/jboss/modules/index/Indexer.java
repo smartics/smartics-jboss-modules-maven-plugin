@@ -57,9 +57,10 @@ public final class Indexer
   /**
    * Default constructor.
    *
-   * @param outputDirectory
+   * @param outputDirectory the folder to write the index to (within a META-INF
+   *          folder that is added).
    */
-  public Indexer(File outputDirectory)
+  public Indexer(final File outputDirectory)
   {
     this.outputDirectory = Arg.checkNotNull("outputDirectory", outputDirectory);
   }
