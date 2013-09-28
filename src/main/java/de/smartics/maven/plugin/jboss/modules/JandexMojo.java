@@ -62,6 +62,7 @@ public class JandexMojo extends AbstractMojo
   @Parameter(defaultValue = "${project.build.outputDirectory}", readonly = true)
   private File outputDirectory;
 
+  // CHECKSTYLE:OFF
   /**
    * The set of class files to process. If empty, all class files are processed.
    *
@@ -86,6 +87,8 @@ public class JandexMojo extends AbstractMojo
    */
   @Parameter
   private List<FileSet> fileSets;
+
+  // CHECKSTYLE:ON
 
   /**
    * A simple flag to skip the execution of this MOJO. If set on the command
@@ -156,26 +159,31 @@ public class JandexMojo extends AbstractMojo
     }
     else
     {
-      for (final FileSet fileSet : fileSets)
-      {
-        final DirectoryScanner scanner = new DirectoryScanner();
-        final File baseDir = calcBasedir(fileSet);
-        scanner.setBasedir(baseDir);
-        final List<String> includes = fileSet.getIncludes();
-        if (includes != null && !includes.isEmpty())
-        {
-          scanner.setIncludes(includes.toArray(new String[includes.size()]));
-        }
-        final List<String> excludes = fileSet.getExcludes();
-        if (excludes != null && !excludes.isEmpty())
-        {
-          scanner.setExcludes(excludes.toArray(new String[excludes.size()]));
-        }
-        runIndexing(indexer, scanner);
-      }
+      runIndexing(indexer);
     }
 
     writeIndex(indexer);
+  }
+
+  private void runIndexing(final Indexer indexer)
+  {
+    for (final FileSet fileSet : fileSets)
+    {
+      final DirectoryScanner scanner = new DirectoryScanner();
+      final File baseDir = calcBasedir(fileSet);
+      scanner.setBasedir(baseDir);
+      final List<String> includes = fileSet.getIncludes();
+      if (includes != null && !includes.isEmpty())
+      {
+        scanner.setIncludes(includes.toArray(new String[includes.size()]));
+      }
+      final List<String> excludes = fileSet.getExcludes();
+      if (excludes != null && !excludes.isEmpty())
+      {
+        scanner.setExcludes(excludes.toArray(new String[excludes.size()]));
+      }
+      runIndexing(indexer, scanner);
+    }
   }
 
   private File calcBasedir(final FileSet fileSet)

@@ -339,7 +339,13 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
     final List<Dependency> dependencies = resolve(rootDependencies);
 
     logDependencies(rootDependencies, dependencies);
+    runModuleCreation(dependencies);
+    attach();
+  }
 
+  private void runModuleCreation(final List<Dependency> dependencies)
+    throws MojoExecutionException
+  {
     final boolean isPomProject = "pom".equals(project.getPackaging());
     if (!isPomProject)
     {
@@ -369,8 +375,6 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
                                          + entry.getKey().getName() + "'.", e);
       }
     }
-
-    attach();
   }
 
   private void logDependencies(final Collection<Dependency> rootDependencies,

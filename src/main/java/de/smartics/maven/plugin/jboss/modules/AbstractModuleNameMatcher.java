@@ -197,6 +197,7 @@ public abstract class AbstractModuleNameMatcher
     return false;
   }
 
+  // CHECKSTYLE:OFF
   /**
    * Merges the includes and excludes of the given matcher with this one.
    *
@@ -242,6 +243,7 @@ public abstract class AbstractModuleNameMatcher
       excludeExpressions = matcher.excludeExpressions;
     }
   }
+  // CHECKSTYLE:ON
 
   // --- object basics --------------------------------------------------------
 

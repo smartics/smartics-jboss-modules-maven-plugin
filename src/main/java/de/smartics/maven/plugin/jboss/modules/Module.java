@@ -469,8 +469,10 @@ public class Module
    *
    * @param module the module to merge with this instance.
    * @throws NullPointerException if {@code module} is <code>null</code>.
+   * @throws IllegalArgumentException if the module is illegal to be merged.
    */
-  public void merge(final Module module)
+  public void merge(final Module module) throws NullPointerException,
+    IllegalArgumentException
   {
     if (!ObjectUtils.equals(name, module.name)
         || !ObjectUtils.equals(slot, module.slot))
