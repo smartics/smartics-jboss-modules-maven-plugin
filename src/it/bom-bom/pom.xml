@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+
+<project
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>de.smartics.maven.plugin</groupId>
+  <artifactId>add-dependency</artifactId>
+  <version>testing</version>
+  <packaging>pom</packaging>
+
+  <name>${project.artifactId}</name>
+  <description>
+    A test case for the smartics-jboss-modules-maven-plugin.
+  </description>
+  <url>http://www.smartics.de/test</url>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>de.smartics.util</groupId>
+        <artifactId>smartics-commons</artifactId>
+        <version>0.5.2</version>
+      </dependency>
+      <dependency>
+        <groupId>de.smartics.test.setup</groupId>
+        <artifactId>test-setup-artifacts-bom</artifactId>
+        <version>1.0.0</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>de.smartics.maven.plugin</groupId>
+        <artifactId>smartics-jboss-modules-maven-plugin</artifactId>
+        <!-- <version>testing</version>  -->
+        <version>0.1.0-SNAPSHOT</version>
+        <executions>
+          <execution>
+            <id>create-modules-archive</id>
+            <goals>
+              <goal>create-modules-archive</goal>
+            </goals>
+            <phase>package</phase>
+          </execution>
+        </executions>
+        <configuration>
+          <slotStrategy>main</slotStrategy>
+          <attach>false</attach>
+
+          <modules>
+            <module>
+              <name>de.smartics.test</name>
+              <includes>
+                <include>
+                  <groupId>de.smartics.test.setup</groupId>
+                </include>
+                <include>
+                  <!--
+                    If it is not added explicitly, it will not be resolved
+                    as a dependency.
+                    -->
+                  <groupId>de.smartics.util</groupId>
+                  <artifactId>smartics-commons</artifactId>
+                </include>
+              </includes>
+              <dependencies>
+                <dependency>
+                  <name>javax.api</name>
+                </dependency>
+              </dependencies>
+            </module>
+          </modules>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
