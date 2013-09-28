@@ -42,7 +42,8 @@ def mods = module.dependencies.module;
 assert 0 == mods.size()
 
 /*
-  The dependency is not added automatically.
+  The dependency is not added, since it is in dependencyManagement.
+  See test 'jar-project' for an example with dependencies.
  */
 def baseD = 'target/jboss-modules/de/smartics/test/setup/test-setup-artifacts-commons/main'
 def artifactFileD = new File(basedir, baseD + '/test-setup-artifacts-commons-1.0.0.jar')
