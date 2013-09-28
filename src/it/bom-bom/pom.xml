@@ -64,7 +64,8 @@
                 <include>
                   <!--
                     If it is not added explicitly, it will not be resolved
-                    as a dependency.
+                    as a dependency. This is because the POM project that
+                    declares the dependencies is by itself not a module.
                     -->
                   <groupId>de.smartics.util</groupId>
                   <artifactId>smartics-commons</artifactId>
