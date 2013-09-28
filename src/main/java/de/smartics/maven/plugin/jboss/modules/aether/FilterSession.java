@@ -58,7 +58,7 @@ public class FilterSession extends FilterRepositorySystemSession
    *           <code>null</code>.
    */
   public FilterSession(final RepositorySystemSession session,
-      final DependencyTraverser traverser)
+      final DependencyTraverser traverser) throws NullPointerException
   {
     super(session);
     this.traverser = Arg.checkNotNull("traverser", traverser);

@@ -55,10 +55,13 @@ public class PruningDependencyTraverser extends DelegateDependencyTraverser
    *
    * @param delegate the traverse to delegate to after own check is not
    *          rejecting.
+   * @param exclusions the artifacts to exclude.
+   * @param skipModules the list of modules to skip.
    * @throws NullPointerException if {@code delegate} is <code>null</code>.
    */
   public PruningDependencyTraverser(final DependencyTraverser delegate,
       final List<Clusion> exclusions, final List<Module> skipModules)
+    throws NullPointerException
   {
     super(delegate);
     this.exclusions = exclusions;

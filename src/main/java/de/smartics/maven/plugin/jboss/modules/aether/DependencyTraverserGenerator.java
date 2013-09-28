@@ -42,6 +42,7 @@ public interface DependencyTraverserGenerator
    *
    * @param delegate the traverse to delegate to after own check is not
    *          rejecting.
+   * @return the traverser.
    * @throws NullPointerException if {@code delegate} is <code>null</code>.
    */
   DependencyTraverser createDependencyTraverser(DependencyTraverser delegate)
