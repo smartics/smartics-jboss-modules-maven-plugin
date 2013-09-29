@@ -86,6 +86,34 @@ public class Dependency
 
   // --- init -----------------------------------------------------------------
 
+  // --- factory --------------------------------------------------------------
+
+  /**
+   * Creates an instance of {@link Dependency}.
+   *
+   * @param name the name of the module upon which this module depends. The
+   *          value is mandatory.
+   * @param slot the version slot of the module upon which this module depends.
+   *          Defaults to "main".
+   * @param export the flag to specify whether this dependency is re-exported by
+   *          default. If not specified, defaults to <code>false</code>.
+   * @param services the modules services.
+   * @param optional the flag to the module to specify whether this dependency
+   *          is optional. Defaults to <code>false</code>.
+   * @return the created instance.
+   */
+  public static Dependency create(final String name, final String slot,
+      final boolean export, final String services, final boolean optional)
+  {
+    final Dependency dependency = new Dependency();
+    dependency.setName(name);
+    dependency.setSlot(slot);
+    dependency.setExport(export);
+    dependency.setServices(services);
+    dependency.setOptional(optional);
+    return dependency;
+  }
+
   // --- get&set --------------------------------------------------------------
 
   /**
@@ -243,6 +271,9 @@ public class Dependency
   @Override
   public String toString()
   {
-    return ToStringBuilder.reflectionToString(this);
+    final ToStringBuilder builder = new ToStringBuilder(null);
+    builder.append("name", name).append("slot", slot).append("export", export);
+    builder.append("services", services).append("optional", optional);
+    return builder.toString();
   }
 }

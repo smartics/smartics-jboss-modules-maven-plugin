@@ -18,6 +18,8 @@ package de.smartics.maven.plugin.jboss.modules;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 /**
  * Base implementation to select modules by their names. Names may be regular
  * expressions.
@@ -247,4 +249,12 @@ public abstract class AbstractModuleNameMatcher
 
   // --- object basics --------------------------------------------------------
 
+  @Override
+  public String toString()
+  {
+    final ToStringBuilder builder = new ToStringBuilder(null);
+    builder.append("include", includes).append("excludes", excludes);
+    return builder.toString();
+
+  }
 }

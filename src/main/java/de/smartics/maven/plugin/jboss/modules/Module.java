@@ -65,7 +65,7 @@ public class Module
    * Defaults to <code>true</code>.
    * </p>
    */
-  private boolean inheritSlot = true;
+  private Boolean inheritSlot = true;
 
   /**
    * The list of inclusions.
@@ -566,6 +566,15 @@ public class Module
 
   // --- object basics --------------------------------------------------------
 
+  private Object readResolve()
+  {
+    if (inheritSlot == null)
+    {
+      inheritSlot = true;
+    }
+    return this;
+  }
+
   @Override
   public int hashCode()
   {
@@ -597,6 +606,14 @@ public class Module
   @Override
   public String toString()
   {
-    return ToStringBuilder.reflectionToString(this);
+    final ToStringBuilder builder = new ToStringBuilder(null);
+    builder.append("name", name).append("slot", slot).append("skip", skip)
+        .append("inheritSlot", inheritSlot);
+    builder.append("properties", properties).append("includes", includes)
+        .append("excludes", excludes);
+    builder.append("dependencies", dependencies).append("export", export)
+        .append("port", port);
+
+    return builder.toString();
   }
 }

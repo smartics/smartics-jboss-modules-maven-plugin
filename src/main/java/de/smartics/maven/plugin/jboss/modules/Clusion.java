@@ -78,6 +78,23 @@ public class Clusion
 
   // --- init -----------------------------------------------------------------
 
+  // --- factory --------------------------------------------------------------
+
+  /**
+   * Helper to create an instance.
+   *
+   * @param groupId the groupId to match. May be a regular expression.
+   * @param artifactId the artifactId to match. May be a regular expression.
+   * @return the new instance.
+   */
+  public static Clusion create(final String groupId, final String artifactId)
+  {
+    final Clusion clusion = new Clusion();
+    clusion.setGroupId(groupId);
+    clusion.setArtifactId(artifactId);
+    return clusion;
+  }
+
   // --- get&set --------------------------------------------------------------
 
   /**

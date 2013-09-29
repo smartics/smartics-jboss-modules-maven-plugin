@@ -68,6 +68,7 @@ import de.smartics.maven.plugin.jboss.modules.domain.ModuleMap;
 import de.smartics.maven.plugin.jboss.modules.domain.PrunerGenerator;
 import de.smartics.maven.plugin.jboss.modules.domain.SlotStrategy;
 import de.smartics.maven.plugin.jboss.modules.domain.TransitiveDependencyResolver;
+import de.smartics.maven.plugin.jboss.modules.sets.ModulesXmlLocator;
 
 /**
  * Generates a archive containing modules from a BOM project.
@@ -308,6 +309,12 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
       defaultValue = "${project.build.directory}/${project.artifactId}-${project.version}-jboss-modules.jar")
   private File modulesArchive;
 
+  /**
+   * The modules declared in the POM and the modules declared on the classpath
+   * (in that order).
+   */
+  private List<Module> allModules;
+
   // ****************************** Initializer *******************************
 
   // ****************************** Constructors ******************************
@@ -333,6 +340,7 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
       return;
     }
 
+    this.allModules = initModules();
     this.repositorySession = adjustSession();
 
     final List<Dependency> rootDependencies = calcRootDependencies();
@@ -341,6 +349,27 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
     logDependencies(rootDependencies, dependencies);
     runModuleCreation(dependencies);
     attach();
+  }
+
+  private List<Module> initModules() throws MojoExecutionException
+  {
+    try
+    {
+      final ModulesXmlLocator locator = new ModulesXmlLocator(defaultSlot);
+      final List<Module> classPathModules = locator.discover();
+      final List<Module> allModules = new ArrayList<Module>(256);
+      if (modules != null)
+      {
+        allModules.addAll(modules);
+      }
+      allModules.addAll(classPathModules);
+      return allModules;
+    }
+    catch (final IOException e)
+    {
+      throw new MojoExecutionException("Cannot read modules from class path.",
+          e);
+    }
   }
 
   private void runModuleCreation(final List<Dependency> dependencies)
@@ -461,7 +490,7 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
     builder.with(slotStrategy);
     builder.withDefaultSlot(defaultSlot);
 
-    final ModuleMap moduleMap = new ModuleMap(modules, dependencies);
+    final ModuleMap moduleMap = new ModuleMap(allModules, dependencies);
     builder.with(moduleMap);
     builder.withExportAll(exportAll);
 
@@ -531,7 +560,7 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
       final List<Dependency> managedDependencies)
   {
     final PrunerGenerator prunerGenerator =
-        new PrunerGenerator(dependencyExcludes, modules);
+        new PrunerGenerator(dependencyExcludes, allModules);
     final List<DependencyFilter> dependencyFilters = createDependencyFilters();
     final MojoRepositoryBuilder builder = new MojoRepositoryBuilder();
     builder.with(repositorySystem).with(repositorySession).with(remoteRepos)
