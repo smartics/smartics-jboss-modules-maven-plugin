@@ -423,5 +423,57 @@
         </p>
       </subsection>
     </section>
+
+    <section name="Import Modules">
+      <p>
+        Many dependencies will be mapped to the same modules in different
+        projects. These standard mappings may be provided by modules files
+        on the class path.
+      </p>
+      <p>
+        A modules file is located in a folder <code>jboss-modules</code>
+        and attached to the class path like this:
+      </p>
+      <source><![CDATA[<plugin>
+  <groupId>${project.groupId}</groupId>
+  <artifactId>${project.artifactId}</artifactId>
+  <version>${project.version}</version>
+  <executions>
+    <execution>
+      <id>create-modules-archive</id>
+      <goals>
+        <goal>create-modules-archive</goal>
+      </goals>
+      <phase>package</phase>
+    </execution>
+  </executions>
+  <dependencies>
+    <dependency>
+      <groupId>de.smartics.config</groupId>
+      <artifactId>config-smartics-jboss-modules</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
+</plugin>]]></source>
+      <p>
+        If the <code>defaultSlot</code> is set, any module without an explicitly
+        specified slot will be mapped to this default slot.
+      </p>
+      <p>
+        The content is a list of module elements as shown above. For instance,
+        the following mapping is stored in a file named <code>jboss-modules/org.apache.commons.xml</code>
+        (extension <code>.xml</code> is required):
+      </p>
+      <source><![CDATA[<modules xmlns="http://smartics.de/jboss-modules-descriptor">
+  <module>
+    <name>org.apache.commons.$1</name>
+    <includes>
+      <include>
+        <artifactId>commons-(.*)</artifactId>
+      </include>
+    </includes>
+  </module>
+</modules>]]></source>
+    </section>
   </body>
 </document>
