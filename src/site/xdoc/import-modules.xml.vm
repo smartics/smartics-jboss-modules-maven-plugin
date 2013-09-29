@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2013 smartics, Kronseder & Reiner GmbH
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<document>
+    <head profile="http://dublincore.org/documents/dcq-html/">
+      <title>Import Module Descriptors</title>
+
+      <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/>
+      <link rel="DC.rights copyright" href="license.html" />
+
+      <meta name="keywords" content="import module descriptor, JBoss modules, archive, maven plugin, maven"/>
+      <meta name="description" content="Provides information on importing module descriptors."/>
+      <meta name="author" content="smartics"/>
+
+      <meta name="DC.title" content="Module Outline"/>
+      <meta name="DC.creator" content="smartics"/>
+      <meta name="DC.subject" content="Tutorial on importing module descriptors for the JBoss modules Maven plugin"/>
+      <meta name="DC.description" content="Provides information on importing module descriptors."/>
+      <meta name="DC.publisher" content="smartics"/>
+      <meta name="DC.rights" content="Copyright 2013 smartics"/>
+    </head>
+	<body>
+    <section name="Import Module Descriptors">
+      <subsection name="Overview">
+        <p>
+          Many dependencies will be mapped to the same modules in different
+          projects. These standard mappings may be provided by modules files
+          on the class path.
+        </p>
+        <p>
+          The project <a href="${webroot}/config-smartics-jboss-modules">config-smartics-jboss-modules</a>
+          provides a configuration to be imported. The next section shows how
+          to import the artifact of this project.
+        </p>
+      </subsection>
+      <subsection name="Adding external Module Descriptors">
+      <p>
+        A modules file is located in a folder <code>jboss-modules</code>
+        and attached to the class path like this:
+      </p>
+      <source><![CDATA[<plugin>
+  <groupId>${project.groupId}</groupId>
+  <artifactId>${project.artifactId}</artifactId>
+  <version>${project.version}</version>
+  <executions>
+    <execution>
+      <id>create-modules-archive</id>
+      <goals>
+        <goal>create-modules-archive</goal>
+      </goals>
+      <phase>package</phase>
+    </execution>
+  </executions>
+  <dependencies>
+    <dependency>
+      <groupId>de.smartics.config</groupId>
+      <artifactId>config-smartics-jboss-modules</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+  </dependencies>
+</plugin>]]></source>
+        <p>
+          If the <code>defaultSlot</code> is set, any module without an explicitly
+          specified slot will be mapped to this default slot.
+        </p>
+      </subsection>
+      <subsection name="Module Descriptor Format">
+        <p>
+          The content is a list of module elements as shown in <a href="module.html">Module Section</a>.
+          For instance, the following mapping is stored in a file named
+          <code>jboss-modules/org.apache.commons.xml</code>
+          (extension <code>.xml</code> is required):
+        </p>
+      <source><![CDATA[<modules xmlns="http://smartics.de/jboss-modules-descriptor">
+  <module>
+    <name>org.apache.commons.$1</name>
+    <includes>
+      <include>
+        <artifactId>commons-(.*)</artifactId>
+      </include>
+    </includes>
+  </module>
+</modules>]]></source>
+      </subsection>
+    </section>
+  </body>
+</document>

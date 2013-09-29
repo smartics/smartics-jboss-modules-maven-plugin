@@ -62,6 +62,7 @@
     <menu name="Documentation">
       <item name="Usage Modules"   href="usage-modules.html"/>
       <item name="Module Outline"  href="module.html"/>
+      <item name="Import Module Descriptors"  href="import-modules.html"/>
       <item name="Usage Jandex"    href="usage-jandex.html"/>
       <item name="Usage Index"     href="usage-index.html"/>
     </menu>
@@ -108,7 +109,7 @@
       <item name="Test Reports"    href="project-reports.html" collapse="true">
         <item name="Test Report"   href="surefire-report.html"/>
         <item name="Code Coverage" href="cobertura/index.html"/>
-        <item name="Javadocs"      href="testapidocs/index.html"/>
+        <!-- <item name="Javadocs"      href="testapidocs/index.html"/> -->
         <item name="Sources"       href="xref-test/index.html"/>
       </item>
 
