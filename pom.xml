@@ -1,9 +1,6 @@
 <?xml version="1.0"?>
 
-<project
-  xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -14,7 +11,7 @@
 
   <groupId>de.smartics.maven.plugin</groupId>
   <artifactId>smartics-jboss-modules-maven-plugin</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>0.1.0</version>
   <packaging>maven-plugin</packaging>
 
   <name>${project.artifactId}</name>
@@ -34,9 +31,9 @@
   </licenses>
 
   <scm>
-    <connection>scm:svn:https://www.smartics.eu/svn/public/maven/smartics-jboss-modules-maven-plugin/trunk</connection>
-    <developerConnection>scm:svn:https://www.smartics.eu/svn/public/maven/smartics-jboss-modules-maven-plugin/trunk</developerConnection>
-    <url>https://www.smartics.eu/svn/public/maven/smartics-jboss-modules-maven-plugin/trunk</url>
+    <connection>scm:svn:https://www.smartics.eu/svn/public/maven/smartics-jboss-modules-maven-plugin/tags/smartics-jboss-modules-maven-plugin-0.1.0</connection>
+    <developerConnection>scm:svn:https://www.smartics.eu/svn/public/maven/smartics-jboss-modules-maven-plugin/tags/smartics-jboss-modules-maven-plugin-0.1.0</developerConnection>
+    <url>https://www.smartics.eu/svn/public/maven/smartics-jboss-modules-maven-plugin/tags/smartics-jboss-modules-maven-plugin-0.1.0</url>
   </scm>
 
   <distributionManagement>
