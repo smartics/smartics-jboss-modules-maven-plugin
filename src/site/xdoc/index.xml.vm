@@ -54,7 +54,9 @@
       <ul>
         <li><a href="usage-modules.html">Usage Modules</a></li>
         <li><a href="module.html">Module Outline</a></li>
+        <li><a href="import-modules.html">Import Module Descriptors</a></li>
         <li><a href="usage-jandex.html">Usage Jandex</a></li>
+        <li><a href="usage-index.html">Usage Index</a></li>
       </ul>
       <p>
         for details on how to use this plugin.
