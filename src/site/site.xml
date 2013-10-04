@@ -108,7 +108,7 @@
         </item>
       <item name="Test Reports"    href="project-reports.html" collapse="true">
         <item name="Test Report"   href="surefire-report.html"/>
-        <item name="Code Coverage" href="cobertura/index.html"/>
+        <!-- <item name="Code Coverage" href="cobertura/index.html"/> -->
         <!-- <item name="Javadocs"      href="testapidocs/index.html"/> -->
         <item name="Sources"       href="xref-test/index.html"/>
       </item>
