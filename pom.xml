@@ -61,7 +61,7 @@
 
     <smartics-commons.version>0.5.1</smartics-commons.version>
 
-    <testdoc.version>0.4.0</testdoc.version>
+    <testdoc.version>0.4.1</testdoc.version>
   </properties>
 
   <dependencies>
@@ -200,18 +200,6 @@
       <groupId>de.smartics.testdoc</groupId>
       <artifactId>testdoc-core</artifactId>
       <version>${testdoc.version}</version>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>com.ibm.icu</groupId>
-          <artifactId>icu4j</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>com.ibm.icu</groupId>
-      <artifactId>icu4j</artifactId>
-      <version>3.8</version>
       <scope>test</scope>
     </dependency>
     <dependency>
