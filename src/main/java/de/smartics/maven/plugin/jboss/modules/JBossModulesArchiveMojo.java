@@ -542,6 +542,7 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
   }
 
   private List<Dependency> resolve(final List<Dependency> rootDependencies)
+    throws MojoExecutionException
   {
     final TransitiveDependencyResolver resolver = createResolver(null);
     try
@@ -551,9 +552,12 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
     }
     catch (final DependencyResolutionException e)
     {
-      getLog().error("Cannot resolve dependency: " + e.getMessage());
+      final String message =
+          "Cannot resolve dependency: "
+              + e.getMessage()
+              + "\nYou may use 'dependencyExcludes' to exclude broken dependencies from examination.";
+      throw new MojoExecutionException(message, e);
     }
-    return new ArrayList<Dependency>();
   }
 
   private TransitiveDependencyResolver createResolver(
