@@ -1,0 +1,178 @@
+<?xml version="1.0"?>
+<!--
+
+    Copyright 2013 smartics, Kronseder & Reiner GmbH
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<modules xmlns="http://smartics.de/ns/jboss-modules-descriptor">
+  <module
+    name=""
+    slot="">
+    <directives>
+      <skip></skip>
+      <inherit-slot></inherit-slot>
+    </directives>
+
+    <match>
+      <includes>
+        <include>
+          <groupId></groupId>
+          <artifactId></artifactId>
+        </include>
+        ...
+        <include>
+          <groupId></groupId>
+          <artifactId></artifactId>
+        </include>
+      </includes>
+      <excludes>
+        <exclude>
+          <groupId></groupId>
+          <artifactId></artifactId>
+        </exclude>
+        ...
+        <exclude>
+          <groupId></groupId>
+          <artifactId></artifactId>
+        </exclude>
+      </excludes>
+    </match>
+
+    <apply-to-dependencies>
+      <dependencies>
+        <match>
+          <includes>
+            <include></include>
+            ...
+            <include></include>
+          </includes>
+
+          <excludes>
+            <exclude></exclude>
+            ...
+            <exclude></exclude>
+          </excludes>
+        </match>
+        <apply>
+          <slot></slot>
+          <export></export>
+          <services></services>
+          <optional></optional>
+          <imports>
+            <include path="" />
+            <include-set>
+              <path name="" />
+              ...
+            </include-set>
+            <exclude-set>
+              <path name="org/jboss/example/tests2" />
+              ...
+            </exclude-set>
+          </imports>
+          <exports>
+            <exclude path="" />
+            <include-set>
+              <path name="" />
+              ...
+            </include-set>
+            <exclude-set>
+              <path name="org/jboss/example/tests" />
+              ...
+            </exclude-set>
+          </exports>
+        </apply>
+      </dependencies>
+      ...
+    </apply-to-dependencies>
+
+    <!-- ????
+    <apply-to-resources>
+        <match>
+          <includes>
+            <include></include>
+            ...
+            <include></include>
+          </includes>
+
+          <excludes>
+            <exclude></exclude>
+            ...
+            <exclude></exclude>
+          </excludes>
+        </match>
+      <filter>
+        ??? not used by any module in JBoss AS 7.1.1.
+      </filter>
+    </apply-to-resources>
+    -->
+
+    <apply-to-module>
+      <exports>
+        <exclude path="**/impl/*" />
+      </exports>
+
+      <main-class name="org.jboss.msc.Version" />
+
+      <properties>
+        <property
+          name="my.property"
+          value="foo" />
+        ...
+        <property
+          name="my.property2"
+          value="foo2" />
+      </properties>
+
+      <!-- ????
+        <resources>
+            <resource-root path="jboss-msc-1.0.1.GA.jar"/>
+            ...
+        </resources>
+       -->
+
+      <dependencies>
+        <module name="javax.api" />
+        ...
+        <module
+          name="org.jboss.ws.jaxws-client"
+          services="export"
+          export="true">
+          <imports>
+            <include path="META-INF/cxf" />
+            <include path="META-INF" />
+          </imports>
+          <exports>
+            <include path="META-INF/cxf" />
+            <include path="META-INF" />
+          </exports>
+        </module>
+
+        ...
+
+        <system export="true">
+          <paths>
+            <path name="org/jboss/modules" />
+            <path name="org/jboss/modules/log" />
+            <path name="org/jboss/modules/filter" />
+            <path name="org/jboss/modules/ref" />
+            <path name="org/jboss/modules/management" />
+          </paths>
+        </system>
+        ...
+      </dependencies>
+    </apply-to-module>
+  </module>
+  ...
+</modules>

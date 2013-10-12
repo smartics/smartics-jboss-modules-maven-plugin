@@ -114,8 +114,11 @@ public class Clusion
    */
   public void setGroupId(final String groupId)
   {
-    this.groupId = groupId;
-    groupIdPattern = compilePattern(groupId);
+    if (StringUtils.isNotBlank(groupId))
+    {
+      this.groupId = groupId;
+      groupIdPattern = compilePattern(groupId);
+    }
   }
 
   private static Pattern compilePattern(final String pattern)
@@ -151,8 +154,11 @@ public class Clusion
    */
   public void setArtifactId(final String artifactId)
   {
-    this.artifactId = artifactId;
-    artifactIdPattern = compilePattern(artifactId);
+    if (StringUtils.isNotBlank(artifactId))
+    {
+      this.artifactId = artifactId;
+      artifactIdPattern = compilePattern(artifactId);
+    }
   }
 
   // --- business -------------------------------------------------------------
