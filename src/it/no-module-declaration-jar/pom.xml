@@ -17,13 +17,15 @@
   </description>
   <url>http://www.smartics.de/test</url>
 
-  <dependencies>
-    <dependency>
-      <groupId>de.smartics.test.setup</groupId>
-      <artifactId>test-setup-artifacts-commons</artifactId>
-      <version>1.0.0</version>
-    </dependency>
-  </dependencies>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>de.smartics.test.setup</groupId>
+        <artifactId>test-setup-artifacts-commons</artifactId>
+        <version>1.0.0</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <build>
     <plugins>
