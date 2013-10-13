@@ -504,7 +504,6 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
 
     try
     {
-
       jarArchiver.addDirectory(targetFolder);
 
       final MavenArchiver archiver = new MavenArchiver();
