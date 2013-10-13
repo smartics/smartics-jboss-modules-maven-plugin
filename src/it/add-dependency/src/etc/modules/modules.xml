@@ -16,7 +16,7 @@
     limitations under the License.
 
 -->
-<modules xmlns="http://smartics.de/ns/jboss-modules-descriptor">
+<modules xmlns="http://smartics.de/ns/jboss-modules-descriptor/1">
   <module name="org.jdom2">
     <match>
       <includes>

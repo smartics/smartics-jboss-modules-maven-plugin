@@ -51,7 +51,7 @@ final class ModulesDescriptorBuilder
    * The name space of the documents parsed by this parser.
    */
   static final Namespace NS = Namespace
-      .getNamespace("http://smartics.de/ns/jboss-modules-descriptor");
+      .getNamespace("http://smartics.de/ns/jboss-modules-descriptor/1");
 
   // --- members --------------------------------------------------------------
 

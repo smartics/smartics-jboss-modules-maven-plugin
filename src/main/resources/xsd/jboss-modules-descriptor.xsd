@@ -1,0 +1,946 @@
+<?xml version="1.0"?>
+<!--
+
+    Copyright 2013 smartics, Kronseder & Reiner GmbH
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<xsd:schema
+  xmlns="http://smartics.de/ns/jboss-modules-descriptor/1"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="http://smartics.de/ns/jboss-modules-descriptor/1"
+  elementFormDefault="qualified">
+  <xsd:annotation>
+    <xsd:documentation>
+      Defines the modules descriptor for creating JBoss modules.
+    </xsd:documentation>
+  </xsd:annotation>
+
+  <xsd:element
+    name="modules"
+    type="Modules" />
+
+  <xsd:complexType name="Modules">
+    <xsd:annotation>
+      <xsd:documentation>
+        The set of module descriptors.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element
+        name="module"
+        type="Module"
+        minOccurs="0"
+        maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>
+            A single module descriptor that defines how to catch dependencies
+            and map them to modules
+            and module dependencies.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="Module">
+    <xsd:annotation>
+      <xsd:documentation>
+        The set of module descriptors.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element
+        name="directives"
+        type="Directives"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>
+            Directives to control the process of module generation.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element
+        name="match"
+        type="ArtifactMatch">
+        <xsd:annotation>
+          <xsd:documentation>
+            Matches artifacts to apply rules of this module descriptor.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element
+        name="apply-to-dependencies"
+        type="ApplyToDependencies"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>
+            Additional information to be applied to dependencies of the module.
+            The module is matched by
+            the artifact matcher and all its artifact
+            dependencies are translated to module dependencies. Modules
+            dependencies allow more detailed information. This is applied here
+            by matching the dependency module and
+            applying the additional
+            information given in this element.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element
+        name="apply-to-module"
+        type="ApplyToModule"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>
+            Additional information to be applied to the module.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute
+      name="name"
+      type="xsd:string"
+      use="required">
+      <xsd:annotation>
+        <xsd:documentation>
+          The name of the module.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute
+      name="slot"
+      type="xsd:string">
+      <xsd:annotation>
+        <xsd:documentation>
+          The slot the module is in.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="Directives">
+    <xsd:annotation>
+      <xsd:documentation>
+        Directives to control the process of module generation.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element
+        name="skip"
+        type="xsd:boolean"
+        default="false"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>
+            If the module should not be created in the target folder, this
+            flag is set to 'true'.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element
+        name="inherit-slot"
+        type="xsd:boolean"
+        default="true"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>
+            If the slot of the module should not be inherited to its dependencies,
+            this flag is set to
+            'false'.
+
+            Useful to create modules for extensions, where the extension is
+            required to be in the main folder,
+            but its dependencies should be
+            moved to a specific slot.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ArtifactMatch">
+    <xsd:annotation>
+      <xsd:documentation>
+        Matches artifacts to apply rules of this module descriptor.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element
+        name="includes"
+        type="ArtifactIncludes"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>
+            The artifacts to match to include into this module. These artifacts
+            will be added as
+            resources.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element
+        name="excludes"
+        type="ArtifactExcludes"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>
+            The artifacts to match to exclude from this module. Allows to
+            filter on the included
+            artifacts.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ArtifactIncludes">
+    <xsd:annotation>
+      <xsd:documentation>
+        The artifacts to match to include into this module. These artifacts
+        will be added as resources.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element
+        name="include"
+        maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>
+            A single include.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element
+              name="groupId"
+              type="xsd:string"
+              minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>
+                  The group identifier of the artifact to match. This is a regular
+                  expression. Groups
+                  can be referenced in the module name with
+                  '$g' + group number (starting with '1').
+
+                  Either this or an
+                  artifact identifier has to be specified.
+
+                  A regular expression group should only be given in one include
+                  element.
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element
+              name="artifactId"
+              type="xsd:string"
+              minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>
+                  The artifact identifier of the artifact to match. This is a
+                  regular expression. Groups
+                  can be referenced in the module
+                  name with '$' + group number (starting with '1').
+
+                  Either this or an
+                  group identifier has to be specified.
+
+                  A regular expression group should only be given in one include
+                  element.
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ArtifactExcludes">
+    <xsd:annotation>
+      <xsd:documentation>
+        The artifacts to match to exclude from this module. These artifacts
+        will not be added as
+        resources.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element
+        name="exclude"
+        maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>
+            A single exclude.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element
+              name="groupId"
+              type="xsd:string"
+              minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>
+                  The group identifier of the artifact to match. This is a regular
+                  expression.
+
+                  Either
+                  this or an artifact identifier has to be specified.
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element
+              name="artifactId"
+              type="xsd:string"
+              minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>
+                  The artifact identifier of the artifact to match. This is a
+                  regular expression.
+
+                  Either
+                  this or an group identifier has to be specified.
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ApplyToDependencies">
+    <xsd:annotation>
+      <xsd:documentation>
+        Additional information to be applied to dependencies of the module.
+        The module is matched by the
+        artifact matcher and all its artifact
+        dependencies are translated to module dependencies. Modules
+        dependencies
+        allow more detailed information. This is applied here
+        by matching the dependency module and applying the
+        additional
+        information given in this element.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element
+        name="dependencies"
+        maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>
+            A list of dependencies to apply additional information to
+            module dependencies.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element
+              name="match"
+              type="ModuleMatch">
+              <xsd:annotation>
+                <xsd:documentation>
+                  The element to match modules by name. A matched module will get the additional
+                  information applied.
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element
+              name="apply"
+              type="ModuleApply">
+              <xsd:annotation>
+                <xsd:documentation>
+                  The information to be applied on a module match.
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ModuleMatch">
+    <xsd:annotation>
+      <xsd:documentation>
+        Matches modules by their names. A matched module will get the
+        additional information applied.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element
+        name="includes"
+        type="ModuleIncludes"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>
+            The names of modules to include in the set of modules dependencies
+            that have the given
+            information applied.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element
+        name="excludes"
+        type="ModuleExcludes"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>
+            The names of modules to exclude from the set of modules dependencies.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ModuleIncludes">
+    <xsd:annotation>
+      <xsd:documentation>
+        The modules to match to include to apply the given information.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element
+        name="include"
+        type="xsd:string"
+        maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>
+            A single include. The content is a regular expression to match the
+            name of a module.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ModuleExcludes">
+    <xsd:annotation>
+      <xsd:documentation>
+        The modules to match to exclude from having the given information applied.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element
+        name="exclude"
+        type="xsd:string"
+        maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>
+            A single exclude. The content is a regular expression to match the
+            name of a module..
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ModuleApply">
+    <xsd:annotation>
+      <xsd:documentation>
+        The information to apply to module dependencies.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element
+        name="slot"
+        type="xsd:string"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>
+            The name of a slot the module dependency should be set to.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element
+        name="export"
+        type="xsd:boolean"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>
+            If set to 'true' the module dependency will be exported.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element
+        name="services"
+        type="Services-Enum"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>
+            The value to set services to: import, export or none;
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element
+        name="optional"
+        type="xsd:boolean"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>
+            If set to 'true' the module dependency is flagged as optional.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element
+        name="imports"
+        type="ModuleDependencyImports"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>
+            The imports of resources within the module.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element
+        name="exports"
+        type="ModuleDependencyExports"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>
+            The exports of resources for the module.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:simpleType name="Services-Enum">
+    <xsd:annotation>
+      <xsd:documentation>
+        The valid values for a module dependency's services attribute
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="import" />
+      <xsd:enumeration value="export" />
+      <xsd:enumeration value="none" />
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:complexType name="ModuleDependencyImports">
+    <xsd:annotation>
+      <xsd:documentation>
+        The imports of resources within the module.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element
+        name="include"
+        maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>
+            A single include.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:attribute
+            name="path"
+            type="xsd:string"
+            use="required">
+            <xsd:annotation>
+              <xsd:documentation>
+                The path to include.
+              </xsd:documentation>
+            </xsd:annotation>
+          </xsd:attribute>
+        </xsd:complexType>
+      </xsd:element>
+
+      <!-- TODO: include-sets -->
+
+      <xsd:element
+        name="exclude"
+        maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>
+            A single exclude.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:attribute
+            name="path"
+            type="xsd:string"
+            use="required">
+            <xsd:annotation>
+              <xsd:documentation>
+                The path to exclude.
+              </xsd:documentation>
+            </xsd:annotation>
+          </xsd:attribute>
+        </xsd:complexType>
+      </xsd:element>
+
+      <!-- TODO: exclude-sets -->
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ModuleDependencyExports">
+    <xsd:annotation>
+      <xsd:documentation>
+        The export of resources.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element
+        name="include"
+        maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>
+            A single include.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:attribute
+            name="path"
+            type="xsd:string"
+            use="required">
+            <xsd:annotation>
+              <xsd:documentation>
+                The path to include.
+              </xsd:documentation>
+            </xsd:annotation>
+          </xsd:attribute>
+        </xsd:complexType>
+      </xsd:element>
+
+      <!-- TODO: include-sets -->
+
+      <xsd:element
+        name="exclude"
+        maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>
+            A single exclude.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:attribute
+            name="path"
+            type="xsd:string"
+            use="required">
+            <xsd:annotation>
+              <xsd:documentation>
+                The path to exclude.
+              </xsd:documentation>
+            </xsd:annotation>
+          </xsd:attribute>
+        </xsd:complexType>
+      </xsd:element>
+
+      <!-- TODO: exclude-sets -->
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ApplyToModule">
+    <xsd:annotation>
+      <xsd:documentation>
+        Allows all the elements
+        exports
+        properties
+        dependencies
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element
+        name="exports"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>
+            As of the module.xml.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element
+              name="include"
+              maxOccurs="unbounded">
+              <xsd:annotation>
+                <xsd:documentation>
+                  A single include.
+                </xsd:documentation>
+              </xsd:annotation>
+              <xsd:complexType>
+                <xsd:attribute
+                  name="path"
+                  type="xsd:string"
+                  use="required">
+                  <xsd:annotation>
+                    <xsd:documentation>
+                      The path to include.
+                    </xsd:documentation>
+                  </xsd:annotation>
+                </xsd:attribute>
+              </xsd:complexType>
+            </xsd:element>
+            <xsd:element
+              name="exclude"
+              maxOccurs="unbounded">
+              <xsd:annotation>
+                <xsd:documentation>
+                  A single exclude.
+                </xsd:documentation>
+              </xsd:annotation>
+              <xsd:complexType>
+                <xsd:attribute
+                  name="path"
+                  type="xsd:string"
+                  use="required">
+                  <xsd:annotation>
+                    <xsd:documentation>
+                      The path to exclude.
+                    </xsd:documentation>
+                  </xsd:annotation>
+                </xsd:attribute>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element
+        name="main-class"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>
+            As of the module.xml.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:attribute
+            name="name"
+            type="xsd:string"
+            use="required">
+            <xsd:annotation>
+              <xsd:documentation>
+                The name of the main class.
+              </xsd:documentation>
+            </xsd:annotation>
+          </xsd:attribute>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element
+        name="properties"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>
+            As of the module.xml.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element
+              name="property"
+              maxOccurs="unbounded">
+              <xsd:annotation>
+                <xsd:documentation>
+                  A single exclude.
+                </xsd:documentation>
+              </xsd:annotation>
+              <xsd:complexType>
+                <xsd:attribute
+                  name="name"
+                  type="xsd:string"
+                  use="required">
+                  <xsd:annotation>
+                    <xsd:documentation>
+                      The name of the property.
+                    </xsd:documentation>
+                  </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute
+                  name="value"
+                  type="xsd:string"
+                  use="required">
+                  <xsd:annotation>
+                    <xsd:documentation>
+                      The value of the property.
+                    </xsd:documentation>
+                  </xsd:annotation>
+                </xsd:attribute>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element
+        name="dependencies"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>
+            Additonal static dependencies to add. As of the module.xml.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element
+              name="module"
+              maxOccurs="unbounded">
+              <xsd:annotation>
+                <xsd:documentation>
+                  A single exclude.
+                </xsd:documentation>
+              </xsd:annotation>
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element
+                    name="imports"
+                    minOccurs="0">
+                    <xsd:annotation>
+                      <xsd:documentation>
+                        As of the module.xml.
+                      </xsd:documentation>
+                    </xsd:annotation>
+                    <xsd:complexType>
+                      <xsd:sequence>
+                        <xsd:element
+                          name="include"
+                          maxOccurs="unbounded">
+                          <xsd:annotation>
+                            <xsd:documentation>
+                              A single include.
+                            </xsd:documentation>
+                          </xsd:annotation>
+                          <xsd:complexType>
+                            <xsd:attribute
+                              name="path"
+                              type="xsd:string"
+                              use="required">
+                              <xsd:annotation>
+                                <xsd:documentation>
+                                  The path to include.
+                                </xsd:documentation>
+                              </xsd:annotation>
+                            </xsd:attribute>
+                          </xsd:complexType>
+                        </xsd:element>
+                        <xsd:element
+                          name="exclude"
+                          maxOccurs="unbounded">
+                          <xsd:annotation>
+                            <xsd:documentation>
+                              A single exclude.
+                            </xsd:documentation>
+                          </xsd:annotation>
+                          <xsd:complexType>
+                            <xsd:attribute
+                              name="path"
+                              type="xsd:string"
+                              use="required">
+                              <xsd:annotation>
+                                <xsd:documentation>
+                                  The path to exclude.
+                                </xsd:documentation>
+                              </xsd:annotation>
+                            </xsd:attribute>
+                          </xsd:complexType>
+                        </xsd:element>
+                      </xsd:sequence>
+                    </xsd:complexType>
+                  </xsd:element>
+
+                  <xsd:element
+                    name="exports"
+                    minOccurs="0">
+                    <xsd:annotation>
+                      <xsd:documentation>
+                        As of the module.xml.
+                      </xsd:documentation>
+                    </xsd:annotation>
+                    <xsd:complexType>
+                      <xsd:sequence>
+                        <xsd:element
+                          name="include"
+                          maxOccurs="unbounded">
+                          <xsd:annotation>
+                            <xsd:documentation>
+                              A single include.
+                            </xsd:documentation>
+                          </xsd:annotation>
+                          <xsd:complexType>
+                            <xsd:attribute
+                              name="path"
+                              type="xsd:string"
+                              use="required">
+                              <xsd:annotation>
+                                <xsd:documentation>
+                                  The path to include.
+                                </xsd:documentation>
+                              </xsd:annotation>
+                            </xsd:attribute>
+                          </xsd:complexType>
+                        </xsd:element>
+                        <xsd:element
+                          name="exclude"
+                          maxOccurs="unbounded">
+                          <xsd:annotation>
+                            <xsd:documentation>
+                              A single exclude.
+                            </xsd:documentation>
+                          </xsd:annotation>
+                          <xsd:complexType>
+                            <xsd:attribute
+                              name="path"
+                              type="xsd:string"
+                              use="required">
+                              <xsd:annotation>
+                                <xsd:documentation>
+                                  The path to exclude.
+                                </xsd:documentation>
+                              </xsd:annotation>
+                            </xsd:attribute>
+                          </xsd:complexType>
+                        </xsd:element>
+                      </xsd:sequence>
+                    </xsd:complexType>
+                  </xsd:element>
+                </xsd:sequence>
+                <xsd:attribute
+                  name="name"
+                  type="xsd:string"
+                  use="required">
+                  <xsd:annotation>
+                    <xsd:documentation>
+                      The name of the module.
+                    </xsd:documentation>
+                  </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute
+                  name="slot"
+                  type="xsd:string">
+                  <xsd:attribute
+                    name="services"
+                    type="Services-Enum">
+                  </xsd:attribute>
+                  <xsd:attribute
+                    name="export"
+                    type="xsd:boolean">
+                  </xsd:attribute>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- TODO
+         <system export="true">
+          <paths>
+            <path name="org/jboss/modules" />
+            <path name="org/jboss/modules/log" />
+          </paths>
+        </system>
+     -->
+</xsd:schema>

@@ -51,7 +51,7 @@
           <dependency>
             <groupId>de.smartics.config</groupId>
             <artifactId>config-smartics-jboss-modules</artifactId>
-            <version>2.0.0</version>
+            <version>2.0.1-SNAPSHOT</version>
           </dependency>
         </dependencies>
       </plugin>
