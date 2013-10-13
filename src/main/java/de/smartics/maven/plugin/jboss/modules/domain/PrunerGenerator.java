@@ -20,9 +20,9 @@ import java.util.List;
 
 import org.sonatype.aether.collection.DependencyTraverser;
 
-import de.smartics.maven.plugin.jboss.modules.Clusion;
 import de.smartics.maven.plugin.jboss.modules.aether.DependencyTraverserGenerator;
 import de.smartics.maven.plugin.jboss.modules.aether.PruningDependencyTraverser;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ArtifactClusion;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleDescriptor;
 
 /**
@@ -40,7 +40,7 @@ public class PrunerGenerator implements DependencyTraverserGenerator
    * A list of dependencies to be excluded from the transitive dependency
    * collection process.
    */
-  private final List<Clusion> dependencyExcludes;
+  private final List<ArtifactClusion> dependencyExcludes;
 
   /**
    * The module descriptors that skip dependency resolution.
@@ -58,12 +58,12 @@ public class PrunerGenerator implements DependencyTraverserGenerator
    *          transitive dependency collection process.
    * @param modules lost of modules to calculate the skip modules.
    */
-  public PrunerGenerator(final List<Clusion> dependencyExcludes,
+  public PrunerGenerator(final List<ArtifactClusion> dependencyExcludes,
       final List<ModuleDescriptor> modules)
   {
     this.dependencyExcludes =
         dependencyExcludes != null ? dependencyExcludes
-            : new ArrayList<Clusion>();
+            : new ArrayList<ArtifactClusion>();
     this.skipModules = calcSkipModules(modules);
   }
 

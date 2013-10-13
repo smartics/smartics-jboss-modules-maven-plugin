@@ -15,10 +15,10 @@
  */
 package help.de.smartics.maven.plugin.jboss.modules;
 
-import de.smartics.maven.plugin.jboss.modules.Clusion;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ArtifactClusion;
 
 /**
- * Builds test instances of {@link Clusion}.
+ * Builds test instances of {@link ArtifactClusion}.
  */
 public final class ClusionBuilder
 {
@@ -149,13 +149,13 @@ public final class ClusionBuilder
   }
 
   /**
-   * Builds an instance of {@link Clusion}.
+   * Builds an instance of {@link ArtifactClusion}.
    *
    * @return the created instance.
    */
-  public Clusion build()
+  public ArtifactClusion build()
   {
-    final Clusion clusion = new Clusion();
+    final ArtifactClusion clusion = new ArtifactClusion();
 
     clusion.setGroupId(groupId);
     clusion.setArtifactId(artifactId);

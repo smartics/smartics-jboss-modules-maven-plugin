@@ -62,6 +62,7 @@ import de.smartics.maven.plugin.jboss.modules.aether.MojoRepositoryBuilder;
 import de.smartics.maven.plugin.jboss.modules.aether.filter.DefaultTransitiveDependencyResolver;
 import de.smartics.maven.plugin.jboss.modules.aether.filter.GaExclusionFilter;
 import de.smartics.maven.plugin.jboss.modules.aether.filter.TestScopeFilter;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ArtifactClusion;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleDescriptor;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ModulesDescriptor;
 import de.smartics.maven.plugin.jboss.modules.domain.ExecutionContext;
@@ -264,7 +265,7 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
    * </pre>
    */
   @Parameter
-  private List<Clusion> dependencyExcludes;
+  private List<ArtifactClusion> dependencyExcludes;
 
   /**
    * The root directories to search for modules XML files that contain module

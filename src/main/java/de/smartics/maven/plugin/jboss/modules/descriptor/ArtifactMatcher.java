@@ -21,7 +21,6 @@ import java.util.List;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.sonatype.aether.artifact.Artifact;
 
-import de.smartics.maven.plugin.jboss.modules.Clusion;
 import de.smartics.maven.plugin.jboss.modules.domain.MatchContext;
 import de.smartics.maven.plugin.jboss.modules.domain.matching.DelegationMatchContext;
 import de.smartics.maven.plugin.jboss.modules.domain.matching.SingleMatchContext;
@@ -42,12 +41,12 @@ public final class ArtifactMatcher
   /**
    * The list of inclusions.
    */
-  private final List<Clusion> includes;
+  private final List<ArtifactClusion> includes;
 
   /**
    * The list of exclusions.
    */
-  private final List<Clusion> excludes;
+  private final List<ArtifactClusion> excludes;
 
   // ****************************** Initializer *******************************
 
@@ -75,12 +74,12 @@ public final class ArtifactMatcher
     /**
      * The list of inclusions.
      */
-    private final List<Clusion> includes = new ArrayList<Clusion>();
+    private final List<ArtifactClusion> includes = new ArrayList<ArtifactClusion>();
 
     /**
      * The list of exclusions.
      */
-    private final List<Clusion> excludes = new ArrayList<Clusion>();
+    private final List<ArtifactClusion> excludes = new ArrayList<ArtifactClusion>();
 
     // ***************************** Initializer ******************************
 
@@ -102,7 +101,7 @@ public final class ArtifactMatcher
      * @param include the include to add.
      * @throws NullPointerException if {@code include} is <code>null</code>.
      */
-    public void addInclude(final Clusion include) throws NullPointerException
+    public void addInclude(final ArtifactClusion include) throws NullPointerException
     {
       includes.add(Arg.checkNotNull("include", include));
     }
@@ -113,7 +112,7 @@ public final class ArtifactMatcher
      * @param exclude the exclude to add.
      * @throws NullPointerException if {@code exclude} is <code>null</code>.
      */
-    public void addExclude(final Clusion exclude) throws NullPointerException
+    public void addExclude(final ArtifactClusion exclude) throws NullPointerException
     {
       excludes.add(Arg.checkNotNull("exclude", exclude));
     }
@@ -142,7 +141,7 @@ public final class ArtifactMatcher
    *
    * @return the list of inclusions.
    */
-  public List<Clusion> getIncludes()
+  public List<ArtifactClusion> getIncludes()
   {
     return includes;
   }
@@ -152,7 +151,7 @@ public final class ArtifactMatcher
    *
    * @return the list of exclusions.
    */
-  public List<Clusion> getExcludes()
+  public List<ArtifactClusion> getExcludes()
   {
     return excludes;
   }
@@ -183,12 +182,12 @@ public final class ArtifactMatcher
     }
   }
 
-  private MatchContext cludes(final List<Clusion> clusions,
+  private MatchContext cludes(final List<ArtifactClusion> clusions,
       final Artifact artifact)
   {
     if (clusions != null)
     {
-      for (final Clusion clusion : clusions)
+      for (final ArtifactClusion clusion : clusions)
       {
         final MatchContext matchContext = clusion.matches(artifact);
         if (matchContext.isMatched())

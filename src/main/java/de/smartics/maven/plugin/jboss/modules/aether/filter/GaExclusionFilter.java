@@ -23,7 +23,7 @@ import org.sonatype.aether.graph.Dependency;
 import org.sonatype.aether.graph.DependencyFilter;
 import org.sonatype.aether.graph.DependencyNode;
 
-import de.smartics.maven.plugin.jboss.modules.Clusion;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ArtifactClusion;
 
 /**
  * Rejects dependencies of scope <tt>test</tt>.
@@ -42,7 +42,7 @@ public final class GaExclusionFilter implements Serializable, DependencyFilter
   /**
    * The artifacts to exclude.
    */
-  private final List<Clusion> exclusions;
+  private final List<ArtifactClusion> exclusions;
 
   // --- members --------------------------------------------------------------
 
@@ -55,7 +55,7 @@ public final class GaExclusionFilter implements Serializable, DependencyFilter
    *
    * @param exclusions the artifacts to exclude.
    */
-  public GaExclusionFilter(final List<Clusion> exclusions)
+  public GaExclusionFilter(final List<ArtifactClusion> exclusions)
   {
     this.exclusions = exclusions;
   }
@@ -81,7 +81,7 @@ public final class GaExclusionFilter implements Serializable, DependencyFilter
     }
 
     final Artifact artifact = dependency.getArtifact();
-    for (final Clusion exclusion : exclusions)
+    for (final ArtifactClusion exclusion : exclusions)
     {
       final boolean exclude = exclusion.matches(artifact).isMatched();
       if (exclude)

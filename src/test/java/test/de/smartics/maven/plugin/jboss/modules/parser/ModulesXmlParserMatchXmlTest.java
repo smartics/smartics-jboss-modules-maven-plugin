@@ -24,8 +24,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import de.smartics.maven.plugin.jboss.modules.Clusion;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ArtifactMatcher;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ArtifactClusion;
 import de.smartics.maven.plugin.jboss.modules.descriptor.Directives;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleDescriptor;
 
@@ -76,18 +76,18 @@ public class ModulesXmlParserMatchXmlTest extends AbstractModulesXmlParserTest
     assertThat(directives.getInheritSlot(), is(equalTo(Boolean.TRUE)));
 
     final ArtifactMatcher matcher = descriptor.getMatcher();
-    final List<Clusion> includes = matcher.getIncludes();
+    final List<ArtifactClusion> includes = matcher.getIncludes();
     assertThat(includes.size(), is(equalTo(2)));
-    final Clusion include1 = includes.get(0);
+    final ArtifactClusion include1 = includes.get(0);
     assertThat(include1.getGroupId(), is(equalTo("de.smartics.test")));
     assertThat(include1.getArtifactId(), is(equalTo("test-lib")));
-    final Clusion include2 = includes.get(1);
+    final ArtifactClusion include2 = includes.get(1);
     assertThat(include2.getGroupId(), is(equalTo("de.smartics.sandbox")));
     assertThat(include2.getArtifactId(), is(nullValue()));
 
-    final List<Clusion> excludes = matcher.getExcludes();
+    final List<ArtifactClusion> excludes = matcher.getExcludes();
     assertThat(excludes.size(), is(equalTo(1)));
-    final Clusion exclude1 = excludes.get(0);
+    final ArtifactClusion exclude1 = excludes.get(0);
     assertThat(exclude1.getGroupId(), is(nullValue()));
     assertThat(exclude1.getArtifactId(), is(equalTo("sandbox-lib")));
   }

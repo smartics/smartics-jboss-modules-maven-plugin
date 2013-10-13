@@ -23,8 +23,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import de.smartics.maven.plugin.jboss.modules.Clusion;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ArtifactMatcher;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ArtifactClusion;
 import de.smartics.maven.plugin.jboss.modules.descriptor.Directives;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleDescriptor;
 
@@ -76,11 +76,11 @@ public class ModulesXmlParserDirectivesXmlTest extends
     assertThat(directives.getInheritSlot(), is(equalTo(Boolean.FALSE)));
 
     final ArtifactMatcher matcher = descriptor.getMatcher();
-    final List<Clusion> includes = matcher.getIncludes();
+    final List<ArtifactClusion> includes = matcher.getIncludes();
     assertThat(includes.size(), is(equalTo(1)));
-    final Clusion include1 = includes.get(0);
+    final ArtifactClusion include1 = includes.get(0);
     assertThat(include1.getGroupId(), is(equalTo("de.smartics.test")));
-    final List<Clusion> excludes = matcher.getExcludes();
+    final List<ArtifactClusion> excludes = matcher.getExcludes();
     assertThat(excludes.size(), is(equalTo(0)));
   }
 }

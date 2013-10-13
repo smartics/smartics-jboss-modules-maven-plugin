@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.smartics.maven.plugin.jboss.modules;
+package de.smartics.maven.plugin.jboss.modules.descriptor;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,7 +31,7 @@ import de.smartics.maven.plugin.jboss.modules.domain.matching.SingleMatchContext
  * Models an inclusion or exclusion. An include/exclude matches if all given
  * information matches (that is: <code>and</code>ed).
  */
-public class Clusion
+public class ArtifactClusion
 {
   // ********************************* Fields *********************************
 
@@ -68,7 +68,7 @@ public class Clusion
   /**
    * Default constructor.
    */
-  public Clusion()
+  public ArtifactClusion()
   {
   }
 
@@ -87,9 +87,9 @@ public class Clusion
    * @param artifactId the artifactId to match. May be a regular expression.
    * @return the new instance.
    */
-  public static Clusion create(final String groupId, final String artifactId)
+  public static ArtifactClusion create(final String groupId, final String artifactId)
   {
-    final Clusion clusion = new Clusion();
+    final ArtifactClusion clusion = new ArtifactClusion();
     clusion.setGroupId(groupId);
     clusion.setArtifactId(artifactId);
     return clusion;

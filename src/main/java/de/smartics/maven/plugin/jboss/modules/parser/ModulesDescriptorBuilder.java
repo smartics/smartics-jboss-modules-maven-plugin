@@ -24,12 +24,12 @@ import org.jdom2.Namespace;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
-import de.smartics.maven.plugin.jboss.modules.Clusion;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ApplyToDependencies;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ApplyToModule;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ArtifactMatcher;
 import de.smartics.maven.plugin.jboss.modules.descriptor.DependenciesDescriptor;
 import de.smartics.maven.plugin.jboss.modules.descriptor.DependenciesDescriptor.Builder;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ArtifactClusion;
 import de.smartics.maven.plugin.jboss.modules.descriptor.Directives;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleClusion;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleDescriptor;
@@ -166,7 +166,7 @@ final class ModulesDescriptorBuilder
     new AbstractArtifactClusionAdder("includes", "include")
     {
       @Override
-      public void add(final Clusion clusion)
+      public void add(final ArtifactClusion clusion)
       {
         builder.addInclude(clusion);
       }
@@ -174,7 +174,7 @@ final class ModulesDescriptorBuilder
     new AbstractArtifactClusionAdder("excludes", "exclude")
     {
       @Override
-      public void add(final Clusion clusion)
+      public void add(final ArtifactClusion clusion)
       {
         builder.addExclude(clusion);
       }

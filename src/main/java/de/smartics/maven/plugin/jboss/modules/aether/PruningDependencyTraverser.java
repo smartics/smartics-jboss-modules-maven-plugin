@@ -21,7 +21,7 @@ import org.sonatype.aether.artifact.Artifact;
 import org.sonatype.aether.collection.DependencyTraverser;
 import org.sonatype.aether.graph.Dependency;
 
-import de.smartics.maven.plugin.jboss.modules.Clusion;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ArtifactClusion;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleDescriptor;
 
 /**
@@ -39,7 +39,7 @@ public class PruningDependencyTraverser extends DelegateDependencyTraverser
   /**
    * The artifacts to exclude.
    */
-  private final List<Clusion> exclusions;
+  private final List<ArtifactClusion> exclusions;
 
   /**
    * The list of modules to skip.
@@ -60,7 +60,7 @@ public class PruningDependencyTraverser extends DelegateDependencyTraverser
    * @throws NullPointerException if {@code delegate} is <code>null</code>.
    */
   public PruningDependencyTraverser(final DependencyTraverser delegate,
-      final List<Clusion> exclusions, final List<ModuleDescriptor> skipModules)
+      final List<ArtifactClusion> exclusions, final List<ModuleDescriptor> skipModules)
     throws NullPointerException
   {
     super(delegate);
@@ -82,7 +82,7 @@ public class PruningDependencyTraverser extends DelegateDependencyTraverser
   protected boolean doTraverseDependency(final Dependency dependency)
   {
     final Artifact artifact = dependency.getArtifact();
-    for (final Clusion exclusion : exclusions)
+    for (final ArtifactClusion exclusion : exclusions)
     {
       final boolean exclude = exclusion.matches(artifact).isMatched();
       if (exclude)

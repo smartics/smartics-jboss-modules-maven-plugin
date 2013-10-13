@@ -21,14 +21,14 @@ import java.util.List;
 
 import org.jdom2.Element;
 
-import de.smartics.maven.plugin.jboss.modules.Clusion;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ArtifactClusion;
 
 /**
  * Base implementation of an {@link ClusionAdder} to add instances of
- * {@link Clusion}.
+ * {@link ArtifactClusion}.
  */
 abstract class AbstractArtifactClusionAdder extends
-    AbstractClusionAdder<Clusion>
+    AbstractClusionAdder<ArtifactClusion>
 {
   // ********************************* Fields *********************************
 
@@ -66,7 +66,7 @@ abstract class AbstractArtifactClusionAdder extends
           clusionsElement.getChildren(elementId, NS);
       for (final Element clusionElement : clusionElements)
       {
-        final Clusion clusion = new Clusion();
+        final ArtifactClusion clusion = new ArtifactClusion();
         final String groupId = clusionElement.getChildText("groupId", NS);
         final String artifactId = clusionElement.getChildText("artifactId", NS);
         clusion.setGroupId(groupId);

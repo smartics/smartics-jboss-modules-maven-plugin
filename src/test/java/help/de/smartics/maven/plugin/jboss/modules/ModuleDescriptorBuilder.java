@@ -19,10 +19,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import de.smartics.maven.plugin.jboss.modules.Clusion;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ApplyToDependencies;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ApplyToModule;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ArtifactMatcher;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ArtifactClusion;
 import de.smartics.maven.plugin.jboss.modules.descriptor.Directives;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleDescriptor;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleDescriptor.Builder;
@@ -239,12 +239,12 @@ public final class ModuleDescriptorBuilder
     }
   }
 
-  public void withInclude(final Clusion include)
+  public void withInclude(final ArtifactClusion include)
   {
     matcherBuilder.addInclude(include);
   }
 
-  public void withExclude(final Clusion exclude)
+  public void withExclude(final ArtifactClusion exclude)
   {
     matcherBuilder.addExclude(exclude);
   }
