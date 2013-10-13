@@ -52,39 +52,6 @@
           <slotStrategy>main</slotStrategy>
           <defaultSlot>other</defaultSlot>
           <attach>false</attach>
-
-          <modules>
-            <module>
-              <name>$g1.$1</name>
-              <slot>main</slot>
-              <inheritSlot>false</inheritSlot>
-              <includes>
-                <include>
-                  <groupId>(de.smartics.util)</groupId>
-                  <artifactId>(smartics-jboss-utils)</artifactId>
-                </include>
-              </includes>
-              <dependencies>
-                <!-- Dependencies have to be manually added. -->
-                <dependency>
-                  <name>de.smartics.util.smartics-validation-utils</name>
-                  <slot>other-v</slot>
-                </dependency>
-              </dependencies>
-            </module>
-
-            <module>
-              <name>$g1.$1</name>
-              <slot>other-v</slot>
-              <skip>true</skip>
-              <includes>
-                <include>
-                  <groupId>(de.smartics.util)</groupId>
-                  <artifactId>(smartics-validation-utils)</artifactId>
-                </include>
-              </includes>
-            </module>
-          </modules>
         </configuration>
       </plugin>
     </plugins>

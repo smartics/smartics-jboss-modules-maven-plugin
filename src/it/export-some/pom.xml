@@ -44,29 +44,6 @@
         </executions>
         <configuration>
           <slotStrategy>main</slotStrategy>
-          <modules>
-            <module>
-              <name>org.apache.commons.configuration</name>
-              <includes>
-                <include>
-                  <artifactId>commons-configuration</artifactId>
-                </include>
-              </includes>
-              <export>
-                <includes>
-                  <include>org.apache.commons..+</include>
-                </includes>
-              </export>
-            </module>
-            <module>
-              <name>org.apache.commons.$1</name>
-              <includes>
-                <include>
-                  <artifactId>commons-(.*)</artifactId>
-                </include>
-              </includes>
-            </module>
-          </modules>
         </configuration>
       </plugin>
     </plugins>

@@ -46,16 +46,6 @@
           <slotStrategy>main</slotStrategy>
           <defaultSlot>myApp</defaultSlot>
           <followOptionalDependencies>true</followOptionalDependencies>
-          <modules>
-            <module>
-              <name>org.apache.commons.$1</name>
-              <includes>
-                <include>
-                  <artifactId>commons-(.*)</artifactId>
-                </include>
-              </includes>
-            </module>
-          </modules>
         </configuration>
       </plugin>
     </plugins>

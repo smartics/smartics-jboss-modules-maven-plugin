@@ -46,20 +46,6 @@
           <slotStrategy>main</slotStrategy>
           <defaultSlot>other</defaultSlot>
           <attach>false</attach>
-
-          <modules>
-            <module>
-              <name>$g1.$1</name>
-              <slot>main</slot>
-              <inheritSlot>false</inheritSlot>
-              <includes>
-                <include>
-                  <groupId>(de.smartics.util)</groupId>
-                  <artifactId>(smartics-jboss-utils)</artifactId>
-                </include>
-              </includes>
-            </module>
-          </modules>
         </configuration>
       </plugin>
     </plugins>

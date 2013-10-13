@@ -44,17 +44,6 @@
         </executions>
         <configuration>
           <slotStrategy>main</slotStrategy>
-          <modules>
-            <module>
-              <name>org.dom4j</name>
-              <includes>
-                <include>
-                  <artifactId>dom4j</artifactId>
-                </include>
-              </includes>
-              <skip>true</skip>
-            </module>
-          </modules>
         </configuration>
       </plugin>
     </plugins>

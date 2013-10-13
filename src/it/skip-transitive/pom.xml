@@ -45,18 +45,6 @@
         <configuration>
           <slotStrategy>main</slotStrategy>
           <attach>false</attach>
-
-          <modules>
-            <module>
-              <name>de.smartics.util.smartics-commons</name>
-              <includes>
-                <include>
-                  <artifactId>smartics-commons</artifactId>
-                </include>
-              </includes>
-              <skip>true</skip>
-            </module>
-          </modules>
         </configuration>
       </plugin>
     </plugins>

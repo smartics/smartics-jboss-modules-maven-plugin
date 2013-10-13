@@ -85,11 +85,17 @@ public class ModulesXmlParserApplyToModuleXmlTest extends
   private void assertApplyToModule(final ModuleDescriptor descriptor)
   {
     final ApplyToModule apply = descriptor.getApplyToModule();
-    final String exportsXml = apply.getExportsXml();
-    assertThat(exportsXml,
-        is(equalTo("<exports xmlns=\"urn:jboss:module:1.1\"><exclude path=\"**/impl/*\" /></exports>")));
     final String mainClassXml = apply.getMainClassXml();
     assertThat(mainClassXml,
         is(equalTo("<main-class xmlns=\"urn:jboss:module:1.1\" name=\"de.smartics.test.Main\" />")));
+    final List<String> dependenciesXmls = apply.getDependenciesXml();
+    assertThat(dependenciesXmls.size(), is(equalTo(2)));
+    assertThat(dependenciesXmls.get(0),
+        is(equalTo("<module xmlns=\"urn:jboss:module:1.1\" name=\"javax.api\" />")));
+    assertThat(dependenciesXmls.get(1),
+        is(equalTo("<module xmlns=\"urn:jboss:module:1.1\" name=\"javax.xml.stream.api\" />")));
+    final String exportsXml = apply.getExportsXml();
+    assertThat(exportsXml,
+        is(equalTo("<exports xmlns=\"urn:jboss:module:1.1\"><exclude path=\"**/impl/*\" /></exports>")));
   }
 }

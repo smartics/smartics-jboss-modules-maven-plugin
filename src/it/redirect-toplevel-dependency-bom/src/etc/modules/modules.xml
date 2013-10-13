@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!--
+
+    Copyright 2013 smartics, Kronseder & Reiner GmbH
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<modules xmlns="http://smartics.de/ns/jboss-modules-descriptor">
+  <module
+    name="$g1.$1"
+    slot="main">
+    <directives>
+      <inherit-slot>false</inherit-slot>
+    </directives>
+
+    <match>
+      <includes>
+        <include>
+          <groupId>(de.smartics.util)</groupId>
+          <artifactId>(smartics-jboss-utils)</artifactId>
+        </include>
+      </includes>
+    </match>
+
+    <apply-to-module>
+      <dependencies>
+         <!-- Dependencies have to be manually added. -->
+        <module
+          name="de.smartics.util.smartics-validation-utils"
+          slot="other-v" />
+      </dependencies>
+    </apply-to-module>
+  </module>
+
+  <module
+    name="$g1.$1"
+    slot="other-v">
+    <directives>
+      <skip>true</skip>
+    </directives>
+    <match>
+      <includes>
+        <include>
+          <groupId>(de.smartics.util)</groupId>
+          <artifactId>(smartics-validation-utils)</artifactId>
+        </include>
+      </includes>
+    </match>
+  </module>
+</modules>

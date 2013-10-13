@@ -46,25 +46,6 @@
           <slotStrategy>main</slotStrategy>
           <defaultSlot>other-slot</defaultSlot>
           <followOptionalDependencies>true</followOptionalDependencies>
-          <modules>
-            <module>
-              <name>org.apache.commons.logging</name>
-              <slot>main</slot>
-              <includes>
-                <include>
-                  <artifactId>commons-logging</artifactId>
-                </include>
-              </includes>
-            </module>
-            <module>
-              <name>org.apache.commons.$1</name>
-              <includes>
-                <include>
-                  <artifactId>commons-(.*)</artifactId>
-                </include>
-              </includes>
-            </module>
-          </modules>
         </configuration>
       </plugin>
     </plugins>
