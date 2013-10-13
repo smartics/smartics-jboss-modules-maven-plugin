@@ -109,7 +109,7 @@ public final class DependenciesDescriptor
     /**
      * The export attribute for the dependency.
      */
-    private Boolean export = Boolean.FALSE;
+    private Boolean export;
 
     /**
      * The services attribute for the dependency.
@@ -119,7 +119,7 @@ public final class DependenciesDescriptor
     /**
      * The optional attribute for the dependency.
      */
-    private Boolean optional = Boolean.FALSE;
+    private Boolean optional;
 
     /**
      * The XML fragment specifying imports for the dependency.
@@ -193,7 +193,7 @@ public final class DependenciesDescriptor
      */
     public Builder withServices(final String services)
     {
-      if (StringUtils.isNotBlank(slot))
+      if (StringUtils.isNotBlank(services))
       {
         this.services = services;
       }
@@ -273,14 +273,7 @@ public final class DependenciesDescriptor
             property, value1, value2));
       }
 
-      if (value1 == null)
-      {
-        return value2;
-      }
-      else
-      {
-        return value1;
-      }
+      return value1 == null ? value2 : value1;
     }
 
     /**
@@ -293,6 +286,15 @@ public final class DependenciesDescriptor
       if (matcher == null)
       {
         matcher = new ModuleMatcher.Builder().build();
+      }
+
+      if (export == null)
+      {
+        export = Boolean.FALSE;
+      }
+      if (optional == null)
+      {
+        optional = Boolean.FALSE;
       }
 
       return new DependenciesDescriptor(this);
