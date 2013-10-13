@@ -114,10 +114,6 @@
     -->
 
     <apply-to-module>
-      <exports>
-        <exclude path="**/impl/*" />
-      </exports>
-
       <main-class name="de.smartics.test.Main" />
 
       <properties>
@@ -152,6 +148,10 @@
           </paths>
         </system>
       </dependencies>
+
+      <exports>
+        <exclude path="**/impl/*" />
+      </exports>
     </apply-to-module>
   </module>
 </modules>
