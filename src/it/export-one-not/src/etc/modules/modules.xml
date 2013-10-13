@@ -28,9 +28,6 @@
     <apply-to-dependencies>
       <dependencies>
         <match>
-          <includes>
-            <include>.+</include>
-          </includes>
           <excludes>
             <exclude>org.apache.commons.lang</exclude>
           </excludes>

@@ -164,18 +164,23 @@ public final class ModuleMatcher
    */
   public boolean matches(final String name)
   {
-    final boolean included = matches(includes, name);
+    final boolean included = matches(includes, name, true);
     if (included)
     {
-      final boolean excluded = matches(excludes, name);
+      final boolean excluded = matches(excludes, name, false);
       return !excluded;
     }
 
     return included;
   }
 
-  private boolean matches(final List<ModuleClusion> cludes, final String name)
+  private boolean matches(final List<ModuleClusion> cludes, final String name,
+      final boolean defaultValue)
   {
+    if (cludes.isEmpty())
+    {
+      return defaultValue;
+    }
     for (final ModuleClusion clusion : cludes)
     {
       if (clusion.match(name))
