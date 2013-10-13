@@ -77,7 +77,7 @@ final class XmlFragmentParser
       final InputStream input = IOUtils.toInputStream(xmlFragment, "UTF-8");
       final Document document = builder.build(input);
       final Element root = document.getRootElement();
-      return root;
+      return root.detach();
     }
     catch (final IOException e)
     {

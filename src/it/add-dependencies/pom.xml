@@ -50,10 +50,6 @@
         <configuration>
           <slotStrategy>main</slotStrategy>
           <attach>false</attach>
-
-          <modules>
-            <dir>src/etc/modules</dir>
-          </modules>
         </configuration>
       </plugin>
     </plugins>

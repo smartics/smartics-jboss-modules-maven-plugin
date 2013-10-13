@@ -71,7 +71,6 @@ import de.smartics.maven.plugin.jboss.modules.domain.PrunerGenerator;
 import de.smartics.maven.plugin.jboss.modules.domain.SlotStrategy;
 import de.smartics.maven.plugin.jboss.modules.domain.TransitiveDependencyResolver;
 import de.smartics.maven.plugin.jboss.modules.parser.ModulesXmlLocator;
-import de.smartics.util.lang.classpath.ProjectClassLoader;
 import edu.emory.mathcs.backport.java.util.Collections;
 
 /**
@@ -371,11 +370,8 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
       final ClassLoader parentClassLoader =
           Thread.currentThread().getContextClassLoader();
       final List<File> rootDirectories = calcModulesRootDirectories();
-      final ClassLoader classLoader =
-          rootDirectories.isEmpty() ? parentClassLoader
-              : new ProjectClassLoader(parentClassLoader, rootDirectories);
-
-      final List<ModulesDescriptor> descriptors = locator.discover(classLoader);
+      final List<ModulesDescriptor> descriptors =
+          locator.discover(parentClassLoader, rootDirectories);
       return descriptors;
     }
     catch (final IOException e)

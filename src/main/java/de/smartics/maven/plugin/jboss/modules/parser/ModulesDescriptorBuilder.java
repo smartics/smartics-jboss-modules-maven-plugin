@@ -320,18 +320,20 @@ final class ModulesDescriptorBuilder
     final String elementName = child.getName();
     if ("dependencies".equals(elementName))
     {
-      for (final Element moduleElement : child.getChildren("module"))
+      for (final Element moduleElement : child.getChildren("module",
+          ModuleXmlBuilder.NS))
       {
-        final String name = child.getAttributeValue("name");
+        final String name = moduleElement.getAttributeValue("name");
         final String fragment = outputter.outputString(moduleElement);
         mBuilder.addDependencyXml(name, fragment);
       }
     }
     else if ("properties".equals(elementName))
     {
-      for (final Element propertyElement : child.getChildren("property"))
+      for (final Element propertyElement : child.getChildren("property",
+          ModuleXmlBuilder.NS))
       {
-        final String name = child.getAttributeValue("name");
+        final String name = propertyElement.getAttributeValue("name");
         final String fragment = outputter.outputString(propertyElement);
         mBuilder.addPropertyXml(name, fragment);
       }

@@ -29,11 +29,16 @@
     </match>
 
     <apply-to-module>
+      <main-class name="de.smartics.test.Main" />
+
+      <dependencies>
+        <module name="javax.api" />
+        <module name="javax.xml.stream.api" />
+      </dependencies>
+
       <exports>
         <exclude path="**/impl/*" />
       </exports>
-
-      <main-class name="de.smartics.test.Main" />
     </apply-to-module>
   </module>
 </modules>

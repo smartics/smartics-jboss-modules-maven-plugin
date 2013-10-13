@@ -16,6 +16,7 @@
 package de.smartics.maven.plugin.jboss.modules.parser;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.jdom2.JDOMException;
@@ -83,12 +85,19 @@ public final class ModulesXmlLocator
    * Discovers all module descriptors on the class path.
    *
    * @param classLoader the class loader whose class path is searched.
+   * @param rootDirectories additional root directories to check first.
    * @return the discovered module descriptors.
    * @throws IOException if resources cannot be loaded from the class path.
    */
-  public List<ModulesDescriptor> discover(final ClassLoader classLoader) throws IOException
+  public List<ModulesDescriptor> discover(final ClassLoader classLoader,
+      final List<File> rootDirectories) throws IOException
   {
     final List<ModulesDescriptor> modules = new ArrayList<ModulesDescriptor>();
+
+    for (final File rootDirectory : rootDirectories)
+    {
+      loadModules(modules, rootDirectory);
+    }
 
     final ClassPathListing listing = new JarAndFileClassPathListing();
     final ClassPathContext context = new ClassPathContext(classLoader, null);
@@ -126,7 +135,8 @@ public final class ModulesXmlLocator
       final String urlString = fileUrl.toExternalForm();
       try
       {
-        parser.parse(urlString, input);
+        final ModulesDescriptor descriptor = parser.parse(urlString, input);
+        modules.add(descriptor);
       }
       catch (final JDOMException e)
       {
@@ -138,6 +148,37 @@ public final class ModulesXmlLocator
       }
     }
   }
+
+  private void loadModules(final List<ModulesDescriptor> modules,
+      final File rootDirectory) throws IOException
+  {
+    final File[] fileList = rootDirectory.listFiles();
+    for (final File file : fileList)
+    {
+      if (!file.getName().endsWith(".xml"))
+      {
+        continue;
+      }
+
+      final InputStream input =
+          new BufferedInputStream(FileUtils.openInputStream(file));
+      final String fileId = file.getAbsolutePath();
+      try
+      {
+        final ModulesDescriptor descriptor = parser.parse(fileId, input);
+        modules.add(descriptor);
+      }
+      catch (final JDOMException e)
+      {
+        throw new IOException("Cannot parse XML file: " + fileId, e);
+      }
+      finally
+      {
+        IOUtils.closeQuietly(input);
+      }
+    }
+  }
+
   // --- object basics --------------------------------------------------------
 
 }
