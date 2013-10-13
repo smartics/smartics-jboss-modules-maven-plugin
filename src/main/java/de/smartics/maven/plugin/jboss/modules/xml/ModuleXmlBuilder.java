@@ -332,7 +332,7 @@ public final class ModuleXmlBuilder
       final DependenciesDescriptor dd)
   {
     final String services = dd.getServices();
-    if (!"none".equals(services))
+    if (services != null && !"none".equals(services))
     {
       moduleElement.setAttribute("services", services);
     }
