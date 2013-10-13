@@ -72,6 +72,7 @@ import de.smartics.maven.plugin.jboss.modules.domain.SlotStrategy;
 import de.smartics.maven.plugin.jboss.modules.domain.TransitiveDependencyResolver;
 import de.smartics.maven.plugin.jboss.modules.parser.ModulesXmlLocator;
 import de.smartics.util.lang.classpath.ProjectClassLoader;
+import edu.emory.mathcs.backport.java.util.Collections;
 
 /**
  * Generates a archive containing modules from a BOM project.
@@ -269,6 +270,16 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
   /**
    * The root directories to search for modules XML files that contain module
    * descriptors.
+   * <p>
+   * If not specified, the default location <code>src/etc/modules</code> is
+   * probed and - if exists - is appended.
+   * </p>
+   *
+   * <pre>
+   * &lt;modules&gt;
+   *   &lt;dir&gt;src/etc/modules&lt;/dir&gt;
+   * &lt;/modules&gt;
+   * </pre>
    *
    * @since 1.0
    */
@@ -374,8 +385,19 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
     }
   }
 
+  @SuppressWarnings("unchecked")
   private List<File> calcModulesRootDirectories()
   {
+    if (modules == null)
+    {
+      final String defaultDir = "src/etc/modules";
+      final File rootDirectory = new File(project.getBasedir(), defaultDir);
+      if (rootDirectory.isDirectory())
+      {
+        modules = Collections.singletonList(defaultDir);
+      }
+    }
+
     if (modules != null)
     {
       final List<File> rootDirectories = new ArrayList<File>(modules.size());
