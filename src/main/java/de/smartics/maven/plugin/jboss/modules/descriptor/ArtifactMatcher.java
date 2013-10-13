@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.sonatype.aether.artifact.Artifact;
 
 import de.smartics.maven.plugin.jboss.modules.Clusion;
+import de.smartics.maven.plugin.jboss.modules.domain.MatchContext;
+import de.smartics.maven.plugin.jboss.modules.domain.matching.DelegationMatchContext;
+import de.smartics.maven.plugin.jboss.modules.domain.matching.SingleMatchContext;
 import de.smartics.util.lang.Arg;
 
 /**
@@ -139,6 +143,47 @@ public final class ArtifactMatcher
   }
 
   // --- business -------------------------------------------------------------
+
+  /**
+   * Checks if the given artifact matches the module descriptor.
+   *
+   * @param artifact the artifact to match.
+   * @return <code>true</code> if the module descriptor matches the given
+   *         artifact, <code>false</code> otherwise.
+   */
+  public MatchContext match(final Artifact artifact)
+  {
+    final MatchContext includesContext = cludes(includes, artifact);
+    final MatchContext excludesContext = cludes(excludes, artifact);
+
+    final boolean result =
+        (includesContext.isMatched() && !excludesContext.isMatched());
+    if (includesContext.isMatched())
+    {
+      return new DelegationMatchContext(result, includesContext);
+    }
+    else
+    {
+      return new SingleMatchContext(result);
+    }
+  }
+
+  private MatchContext cludes(final List<Clusion> clusions,
+      final Artifact artifact)
+  {
+    if (clusions != null)
+    {
+      for (final Clusion clusion : clusions)
+      {
+        final MatchContext matchContext = clusion.matches(artifact);
+        if (matchContext.isMatched())
+        {
+          return matchContext;
+        }
+      }
+    }
+    return new SingleMatchContext(false);
+  }
 
   // --- object basics --------------------------------------------------------
 

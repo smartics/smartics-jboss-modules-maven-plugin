@@ -33,7 +33,7 @@ import org.jdom2.output.XMLOutputter;
 import org.sonatype.aether.artifact.Artifact;
 import org.sonatype.aether.graph.Dependency;
 
-import de.smartics.maven.plugin.jboss.modules.Module;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleDescriptor;
 import de.smartics.maven.plugin.jboss.modules.xml.ModuleXmlBuilder;
 
 /**
@@ -55,7 +55,7 @@ public final class ModuleBuilder
   /**
    * The descriptor of the module to build.
    */
-  private final Module module;
+  private final ModuleDescriptor module;
 
   /**
    * The artifacts that are part of this module.
@@ -74,7 +74,7 @@ public final class ModuleBuilder
    * @param module the descriptor of the module to build.
    * @param dependencies the dependencies that are part of this module.
    */
-  public ModuleBuilder(final ExecutionContext context, final Module module,
+  public ModuleBuilder(final ExecutionContext context, final ModuleDescriptor module,
       final Collection<Dependency> dependencies)
   {
     this.context = context;
@@ -100,7 +100,7 @@ public final class ModuleBuilder
    */
   public void create() throws IOException
   {
-    if (!module.isSkip())
+    if (!module.getDirectives().getSkip())
     {
       final File moduleFolder = createModuleFolder();
       createModuleXml(moduleFolder);

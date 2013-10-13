@@ -62,13 +62,16 @@ import de.smartics.maven.plugin.jboss.modules.aether.MojoRepositoryBuilder;
 import de.smartics.maven.plugin.jboss.modules.aether.filter.DefaultTransitiveDependencyResolver;
 import de.smartics.maven.plugin.jboss.modules.aether.filter.GaExclusionFilter;
 import de.smartics.maven.plugin.jboss.modules.aether.filter.TestScopeFilter;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleDescriptor;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ModulesDescriptor;
 import de.smartics.maven.plugin.jboss.modules.domain.ExecutionContext;
 import de.smartics.maven.plugin.jboss.modules.domain.ModuleBuilder;
 import de.smartics.maven.plugin.jboss.modules.domain.ModuleMap;
 import de.smartics.maven.plugin.jboss.modules.domain.PrunerGenerator;
 import de.smartics.maven.plugin.jboss.modules.domain.SlotStrategy;
 import de.smartics.maven.plugin.jboss.modules.domain.TransitiveDependencyResolver;
-import de.smartics.maven.plugin.jboss.modules.sets.ModulesXmlLocator;
+import de.smartics.maven.plugin.jboss.modules.parser.ModulesXmlLocator;
+import de.smartics.util.lang.classpath.ProjectClassLoader;
 
 /**
  * Generates a archive containing modules from a BOM project.
@@ -264,33 +267,13 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
   private List<Clusion> dependencyExcludes;
 
   /**
-   * The module descriptors. The descriptors match dependencies in the project's
-   * POM and creates a module for each.
-   *
-   * <pre>
-   * &lt;modules&gt;
-   *   &lt;module&gt;
-   *     &lt;name&gt;org.apache.commons.$1&lt;/name&gt;
-   *     &lt;includes&gt;
-   *       &lt;include&gt;
-   *         &lt;artifactId&gt;commons-(.*)&lt;/artifactId&gt;
-   *       &lt;/include&gt;
-   *     &lt;/includes&gt;
-   *   &lt;/module&gt;
-   * &lt;/modules&gt;
-   * </pre>
+   * The root directories to search for modules XML files that contain module
+   * descriptors.
    *
    * @since 1.0
    */
   @Parameter
-  private List<Module> modules;
-
-  /**
-   * A flag to override that every dependency of every module is to be exported
-   * regardless of any individual module settings.
-   */
-  @Parameter(defaultValue = "false")
-  private boolean exportAll;
+  private List<String> modules;
 
   /**
    * The folder to write the module structure to.
@@ -313,7 +296,12 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
    * The modules declared in the POM and the modules declared on the classpath
    * (in that order).
    */
-  private List<Module> allModules;
+  private List<ModulesDescriptor> modulesDescriptors;
+
+  /**
+   * The linear list of all modules from {@link #modulesDescriptors}.
+   */
+  private List<ModuleDescriptor> allModules;
 
   // ****************************** Initializer *******************************
 
@@ -340,6 +328,7 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
       return;
     }
 
+    this.modulesDescriptors = initModulesDescriptors();
     this.allModules = initModules();
     this.repositorySession = adjustSession();
 
@@ -351,25 +340,65 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
     attach();
   }
 
-  private List<Module> initModules() throws MojoExecutionException
+  private List<ModuleDescriptor> initModules()
+  {
+    final List<ModuleDescriptor> modules = new ArrayList<ModuleDescriptor>();
+
+    for (final ModulesDescriptor descriptor : modulesDescriptors)
+    {
+      modules.addAll(descriptor.getDescriptors());
+    }
+    return modules;
+  }
+
+  private List<ModulesDescriptor> initModulesDescriptors()
+    throws MojoExecutionException
   {
     try
     {
       final ModulesXmlLocator locator = new ModulesXmlLocator(defaultSlot);
-      final List<Module> classPathModules = locator.discover();
-      final List<Module> allModules = new ArrayList<Module>(256);
-      if (modules != null)
-      {
-        allModules.addAll(modules);
-      }
-      allModules.addAll(classPathModules);
-      return allModules;
+      final ClassLoader parentClassLoader =
+          Thread.currentThread().getContextClassLoader();
+      final List<File> rootDirectories = calcModulesRootDirectories();
+      final ClassLoader classLoader =
+          rootDirectories.isEmpty() ? parentClassLoader
+              : new ProjectClassLoader(parentClassLoader, rootDirectories);
+
+      final List<ModulesDescriptor> descriptors = locator.discover(classLoader);
+      return descriptors;
     }
     catch (final IOException e)
     {
       throw new MojoExecutionException("Cannot read modules from class path.",
           e);
     }
+  }
+
+  private List<File> calcModulesRootDirectories()
+  {
+    if (modules != null)
+    {
+      final List<File> rootDirectories = new ArrayList<File>(modules.size());
+      for (final String dir : modules)
+      {
+        final File rootDirectory = new File(project.getBasedir(), dir);
+        if (rootDirectory.isDirectory())
+        {
+          rootDirectories.add(rootDirectory);
+        }
+        else
+        {
+          getLog().warn(
+              String.format(
+                  "Modules directory '%s' does not exist. Skipping ...",
+                  rootDirectory.getAbsolutePath()));
+        }
+      }
+
+      return rootDirectories;
+    }
+
+    return new ArrayList<File>(0);
   }
 
   private void runModuleCreation(final List<Dependency> dependencies)
@@ -386,10 +415,10 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
     }
 
     final ExecutionContext context = createContext(dependencies);
-    for (final Entry<Module, List<Dependency>> entry : context.getModuleMap()
-        .toMap().entrySet())
+    for (final Entry<ModuleDescriptor, List<Dependency>> entry : context
+        .getModuleMap().toMap().entrySet())
     {
-      final Module module = entry.getKey();
+      final ModuleDescriptor module = entry.getKey();
       final Collection<Dependency> moduleDependencies =
           new HashSet<Dependency>(entry.getValue());
       final ModuleBuilder builder =
@@ -492,7 +521,6 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
 
     final ModuleMap moduleMap = new ModuleMap(allModules, dependencies);
     builder.with(moduleMap);
-    builder.withExportAll(exportAll);
 
     if (verbose)
     {

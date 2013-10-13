@@ -18,7 +18,8 @@ package de.smartics.maven.plugin.jboss.modules;
 /**
  * Handles matching module names for tagging its services attribute.
  */
-public class Services extends AbstractModuleNameMatcher
+@Deprecated
+class Services extends AbstractModuleNameMatcher
 {
   // ********************************* Fields *********************************
 

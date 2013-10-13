@@ -28,7 +28,7 @@ import org.junit.Test;
 import org.sonatype.aether.artifact.Artifact;
 import org.sonatype.aether.graph.Dependency;
 
-import de.smartics.maven.plugin.jboss.modules.Module;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleDescriptor;
 import de.smartics.maven.plugin.jboss.modules.domain.ModuleMap;
 import de.smartics.testdoc.annotations.Uut;
 
@@ -70,7 +70,7 @@ public class ModuleMapEmptyTest
   @Test
   public void ifEmptyReturnsTheEmptyMap()
   {
-    final Map<Module, List<Dependency>> map = uut.toMap();
+    final Map<ModuleDescriptor, List<Dependency>> map = uut.toMap();
     assertThat(map.isEmpty(), is(true));
   }
 
@@ -82,11 +82,12 @@ public class ModuleMapEmptyTest
     final Dependency dependency = new Dependency(artifact, "compile");
     uut.add(dependency);
 
-    final Map<Module, List<Dependency>> map = uut.toMap();
+    final Map<ModuleDescriptor, List<Dependency>> map = uut.toMap();
     assertThat(map.size(), is(1));
 
-    final Module module = new Module();
-    module.setName("de.smartics.test.test-artifact");
+    final ModuleDescriptor module =
+        new ModuleDescriptor.Builder().withName(
+            "de.smartics.test.test-artifact").build();
 
     final List<Dependency> dependencies = map.get(module);
     assertThat(dependencies.size(), is(1));
@@ -107,11 +108,12 @@ public class ModuleMapEmptyTest
         new Dependency(sourceArtifact, "compile");
     uut.add(sourceDependency);
 
-    final Map<Module, List<Dependency>> map = uut.toMap();
+    final Map<ModuleDescriptor, List<Dependency>> map = uut.toMap();
     assertThat(map.size(), is(1));
 
-    final Module module = new Module();
-    module.setName("de.smartics.test.test-artifact");
+    final ModuleDescriptor module =
+        new ModuleDescriptor.Builder().withName(
+            "de.smartics.test.test-artifact").build();
 
     final List<Dependency> dependencies = map.get(module);
     assertThat(dependencies.size(), is(2));

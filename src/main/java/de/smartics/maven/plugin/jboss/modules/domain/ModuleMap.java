@@ -32,7 +32,7 @@ import org.sonatype.aether.graph.Dependency;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
-import de.smartics.maven.plugin.jboss.modules.Module;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleDescriptor;
 import de.smartics.util.lang.Arg;
 
 /**
@@ -50,19 +50,19 @@ public final class ModuleMap
   /**
    * The modules encountered or declared.
    */
-  private final List<Module> modules;
+  private final List<ModuleDescriptor> modules;
 
   /**
    * Maps modules to their dependencies.
    */
-  private final Multimap<Module, Dependency> module2Dependencies = HashMultimap
-      .create();
+  private final Multimap<ModuleDescriptor, Dependency> module2Dependencies =
+      HashMultimap.create();
 
   /**
    * Maps a dependency to its module.
    */
-  private final Map<DependencyKey, Module> dependency2Module =
-      new HashMap<DependencyKey, Module>();
+  private final Map<DependencyKey, ModuleDescriptor> dependency2Module =
+      new HashMap<DependencyKey, ModuleDescriptor>();
 
   // ****************************** Initializer *******************************
 
@@ -73,7 +73,7 @@ public final class ModuleMap
    */
   public ModuleMap()
   {
-    this(new ArrayList<Module>());
+    this(new ArrayList<ModuleDescriptor>());
   }
 
   /**
@@ -81,7 +81,7 @@ public final class ModuleMap
    *
    * @param modules the configured modules.
    */
-  public ModuleMap(final List<Module> modules)
+  public ModuleMap(final List<ModuleDescriptor> modules)
   {
     this.modules = modules;
   }
@@ -89,15 +89,15 @@ public final class ModuleMap
   /**
    * Convenience constructor to initialize with values.
    *
-   * @param modules the configured modules.
+   * @param modulesDescriptors the configured modules.
    * @param dependencies the dependencies to add.
    */
-  public ModuleMap(final List<Module> modules,
+  public ModuleMap(final List<ModuleDescriptor> modulesDescriptors,
       final Collection<Dependency> dependencies)
   {
     this.modules =
-        new ArrayList<Module>(modules != null ? modules
-            : new ArrayList<Module>());
+        new ArrayList<ModuleDescriptor>(modulesDescriptors != null
+            ? modulesDescriptors : new ArrayList<ModuleDescriptor>());
 
     initDependencies(dependencies);
   }
@@ -198,11 +198,11 @@ public final class ModuleMap
    *
    * @return the map of modules.
    */
-  public synchronized Map<Module, List<Dependency>> toMap()
+  public synchronized Map<ModuleDescriptor, List<Dependency>> toMap()
   {
-    final Map<Module, List<Dependency>> map =
-        new LinkedHashMap<Module, List<Dependency>>();
-    for (final Entry<Module, Collection<Dependency>> entry : module2Dependencies
+    final Map<ModuleDescriptor, List<Dependency>> map =
+        new LinkedHashMap<ModuleDescriptor, List<Dependency>>();
+    for (final Entry<ModuleDescriptor, Collection<Dependency>> entry : module2Dependencies
         .asMap().entrySet())
     {
       final List<Dependency> list = new ArrayList<Dependency>(entry.getValue());
@@ -221,29 +221,29 @@ public final class ModuleMap
    * @param dependency the dependency to add.
    * @return the module the dependency is associated with.
    */
-  public synchronized Module add(final Dependency dependency)
+  public synchronized ModuleDescriptor add(final Dependency dependency)
   {
     final DependencyKey key = new DependencyKey(dependency);
-    final Module alreadyStoredModule = dependency2Module.get(key);
+    final ModuleDescriptor alreadyStoredModule = dependency2Module.get(key);
     if (alreadyStoredModule != null)
     {
       return alreadyStoredModule;
     }
 
-    final Module module = calcModule(key);
+    final ModuleDescriptor module = calcModule(key);
     storeArtifact(module, dependency);
     return module;
   }
 
-  private Module calcModule(final DependencyKey key)
+  private ModuleDescriptor calcModule(final DependencyKey key)
   {
-    final Module alreadyStoredModule = dependency2Module.get(key);
+    final ModuleDescriptor alreadyStoredModule = dependency2Module.get(key);
     if (alreadyStoredModule != null)
     {
       return alreadyStoredModule;
     }
 
-    for (final Module module : modules)
+    for (final ModuleDescriptor module : modules)
     {
       final MatchContext matchContext =
           module.match(key.dependency.getArtifact());
@@ -251,7 +251,7 @@ public final class ModuleMap
       {
         if (matchContext.hasGroupMatch())
         {
-          final Module newModule = createModule(matchContext, module);
+          final ModuleDescriptor newModule = createModule(matchContext, module);
           return newModule;
         }
         else
@@ -261,17 +261,18 @@ public final class ModuleMap
       }
     }
 
-    final Module module = createModule(key.dependency);
+    final ModuleDescriptor module = createModule(key.dependency);
     return module;
   }
 
-  private void storeArtifact(final Module module, final Dependency dependency)
+  private void storeArtifact(final ModuleDescriptor module,
+      final Dependency dependency)
   {
-    if (!module.isSkip())
+    if (!module.getDirectives().getSkip())
     {
       if (module2Dependencies.containsKey(module))
       {
-        for (final Module current : module2Dependencies.keySet())
+        for (final ModuleDescriptor current : module2Dependencies.keySet())
         {
           if (module.equals(current))
           {
@@ -284,28 +285,24 @@ public final class ModuleMap
     }
   }
 
-  private Module createModule(final MatchContext matchContext,
-      final Module originalModule)
+  private ModuleDescriptor createModule(final MatchContext matchContext,
+      final ModuleDescriptor originalModule)
   {
-    final Module module = new Module(originalModule);
-
     final String name = matchContext.translateName(originalModule.getName());
-    module.setName(name);
+    final ModuleDescriptor module = ModuleDescriptor.copy(name, originalModule);
 
     return module;
   }
 
-  private Module createModule(final Dependency dependency)
+  private ModuleDescriptor createModule(final Dependency dependency)
   {
-    final Module module = new Module();
-
     final Artifact artifact = dependency.getArtifact();
     final String groupId = artifact.getGroupId();
     final String artifactId = artifact.getArtifactId();
 
     final String name = createName(groupId, artifactId);
 
-    module.setName(name);
+    final ModuleDescriptor module = ModuleDescriptor.create(name);
     return module;
   }
 
@@ -345,10 +342,10 @@ public final class ModuleMap
    * @param dependency the artifact whose module is requested.
    * @return the module of the dependency.
    */
-  public synchronized Module getModule(final Dependency dependency)
+  public synchronized ModuleDescriptor getModule(final Dependency dependency)
   {
     final DependencyKey key = new DependencyKey(dependency);
-    Module module = dependency2Module.get(key);
+    ModuleDescriptor module = dependency2Module.get(key);
 
     if (module == null)
     {
@@ -363,10 +360,10 @@ public final class ModuleMap
   public String toString()
   {
     final StringBuilder buffer = new StringBuilder(2048);
-    for (final Entry<Module, Collection<Dependency>> entry : module2Dependencies
+    for (final Entry<ModuleDescriptor, Collection<Dependency>> entry : module2Dependencies
         .asMap().entrySet())
     {
-      final Module module = entry.getKey();
+      final ModuleDescriptor module = entry.getKey();
       buffer.append('\n').append(module.getName()).append(':');
       for (final Dependency dependency : entry.getValue())
       {

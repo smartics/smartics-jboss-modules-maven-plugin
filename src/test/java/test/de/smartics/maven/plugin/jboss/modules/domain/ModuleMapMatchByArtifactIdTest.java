@@ -19,21 +19,20 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
+import help.de.smartics.maven.plugin.jboss.modules.ArtifactBuilder;
+import help.de.smartics.maven.plugin.jboss.modules.ClusionBuilder;
+import help.de.smartics.maven.plugin.jboss.modules.ModuleDescriptorBuilder;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
-import help.de.smartics.maven.plugin.jboss.modules.ArtifactBuilder;
-import help.de.smartics.maven.plugin.jboss.modules.ClusionBuilder;
-import help.de.smartics.maven.plugin.jboss.modules.ModuleBuilder;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.sonatype.aether.artifact.Artifact;
 import org.sonatype.aether.graph.Dependency;
 
-import de.smartics.maven.plugin.jboss.modules.Module;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleDescriptor;
 import de.smartics.maven.plugin.jboss.modules.domain.ModuleMap;
 import de.smartics.testdoc.annotations.Uut;
 
@@ -66,14 +65,13 @@ public class ModuleMapMatchByArtifactIdTest
   @Before
   public void setUp()
   {
-    final ModuleBuilder builder = ModuleBuilder.a();
+    final ModuleDescriptorBuilder builder = ModuleDescriptorBuilder.a();
     builder.withName(MODULE_NAME);
     final ClusionBuilder clusionBuilder = ClusionBuilder.a();
     clusionBuilder.withArtifactId("commons-.*");
-    builder.withIncludes(Arrays.asList(clusionBuilder.build()));
+    builder.withInclude(clusionBuilder.build());
 
-    final List<Module> modules = Arrays.asList(builder.build());
-
+    final List<ModuleDescriptor> modules = Arrays.asList(builder.build());
     uut = new ModuleMap(modules);
   }
 
@@ -108,11 +106,11 @@ public class ModuleMapMatchByArtifactIdTest
     final Dependency three = new Dependency(artifactThree, "compile");
     uut.add(three);
 
-    final Map<Module, List<Dependency>> map = uut.toMap();
+    final Map<ModuleDescriptor, List<Dependency>> map = uut.toMap();
     assertThat(map.size(), is(1));
 
-    final Module module = new Module();
-    module.setName(MODULE_NAME);
+    final ModuleDescriptor module =
+        new ModuleDescriptor.Builder().withName(MODULE_NAME).build();
 
     final List<Dependency> artifacts = map.get(module);
     assertThat(artifacts.size(), is(3));

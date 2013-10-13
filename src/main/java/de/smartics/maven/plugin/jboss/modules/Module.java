@@ -34,7 +34,8 @@ import de.smartics.maven.plugin.jboss.modules.domain.matching.SingleMatchContext
  *      href="https://docs.jboss.org/author/display/MODULES/Module+descriptors">Module
  *      descriptors</a>
  */
-public class Module
+@Deprecated
+class Module
 {
   // ********************************* Fields *********************************
 

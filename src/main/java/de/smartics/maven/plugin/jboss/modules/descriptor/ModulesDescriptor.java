@@ -97,6 +97,20 @@ public final class ModulesDescriptor
     return Collections.unmodifiableList(descriptors);
   }
 
+  /**
+   * Adds the given slot to all module descriptors that have not set their slots
+   * explicitly.
+   *
+   * @param slot the slot to set.
+   */
+  public void applyDefaultSlot(final String slot)
+  {
+    for (final ModuleDescriptor descriptor : descriptors)
+    {
+      descriptor.applySlot(slot);
+    }
+  }
+
   // --- object basics --------------------------------------------------------
 
   /**

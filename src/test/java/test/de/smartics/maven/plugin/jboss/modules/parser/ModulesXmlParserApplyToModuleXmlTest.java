@@ -10,6 +10,7 @@ import java.util.List;
 import org.junit.Test;
 
 import de.smartics.maven.plugin.jboss.modules.Clusion;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ApplyToModule;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ArtifactMatcher;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleDescriptor;
 
@@ -68,9 +69,12 @@ public class ModulesXmlParserApplyToModuleXmlTest extends
 
   private void assertApplyToModule(final ModuleDescriptor descriptor)
   {
-    final String xml = descriptor.getApplyToModuleXml();
-    assertThat(xml,
-        is(equalTo("<exports><exclude path=\"**/impl/*\" /></exports>\n"
-                   + "<main-class name=\"de.smartics.test.Main\" />\n")));
+    final ApplyToModule apply = descriptor.getApplyToModule();
+    final String exportsXml = apply.getExportsXml();
+    assertThat(exportsXml,
+        is(equalTo("<exports xmlns=\"urn:jboss:module:1.1\"><exclude path=\"**/impl/*\" /></exports>")));
+    final String mainClassXml = apply.getMainClassXml();
+    assertThat(mainClassXml,
+        is(equalTo("<main-class xmlns=\"urn:jboss:module:1.1\" name=\"de.smartics.test.Main\" />")));
   }
 }

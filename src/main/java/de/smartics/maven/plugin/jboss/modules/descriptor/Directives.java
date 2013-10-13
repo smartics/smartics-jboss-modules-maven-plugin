@@ -20,7 +20,7 @@ public final class Directives
    * dependency to an existing module in JBoss, but not to create a module in
    * the target folder.
    */
-  private final Boolean skip;
+  private Boolean skip;
 
   /**
    * The signal to control, if the slot is to be inherited to the dependencies
@@ -30,7 +30,7 @@ public final class Directives
    * Useful to create extensions that have to reside in the main slot but have
    * to depend on modules in another slot.
    */
-  private final Boolean inheritSlot;
+  private Boolean inheritSlot;
 
   // ****************************** Initializer *******************************
 
@@ -180,6 +180,17 @@ public final class Directives
   }
 
   // --- business -------------------------------------------------------------
+
+  /**
+   * Merges the given directive with this instance.
+   *
+   * @param directives the instance to merge into this instance.
+   */
+  public void merge(final Directives directives)
+  {
+    skip |= directives.skip;
+    inheritSlot |= directives.inheritSlot;
+  }
 
   // --- object basics --------------------------------------------------------
 

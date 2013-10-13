@@ -15,8 +15,11 @@
  */
 package de.smartics.maven.plugin.jboss.modules.descriptor;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.sonatype.aether.artifact.Artifact;
 
+import de.smartics.maven.plugin.jboss.modules.domain.MatchContext;
 import de.smartics.util.lang.Arg;
 
 /**
@@ -39,7 +42,7 @@ public final class ModuleDescriptor
   /**
    * The name of the slot this module is part of. May be <code>null</code>.
    */
-  private final String slot;
+  private String slot;
 
   /**
    * The directives for this module. Directives control the building process of
@@ -60,13 +63,24 @@ public final class ModuleDescriptor
   private final ApplyToDependencies applyToDependencies;
 
   /**
-   * The XML fragment to be applied to the generated module.
+   * The module information to be applied to the generated module.
    */
-  private final String applyToModuleXml;
+  private final ApplyToModule applyToModule;
 
   // ****************************** Initializer *******************************
 
   // ****************************** Constructors ******************************
+
+  private ModuleDescriptor(final String name,
+      final ModuleDescriptor originalModule)
+  {
+    this.name = name;
+    this.slot = originalModule.slot;
+    this.directives = originalModule.directives;
+    this.matcher = originalModule.matcher;
+    this.applyToDependencies = originalModule.applyToDependencies;
+    this.applyToModule = originalModule.applyToModule;
+  }
 
   private ModuleDescriptor(final Builder builder)
   {
@@ -75,7 +89,7 @@ public final class ModuleDescriptor
     directives = builder.directives;
     matcher = builder.matcher;
     applyToDependencies = builder.applyToDependencies;
-    applyToModuleXml = builder.applyToModuleXml;
+    applyToModule = builder.applyToModule;
   }
 
   // ****************************** Inner Classes *****************************
@@ -120,9 +134,9 @@ public final class ModuleDescriptor
     private ApplyToDependencies applyToDependencies;
 
     /**
-     * The XML fragment to be applied to the generated module.
+     * The module information to be applied to the generated module.
      */
-    private String applyToModuleXml;
+    private ApplyToModule applyToModule;
 
     // ***************************** Initializer ******************************
 
@@ -135,6 +149,7 @@ public final class ModuleDescriptor
     // --- init ---------------------------------------------------------------
 
     // --- get&set ------------------------------------------------------------
+
     /**
      * Sets the name of the module.
      *
@@ -201,16 +216,82 @@ public final class ModuleDescriptor
     }
 
     /**
-     * Sets the XML fragment to be applied to the generated module.
+     * Sets the module information to be applied to the generated module.
      *
-     * @param applyToModuleXml the XML fragment to be applied to the generated
-     *          module.
+     * @param applyToModule the module information to be applied to the
+     *          generated module.
      * @return a reference on this builder.
      */
-    public Builder withApplyToModuleXml(final String applyToModuleXml)
+    public Builder with(final ApplyToModule applyToModule)
     {
-      this.applyToModuleXml = applyToModuleXml;
+      this.applyToModule = applyToModule;
       return this;
+    }
+
+    /**
+     * Returns the name of the module.
+     *
+     * @return the name of the module.
+     */
+    public String getName()
+    {
+      return name;
+    }
+
+    /**
+     * Returns the name of the slot this module is part of. May be
+     * <code>null</code>.
+     *
+     * @return the name of the slot this module is part of.
+     */
+    public String getSlot()
+    {
+      return slot;
+    }
+
+    /**
+     * Returns the directives for this module. Directives control the building
+     * process of this module.
+     *
+     * @return the directives for this module.
+     */
+    public Directives getDirectives()
+    {
+      return directives;
+    }
+
+    /**
+     * Returns the artifact matcher to define the rules for matching artifacts
+     * to be included as resources to a module.
+     *
+     * @return the artifact matcher to define the rules for matching artifacts
+     *         to be included as resources to a module.
+     */
+    public ArtifactMatcher getMatcher()
+    {
+      return matcher;
+    }
+
+    /**
+     * Returns the information that has to be applied to dependencies if the
+     * matcher matches the name of a module.
+     *
+     * @return the information that has to be applied to dependencies if the
+     *         matcher matches the name of a module.
+     */
+    public ApplyToDependencies getApplyToDependencies()
+    {
+      return applyToDependencies;
+    }
+
+    /**
+     * Returns the module information to be applied to the generated module.
+     *
+     * @return the module information to be applied to the generated module.
+     */
+    public ApplyToModule getApplyToModule()
+    {
+      return applyToModule;
     }
 
     // --- business -----------------------------------------------------------
@@ -241,6 +322,10 @@ public final class ModuleDescriptor
       {
         applyToDependencies = new ApplyToDependencies.Builder().build();
       }
+      if (applyToModule == null)
+      {
+        applyToModule = new ApplyToModule.Builder().build();
+      }
 
       return new ModuleDescriptor(this);
     }
@@ -252,6 +337,32 @@ public final class ModuleDescriptor
   // ********************************* Methods ********************************
 
   // --- init -----------------------------------------------------------------
+
+  // --- factory --------------------------------------------------------------
+
+  /**
+   * Creates a shallow copy of the module descriptor.
+   *
+   * @param name the name of the module.
+   * @param originalModule the descriptor to shallow copy.
+   * @return the shallow copy.
+   */
+  public static ModuleDescriptor copy(final String name,
+      final ModuleDescriptor originalModule)
+  {
+    return new ModuleDescriptor(name, originalModule);
+  }
+
+  /**
+   * Creates a module with a given name.
+   *
+   * @param name the name of the module.
+   * @return the new instance.
+   */
+  public static ModuleDescriptor create(final String name)
+  {
+    return new Builder().withName(name).build();
+  }
 
   // --- get&set --------------------------------------------------------------
 
@@ -312,18 +423,98 @@ public final class ModuleDescriptor
   }
 
   /**
-   * Returns the XML fragment to be applied to the generated module.
+   * Returns the module information to be applied to the generated module.
    *
-   * @return the XML fragment to be applied to the generated module.
+   * @return the module information to be applied to the generated module.
    */
-  public String getApplyToModuleXml()
+  public ApplyToModule getApplyToModule()
   {
-    return applyToModuleXml;
+    return applyToModule;
   }
 
   // --- business -------------------------------------------------------------
 
+  /**
+   * Sets the slot to the given value, if the slot is not set.
+   *
+   * @param slot the slot to set.
+   */
+  public void applySlot(final String slot)
+  {
+    if (slot == null)
+    {
+      this.slot = slot;
+    }
+  }
+
+  /**
+   * Checks if the given artifact matches the module descriptor.
+   *
+   * @param artifact the artifact to match.
+   * @return <code>true</code> if the module descriptor matches the given
+   *         artifact, <code>false</code> otherwise.
+   */
+  public MatchContext match(final Artifact artifact)
+  {
+    return matcher.match(artifact);
+  }
+
+  /**
+   * Merges the dependencies, properties, port and export of the given module
+   * descriptor with this one.
+   *
+   * @param moduleDescriptor the module descriptor to merge with this instance.
+   * @throws NullPointerException if {@code moduleDescriptor} is
+   *           <code>null</code>.
+   * @throws IllegalArgumentException if the module descriptor is illegal to be
+   *           merged.
+   */
+  public void merge(final ModuleDescriptor moduleDescriptor)
+    throws NullPointerException, IllegalArgumentException
+  {
+    if (!ObjectUtils.equals(name, moduleDescriptor.name)
+        || !ObjectUtils.equals(slot, moduleDescriptor.slot))
+    {
+      throw new IllegalArgumentException(String.format(
+          "Cannot merge different modules: %s:%s vs %s:%s.", name, slot,
+          moduleDescriptor.name, moduleDescriptor.slot));
+    }
+
+    directives.merge(moduleDescriptor.directives);
+    // matcher is not merged
+    applyToDependencies.merge(moduleDescriptor.applyToDependencies);
+    applyToModule.merge(moduleDescriptor.applyToModule);
+  }
+
   // --- object basics --------------------------------------------------------
+
+  @Override
+  public int hashCode()
+  {
+    int result = 17;
+    result = 37 * result + ObjectUtils.hashCode(name);
+    result = 37 * result + ObjectUtils.hashCode(slot);
+
+    return result;
+  }
+
+  @Override
+  public boolean equals(final Object object)
+  {
+    if (this == object)
+    {
+      return true;
+    }
+    else if (object == null || getClass() != object.getClass())
+    {
+      return false;
+    }
+
+    final ModuleDescriptor other = (ModuleDescriptor) object;
+
+    return (ObjectUtils.equals(name, other.name) && ObjectUtils.equals(slot,
+        other.slot));
+  }
 
   /**
    * {@inheritDoc}

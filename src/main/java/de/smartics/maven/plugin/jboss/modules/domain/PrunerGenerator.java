@@ -21,9 +21,9 @@ import java.util.List;
 import org.sonatype.aether.collection.DependencyTraverser;
 
 import de.smartics.maven.plugin.jboss.modules.Clusion;
-import de.smartics.maven.plugin.jboss.modules.Module;
 import de.smartics.maven.plugin.jboss.modules.aether.DependencyTraverserGenerator;
 import de.smartics.maven.plugin.jboss.modules.aether.PruningDependencyTraverser;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleDescriptor;
 
 /**
  * Implements pruning on dependency excludes an modules tagged as 'skip'.
@@ -45,7 +45,7 @@ public class PrunerGenerator implements DependencyTraverserGenerator
   /**
    * The module descriptors that skip dependency resolution.
    */
-  private final List<Module> skipModules;
+  private final List<ModuleDescriptor> skipModules;
 
   // ****************************** Initializer *******************************
 
@@ -59,7 +59,7 @@ public class PrunerGenerator implements DependencyTraverserGenerator
    * @param modules lost of modules to calculate the skip modules.
    */
   public PrunerGenerator(final List<Clusion> dependencyExcludes,
-      final List<Module> modules)
+      final List<ModuleDescriptor> modules)
   {
     this.dependencyExcludes =
         dependencyExcludes != null ? dependencyExcludes
@@ -75,16 +75,16 @@ public class PrunerGenerator implements DependencyTraverserGenerator
 
   // --- get&set --------------------------------------------------------------
 
-  private List<Module> calcSkipModules(final List<Module> modules)
+  private List<ModuleDescriptor> calcSkipModules(final List<ModuleDescriptor> modules)
   {
     if (modules == null)
     {
-      return new ArrayList<Module>();
+      return new ArrayList<ModuleDescriptor>();
     }
-    final List<Module> skipModules = new ArrayList<Module>(modules.size());
-    for (final Module module : modules)
+    final List<ModuleDescriptor> skipModules = new ArrayList<ModuleDescriptor>(modules.size());
+    for (final ModuleDescriptor module : modules)
     {
-      if (module.isSkip())
+      if (module.getDirectives().getSkip())
       {
         skipModules.add(module);
       }

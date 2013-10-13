@@ -19,8 +19,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -31,8 +29,10 @@ import org.jdom2.Namespace;
 import org.sonatype.aether.artifact.Artifact;
 import org.sonatype.aether.graph.Dependency;
 
-import de.smartics.maven.plugin.jboss.modules.Module;
-import de.smartics.maven.plugin.jboss.modules.Services;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ApplyToDependencies;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ApplyToModule;
+import de.smartics.maven.plugin.jboss.modules.descriptor.DependenciesDescriptor;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleDescriptor;
 import de.smartics.maven.plugin.jboss.modules.domain.ExecutionContext;
 import de.smartics.maven.plugin.jboss.modules.domain.SlotStrategy;
 import edu.emory.mathcs.backport.java.util.Collections;
@@ -62,7 +62,7 @@ public final class ModuleXmlBuilder
   /**
    * The module to build.
    */
-  private final Module module;
+  private final ModuleDescriptor module;
 
   /**
    * The dependencies to reference.
@@ -79,6 +79,11 @@ public final class ModuleXmlBuilder
    */
   private final Element root;
 
+  /**
+   * A helper class to parse XML fragments.
+   */
+  private final XmlFragmentParser xmlFragmentParser = new XmlFragmentParser();
+
   // ****************************** Initializer *******************************
 
   // ****************************** Constructors ******************************
@@ -91,8 +96,8 @@ public final class ModuleXmlBuilder
    * @param module the module to build.
    * @param dependencies the dependencies to reference.
    */
-  public ModuleXmlBuilder(final ExecutionContext context, final Module module,
-      final Collection<Dependency> dependencies)
+  public ModuleXmlBuilder(final ExecutionContext context,
+      final ModuleDescriptor module, final Collection<Dependency> dependencies)
   {
     this.context = context;
     this.module = module;
@@ -144,7 +149,7 @@ public final class ModuleXmlBuilder
   // --- init -----------------------------------------------------------------
 
   private static String calcSlot(final ExecutionContext context,
-      final Module module, final Collection<Dependency> dependencies)
+      final ModuleDescriptor module, final Collection<Dependency> dependencies)
   {
     final String specifiedSlot = module.getSlot();
     if (StringUtils.isNotBlank(specifiedSlot))
@@ -188,29 +193,37 @@ public final class ModuleXmlBuilder
    */
   public Document build()
   {
+    addMainClass(module);
     addProperties(module);
     addResources(dependencies);
     addDependencies(module, dependencies);
+    addExports(module);
 
     return document;
   }
 
-  private void addProperties(final Module module)
+  private void addMainClass(final ModuleDescriptor module)
   {
-    final Map<String, String> properties = module.getProperties();
-    if (properties != null && !properties.isEmpty())
-    {
-      final Element propertiesElement = new Element("properties", NS);
-      for (final Entry<String, String> entry : properties.entrySet())
-      {
-        final Element property = new Element("property", NS);
-        property.setAttribute("name", entry.getKey());
-        property.setAttribute("value", entry.getValue());
-        propertiesElement.addContent(property);
-      }
+    final String xml = module.getApplyToModule().getMainClassXml();
+    final Element element = xmlFragmentParser.parse(xml);
+    root.addContent(element);
+  }
 
-      root.addContent(propertiesElement);
+  private void addProperties(final ModuleDescriptor module)
+  {
+    final List<String> xmls = module.getApplyToModule().getPropertiesXml();
+    if (xmls.isEmpty())
+    {
+      return;
     }
+
+    final Element propertiesElement = new Element("properties", NS);
+    for (final String xml : xmls)
+    {
+      final Element element = xmlFragmentParser.parse(xml);
+      propertiesElement.addContent(element);
+    }
+    root.addContent(propertiesElement);
   }
 
   private void addResources(final Collection<Dependency> dependencies)
@@ -251,42 +264,53 @@ public final class ModuleXmlBuilder
     return sorted;
   }
 
-  private void addDependencies(final Module module,
+  private void addDependencies(final ModuleDescriptor module,
       final Collection<Dependency> dependencies)
   {
-    if (!dependencies.isEmpty() || module.hasDependencies())
+    final ApplyToModule applyToModule = module.getApplyToModule();
+    final List<String> staticDependencies = applyToModule.getDependenciesXml();
+    if (!(dependencies.isEmpty() && staticDependencies.isEmpty()))
     {
       final Element dependenciesElement = new Element("dependencies", NS);
 
       addResolvedDependencies(module, dependencies, dependenciesElement);
-      addStaticDependencies(module, dependenciesElement);
+      addStaticDependencies(staticDependencies, dependenciesElement);
 
       root.addContent(dependenciesElement);
     }
   }
 
-  private void addResolvedDependencies(final Module module,
+  private void addResolvedDependencies(final ModuleDescriptor module,
       final Collection<Dependency> dependencies,
       final Element dependenciesElement)
   {
     final Set<SortElement> sorted =
         createSortedDependencies(module, dependencies);
 
+    final ApplyToDependencies apply = module.getApplyToDependencies();
+
     for (final SortElement element : sorted)
     {
       final String name = element.key;
       final Element moduleElement = new Element("module", NS);
       moduleElement.setAttribute("name", name);
-      if (element.dependency.isOptional())
+
+      final DependenciesDescriptor dd = apply.getDescriptorThatMatches(name);
+
+      final Boolean ddOptional = dd.getOptional();
+      if ((ddOptional != null && ddOptional)
+          || (ddOptional == null || element.dependency.isOptional()))
       {
         moduleElement.setAttribute("optional", "true");
       }
-      if (module.isExport(name))
+      final Boolean ddExport = dd.getExport();
+      if (ddExport != null && ddExport)
       {
         moduleElement.setAttribute("export", "true");
       }
-      final String services = module.getService(name);
-      if (!Services.NONE.equals(services))
+
+      final String services = dd.getServices();
+      if (!"none".equals(services))
       {
         moduleElement.setAttribute("services", services);
       }
@@ -306,8 +330,8 @@ public final class ModuleXmlBuilder
     }
   }
 
-  private Set<SortElement> createSortedDependencies(final Module module,
-      final Collection<Dependency> dependencies)
+  private Set<SortElement> createSortedDependencies(
+      final ModuleDescriptor module, final Collection<Dependency> dependencies)
   {
     final Set<SortElement> sorted = new TreeSet<SortElement>();
     for (final Dependency dependency : dependencies)
@@ -318,17 +342,17 @@ public final class ModuleXmlBuilder
     return sorted;
   }
 
-  private String calcDefaultSlot(final Module module,
+  private String calcDefaultSlot(final ModuleDescriptor module,
       final Dependency dependency)
   {
-    final Module depModule = context.getModule(dependency);
+    final ModuleDescriptor depModule = context.getModule(dependency);
     final String depModuleSlot = depModule.getSlot();
     if (StringUtils.isNotBlank(depModuleSlot))
     {
       return depModuleSlot;
     }
 
-    final boolean inheritSlot = module.isInheritSlot();
+    final boolean inheritSlot = module.getDirectives().getInheritSlot();
     if (inheritSlot)
     {
       final String moduleSlot = module.getSlot();
@@ -343,42 +367,16 @@ public final class ModuleXmlBuilder
   }
 
   // CHECKSTYLE:OFF
-  private void addStaticDependencies(final Module module,
+  private void addStaticDependencies(final List<String> staticDependencies,
       final Element dependenciesElement)
   {
-    if (module.hasDependencies())
+    if (!staticDependencies.isEmpty())
     {
-      final List<de.smartics.maven.plugin.jboss.modules.Dependency> dependencies =
-          module.getDependencies();
-      for (final de.smartics.maven.plugin.jboss.modules.Dependency dependency : dependencies)
+      for (final String xml : staticDependencies)
       {
-        final Element moduleElement = new Element("module", NS);
-        final String name = dependency.getName();
-        if (StringUtils.isBlank(name))
-        {
-          continue;
-        }
-        moduleElement.setAttribute("name", name);
+        final Element element = xmlFragmentParser.parse(xml);
+        dependenciesElement.addContent(element);
 
-        final String slot = dependency.getSlot();
-        if (StringUtils.isNotBlank(slot))
-        {
-          moduleElement.setAttribute("slot", slot);
-        }
-        if (context.isExportAll() || dependency.isExport())
-        {
-          moduleElement.setAttribute("export", "true");
-        }
-        final String services = dependency.getServices();
-        if (StringUtils.isNotBlank(services))
-        {
-          moduleElement.setAttribute("services", services);
-        }
-        if (dependency.isOptional())
-        {
-          moduleElement.setAttribute("optional", "true");
-        }
-        dependenciesElement.addContent(moduleElement);
       }
     }
   }
@@ -386,13 +384,13 @@ public final class ModuleXmlBuilder
   // CHECKSTYLE:ON
 
   private void addSortedDependencies(final Set<SortElement> sorted,
-      final Module owningModule, final List<Dependency> dependencies)
+      final ModuleDescriptor owningModule, final List<Dependency> dependencies)
   {
     for (final Dependency dependency : dependencies)
     {
       try
       {
-        final Module module = context.getModule(dependency);
+        final ModuleDescriptor module = context.getModule(dependency);
         final String name = module.getName();
         if (!name.equals(owningModule.getName()))
         {
@@ -407,6 +405,13 @@ public final class ModuleXmlBuilder
                 owningModule.getName()));
       }
     }
+  }
+
+  private void addExports(final ModuleDescriptor module2)
+  {
+    final String xml = module.getApplyToModule().getExportsXml();
+    final Element element = xmlFragmentParser.parse(xml);
+    root.addContent(element);
   }
 
   // --- object basics --------------------------------------------------------

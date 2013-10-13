@@ -22,7 +22,7 @@ import org.apache.maven.plugin.logging.Log;
 import org.sonatype.aether.graph.Dependency;
 import org.sonatype.aether.resolution.DependencyResolutionException;
 
-import de.smartics.maven.plugin.jboss.modules.Module;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleDescriptor;
 import de.smartics.util.lang.Arg;
 import edu.emory.mathcs.backport.java.util.Collections;
 
@@ -67,12 +67,6 @@ public final class ExecutionContext
    */
   private final ModuleMap moduleMap;
 
-  /**
-   * A flag to override that every dependency of every module is to be exported
-   * regardless of any individual module settings.
-   */
-  private final boolean exportAll;
-
   // ****************************** Initializer *******************************
 
   // ****************************** Constructors ******************************
@@ -85,7 +79,6 @@ public final class ExecutionContext
     this.slotStrategy = builder.slotStrategy;
     this.defaultSlot = builder.defaultSlot;
     this.moduleMap = builder.moduleMap;
-    this.exportAll = builder.exportAll;
   }
 
   // ****************************** Inner Classes *****************************
@@ -130,12 +123,6 @@ public final class ExecutionContext
      * The map of modules encountered so far.
      */
     private ModuleMap moduleMap;
-
-    /**
-     * A flag to override that every dependency of every module is to be
-     * exported regardless of any individual module settings.
-     */
-    private boolean exportAll;
 
     // ***************************** Initializer ******************************
 
@@ -218,20 +205,6 @@ public final class ExecutionContext
     public Builder with(final ModuleMap moduleMap)
     {
       this.moduleMap = moduleMap;
-      return this;
-    }
-
-    /**
-     * Sets a flag to override that every dependency of every module is to be
-     * exported regardless of any individual module settings.
-     *
-     * @param exportAll a flag to override that every dependency of every module
-     *          is to be exported regardless of any individual module settings.
-     * @return a reference to this builder.
-     */
-    public Builder withExportAll(final boolean exportAll)
-    {
-      this.exportAll = exportAll;
       return this;
     }
 
@@ -323,18 +296,6 @@ public final class ExecutionContext
     return moduleMap;
   }
 
-  /**
-   * Returns a flag to override that every dependency of every module is to be
-   * exported regardless of any individual module settings.
-   *
-   * @return a flag to override that every dependency of every module is to be
-   *         exported regardless of any individual module settings.
-   */
-  public boolean isExportAll()
-  {
-    return exportAll;
-  }
-
   // --- business -------------------------------------------------------------
 
   /**
@@ -368,10 +329,10 @@ public final class ExecutionContext
    * @throws IllegalArgumentException if there is no module registered for the
    *           given dependency.
    */
-  public Module getModule(final Dependency dependency)
+  public ModuleDescriptor getModule(final Dependency dependency)
     throws IllegalArgumentException
   {
-    final Module module = moduleMap.getModule(dependency);
+    final ModuleDescriptor module = moduleMap.getModule(dependency);
     if (module == null)
     {
       throw new IllegalArgumentException("Cannot find module for dependency: "

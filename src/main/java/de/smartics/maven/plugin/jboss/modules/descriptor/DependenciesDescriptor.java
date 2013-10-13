@@ -227,6 +227,48 @@ public final class DependenciesDescriptor
     // --- business -----------------------------------------------------------
 
     /**
+     * Merges the content of the given descriptor into the builder instance.
+     * <p>
+     * Not that the matcher information is not merged.
+     * </p>
+     *
+     * @param moduleName the name of the module to merge the descriptor.
+     * @param descriptor the descriptor information to merge into this instance.
+     */
+    public void merge(final String moduleName,
+        final DependenciesDescriptor descriptor)
+    {
+      slot = merge("slot", moduleName, slot, descriptor.slot);
+      export = merge("export", moduleName, export, descriptor.export);
+      services = merge("services", moduleName, services, descriptor.services);
+      optional = merge("optional", moduleName, optional, descriptor.optional);
+      importsXml =
+          merge("imports", moduleName, importsXml, descriptor.importsXml);
+      exportsXml =
+          merge("exports", moduleName, exportsXml, descriptor.exportsXml);
+    }
+
+    private <T> T merge(final String property, final String moduleName,
+        final T value1, final T value2)
+    {
+      if (value1 != null && value2 != null && !value1.equals(value2))
+      {
+        throw new IllegalArgumentException(String.format(
+            "Module %s: Cannot merge %s: '%s' differs from '%s'.", moduleName,
+            property, value1, value2));
+      }
+
+      if (value1 == null)
+      {
+        return value2;
+      }
+      else
+      {
+        return value1;
+      }
+    }
+
+    /**
      * Builds an instance of {@link DependenciesDescriptor}.
      *
      * @return the instance.
@@ -322,6 +364,18 @@ public final class DependenciesDescriptor
 
   // --- business -------------------------------------------------------------
 
+  /**
+   * Checks if the matcher of this descriptor matches with the given module
+   * name.
+   *
+   * @param name the module name to match.
+   * @return <code>true</code> on a match, <code>false</code> otherwise.
+   */
+  public boolean matches(final String name)
+  {
+    return matcher.matches(name);
+  }
+
   // --- object basics --------------------------------------------------------
 
   /**
@@ -335,4 +389,5 @@ public final class DependenciesDescriptor
   {
     return ToStringBuilder.reflectionToString(this);
   }
+
 }

@@ -18,7 +18,8 @@ package de.smartics.maven.plugin.jboss.modules;
 /**
  * Handles matching module names for export.
  */
-public class Export extends AbstractModuleNameMatcher
+@Deprecated
+class Export extends AbstractModuleNameMatcher
 {
   // ********************************* Fields *********************************
 

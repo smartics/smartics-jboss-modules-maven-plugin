@@ -11,6 +11,7 @@ import org.jdom2.output.XMLOutputter;
 
 import de.smartics.maven.plugin.jboss.modules.Clusion;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ApplyToDependencies;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ApplyToModule;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ArtifactMatcher;
 import de.smartics.maven.plugin.jboss.modules.descriptor.DependenciesDescriptor;
 import de.smartics.maven.plugin.jboss.modules.descriptor.DependenciesDescriptor.Builder;
@@ -19,6 +20,7 @@ import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleClusion;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleDescriptor;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleMatcher;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ModulesDescriptor;
+import de.smartics.maven.plugin.jboss.modules.xml.ModuleXmlBuilder;
 
 /**
  * The worker to do the parsing on a given document. It provides internal state
@@ -249,20 +251,20 @@ final class ModulesDescriptorBuilder
     final Element importElement = applyElement.getChild("imports", NS);
     if (importElement != null)
     {
-      removeNamespaces(importElement);
+      adjustNamespaces(importElement);
       final String imports = outputter.outputString(importElement);
       builder.withImportsXml(imports);
     }
     final Element exportElement = applyElement.getChild("exports", NS);
     if (exportElement != null)
     {
-      removeNamespaces(exportElement);
+      adjustNamespaces(exportElement);
       final String exports = outputter.outputString(exportElement);
       builder.withExportsXml(exports);
     }
   }
 
-  private void removeNamespaces(final Element element)
+  private void adjustNamespaces(final Element element)
   {
     element.setNamespace(null);
     final List<Namespace> namespaces =
@@ -271,9 +273,10 @@ final class ModulesDescriptorBuilder
     {
       element.removeNamespaceDeclaration(namespace);
     }
+    element.setNamespace(ModuleXmlBuilder.NS);
     for (final Element child : element.getChildren())
     {
-      removeNamespaces(child);
+      adjustNamespaces(child);
     }
   }
 
@@ -284,18 +287,54 @@ final class ModulesDescriptorBuilder
       return;
     }
 
-    removeNamespaces(applyToModuleElement);
-    final XMLOutputter outputter = new XMLOutputter(Format.getCompactFormat());
-    final StringBuilder buffer = new StringBuilder(4096);
-    for(final Element child:applyToModuleElement.getChildren())
-    {
-      final String fragment = outputter.outputString(child);
-      buffer.append(fragment).append('\n');
+    final ApplyToModule.Builder mBuilder = new ApplyToModule.Builder();
 
+    adjustNamespaces(applyToModuleElement);
+    final XMLOutputter outputter = new XMLOutputter(Format.getCompactFormat());
+    for (final Element child : applyToModuleElement.getChildren())
+    {
+      handleChild(mBuilder, outputter, child);
     }
 
-    final String applyToModule = buffer.toString();
-    builder.withApplyToModuleXml(applyToModule);
+    builder.with(mBuilder.build());
+  }
+
+  private void handleChild(final ApplyToModule.Builder mBuilder,
+      final XMLOutputter outputter, final Element child)
+  {
+    final String elementName = child.getName();
+    if ("dependencies".equals(elementName))
+    {
+      for (final Element moduleElement : child.getChildren("module"))
+      {
+        final String name = child.getAttributeValue("name");
+        final String fragment = outputter.outputString(moduleElement);
+        mBuilder.addDependencyXml(name, fragment);
+      }
+    }
+    else if ("properties".equals(elementName))
+    {
+      for (final Element propertyElement : child.getChildren("property"))
+      {
+        final String name = child.getAttributeValue("name");
+        final String fragment = outputter.outputString(propertyElement);
+        mBuilder.addPropertyXml(name, fragment);
+      }
+    }
+    else if ("exports".equals(elementName))
+    {
+      final String fragment = outputter.outputString(child);
+      mBuilder.withExportsXml(fragment);
+    }
+    else if ("main-class".equals(elementName))
+    {
+      final String fragment = outputter.outputString(child);
+      mBuilder.withMainClassXml(fragment);
+    }
+    else
+    {
+      // TODO warn or add to end?
+    }
   }
 
   // --- object basics --------------------------------------------------------

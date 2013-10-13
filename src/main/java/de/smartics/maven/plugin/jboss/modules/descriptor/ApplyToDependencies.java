@@ -113,7 +113,42 @@ public final class ApplyToDependencies
     return Collections.unmodifiableList(descriptors);
   }
 
+  /**
+   * Creates a merged descriptor from all descriptors that matches the given
+   * module name.
+   *
+   * @param name the name of a module to match.
+   * @return the merged descriptor.
+   */
+  public DependenciesDescriptor getDescriptorThatMatches(final String name)
+  {
+    final DependenciesDescriptor.Builder builder =
+        new DependenciesDescriptor.Builder();
+
+    for (final DependenciesDescriptor descriptor : descriptors)
+    {
+      if (descriptor.matches(name))
+      {
+        builder.merge(name, descriptor);
+      }
+    }
+
+    final DependenciesDescriptor descriptor = builder.build();
+    return descriptor;
+  }
+
   // --- business -------------------------------------------------------------
+
+  /**
+   * Merges the given {@code applyToDependencies} instance into this instance.
+   *
+   * @param applyToDependencies the applyToDependencies to merge into this
+   *          instance.
+   */
+  public void merge(final ApplyToDependencies applyToDependencies)
+  {
+    descriptors.addAll(applyToDependencies.descriptors);
+  }
 
   // --- object basics --------------------------------------------------------
 

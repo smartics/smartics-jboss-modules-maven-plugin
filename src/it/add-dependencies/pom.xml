@@ -52,25 +52,7 @@
           <attach>false</attach>
 
           <modules>
-            <module>
-              <name>org.apache.commons</name>
-              <includes>
-                <include>
-                  <artifactId>commons-lang</artifactId>
-                </include>
-                <include>
-                  <artifactId>commons-logging</artifactId>
-                </include>
-              </includes>
-              <dependencies>
-                <dependency>
-                  <name>javax.api</name>
-                </dependency>
-                <dependency>
-                  <name>javax.xml.stream.api</name>
-                </dependency>
-              </dependencies>
-            </module>
+            <dir>src/etc/modules</dir>
           </modules>
         </configuration>
       </plugin>

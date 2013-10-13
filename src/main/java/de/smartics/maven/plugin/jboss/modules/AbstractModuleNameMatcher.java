@@ -24,7 +24,8 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * Base implementation to select modules by their names. Names may be regular
  * expressions.
  */
-public abstract class AbstractModuleNameMatcher
+@Deprecated
+abstract class AbstractModuleNameMatcher
 {
   // ********************************* Fields *********************************
 

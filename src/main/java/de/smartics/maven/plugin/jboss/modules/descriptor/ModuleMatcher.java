@@ -141,6 +141,36 @@ public final class ModuleMatcher
 
   // --- business -------------------------------------------------------------
 
+  /**
+   * Checks if the matcher matches with the given module name.
+   *
+   * @param name the module name to match.
+   * @return <code>true</code> on a match, <code>false</code> otherwise.
+   */
+  public boolean matches(final String name)
+  {
+    final boolean included = matches(includes, name);
+    if (included)
+    {
+      final boolean excluded = matches(excludes, name);
+      return !excluded;
+    }
+
+    return included;
+  }
+
+  private boolean matches(final List<ModuleClusion> cludes, final String name)
+  {
+    for (final ModuleClusion clusion : cludes)
+    {
+      if (clusion.match(name))
+      {
+        return true;
+      }
+    }
+    return false;
+  }
+
   // --- object basics --------------------------------------------------------
 
   /**

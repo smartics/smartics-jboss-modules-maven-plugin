@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.smartics.maven.plugin.jboss.modules.sets;
+package de.smartics.maven.plugin.jboss.modules.parser;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -25,8 +25,9 @@ import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.jdom2.JDOMException;
 
-import de.smartics.maven.plugin.jboss.modules.Module;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ModulesDescriptor;
 import de.smartics.util.lang.classpath.ClassPathContext;
 import de.smartics.util.lang.classpath.ClassPathListing;
 import de.smartics.util.lang.classpath.JarAndFileClassPathListing;
@@ -45,7 +46,7 @@ public final class ModulesXmlLocator
   /**
    * The parser of external modules XML documents.
    */
-  private final ModulesParser parser = new ModulesParser();
+  private final ModulesXmlParser parser = new ModulesXmlParser();
 
   /**
    * The name of the slot to map modules without slot to.
@@ -81,16 +82,15 @@ public final class ModulesXmlLocator
   /**
    * Discovers all module descriptors on the class path.
    *
+   * @param classLoader the class loader whose class path is searched.
    * @return the discovered module descriptors.
    * @throws IOException if resources cannot be loaded from the class path.
    */
-  public List<Module> discover() throws IOException
+  public List<ModulesDescriptor> discover(final ClassLoader classLoader) throws IOException
   {
-    final List<Module> modules = new ArrayList<Module>();
+    final List<ModulesDescriptor> modules = new ArrayList<ModulesDescriptor>();
 
     final ClassPathListing listing = new JarAndFileClassPathListing();
-    final ClassLoader classLoader =
-        Thread.currentThread().getContextClassLoader();
     final ClassPathContext context = new ClassPathContext(classLoader, null);
     final Enumeration<URL> urls = classLoader.getResources("jboss-modules");
     while (urls.hasMoreElements())
@@ -102,20 +102,17 @@ public final class ModulesXmlLocator
 
     if (targetSlot != null)
     {
-      for (final Module module : modules)
+      for (final ModulesDescriptor module : modules)
       {
-        if (StringUtils.isBlank(module.getSlot()))
-        {
-          module.setSlot(targetSlot);
-        }
+        module.applyDefaultSlot(targetSlot);
       }
     }
 
     return modules;
   }
 
-  private void loadModules(final List<Module> modules, final URL url,
-      final List<String> fileList) throws IOException
+  private void loadModules(final List<ModulesDescriptor> modules,
+      final URL url, final List<String> fileList) throws IOException
   {
     for (final String file : fileList)
     {
@@ -126,10 +123,14 @@ public final class ModulesXmlLocator
 
       final URL fileUrl = new URL(url.toExternalForm() + '/' + file);
       final InputStream input = new BufferedInputStream(fileUrl.openStream());
+      final String urlString = fileUrl.toExternalForm();
       try
       {
-        final String urlString = fileUrl.toExternalForm();
-        parser.parse(modules, input, urlString);
+        parser.parse(urlString, input);
+      }
+      catch (final JDOMException e)
+      {
+        throw new IOException("Cannot parse XML file: " + urlString, e);
       }
       finally
       {
