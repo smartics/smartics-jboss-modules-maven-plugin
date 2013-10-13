@@ -205,8 +205,11 @@ public final class ModuleXmlBuilder
   private void addMainClass(final ModuleDescriptor module)
   {
     final String xml = module.getApplyToModule().getMainClassXml();
-    final Element element = xmlFragmentParser.parse(xml);
-    root.addContent(element);
+    if (xml != null)
+    {
+      final Element element = xmlFragmentParser.parse(xml);
+      root.addContent(element);
+    }
   }
 
   private void addProperties(final ModuleDescriptor module)
@@ -296,37 +299,58 @@ public final class ModuleXmlBuilder
       moduleElement.setAttribute("name", name);
 
       final DependenciesDescriptor dd = apply.getDescriptorThatMatches(name);
-
-      final Boolean ddOptional = dd.getOptional();
-      if ((ddOptional != null && ddOptional)
-          || (ddOptional == null || element.dependency.isOptional()))
-      {
-        moduleElement.setAttribute("optional", "true");
-      }
-      final Boolean ddExport = dd.getExport();
-      if (ddExport != null && ddExport)
-      {
-        moduleElement.setAttribute("export", "true");
-      }
-
-      final String services = dd.getServices();
-      if (!"none".equals(services))
-      {
-        moduleElement.setAttribute("services", services);
-      }
-
-      final SlotStrategy slotStrategy = context.getSlotStrategy();
-      final Dependency dependency = element.dependency;
-      final String defaultSlot = calcDefaultSlot(module, dependency);
-      final String slot =
-          slotStrategy.calcSlot(dependency.getArtifact(), defaultSlot);
-      if (!SlotStrategy.MAIN_SLOT.equals(slot)
-          || (StringUtils.isNotBlank(module.getSlot()) && !slot.equals(module
-              .getSlot())))
-      {
-        moduleElement.setAttribute("slot", slot);
-      }
+      handleOptional(element, moduleElement, dd);
+      handleExport(moduleElement, dd);
+      handleServices(moduleElement, dd);
+      handleSlot(module, element, moduleElement);
       dependenciesElement.addContent(moduleElement);
+    }
+  }
+
+  private void handleOptional(final SortElement element,
+      final Element moduleElement, final DependenciesDescriptor dd)
+  {
+    final Boolean ddOptional = dd.getOptional();
+    if ((ddOptional != null && ddOptional)
+        || (ddOptional == null || element.dependency.isOptional()))
+    {
+      moduleElement.setAttribute("optional", "true");
+    }
+  }
+
+  private void handleExport(final Element moduleElement,
+      final DependenciesDescriptor dd)
+  {
+    final Boolean ddExport = dd.getExport();
+    if (ddExport != null && ddExport)
+    {
+      moduleElement.setAttribute("export", "true");
+    }
+  }
+
+  private void handleServices(final Element moduleElement,
+      final DependenciesDescriptor dd)
+  {
+    final String services = dd.getServices();
+    if (!"none".equals(services))
+    {
+      moduleElement.setAttribute("services", services);
+    }
+  }
+
+  private void handleSlot(final ModuleDescriptor module,
+      final SortElement element, final Element moduleElement)
+  {
+    final SlotStrategy slotStrategy = context.getSlotStrategy();
+    final Dependency dependency = element.dependency;
+    final String defaultSlot = calcDefaultSlot(module, dependency);
+    final String slot =
+        slotStrategy.calcSlot(dependency.getArtifact(), defaultSlot);
+    if (!SlotStrategy.MAIN_SLOT.equals(slot)
+        || (StringUtils.isNotBlank(module.getSlot()) && !slot.equals(module
+            .getSlot())))
+    {
+      moduleElement.setAttribute("slot", slot);
     }
   }
 
@@ -410,8 +434,11 @@ public final class ModuleXmlBuilder
   private void addExports(final ModuleDescriptor module2)
   {
     final String xml = module.getApplyToModule().getExportsXml();
-    final Element element = xmlFragmentParser.parse(xml);
-    root.addContent(element);
+    if (xml != null)
+    {
+      final Element element = xmlFragmentParser.parse(xml);
+      root.addContent(element);
+    }
   }
 
   // --- object basics --------------------------------------------------------
