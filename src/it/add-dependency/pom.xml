@@ -45,59 +45,6 @@
         <configuration>
           <slotStrategy>main</slotStrategy>
           <attach>false</attach>
-
-          <modules>
-            <module>
-              <name>org.jdom2</name>
-              <includes>
-                <include>
-                  <groupId>org.jdom</groupId>
-                  <artifactId>jdom2</artifactId>
-                </include>
-              </includes>
-              <dependencies>
-                <dependency>
-                  <name>javax.api</name>
-                </dependency>
-              </dependencies>
-            </module>
-
-            <module>
-              <name>org.apache.xerces</name>
-              <includes>
-                <include>
-                  <groupId>xerces</groupId>
-                </include>
-                <include>
-                  <groupId>xml-resolver</groupId>
-                </include>
-              </includes>
-            </module>
-            <module>
-              <name>org.apache.xalan</name>
-              <includes>
-                <include>
-                  <groupId>.*xalan.*</groupId>
-                </include>
-              </includes>
-            </module>
-            <module>
-              <name>org.apache.xml-apis</name>
-              <includes>
-                <include>
-                  <artifactId>xml-apis</artifactId>
-                </include>
-              </includes>
-            </module>
-            <module>
-              <name>org.jaxen</name>
-              <includes>
-                <include>
-                  <artifactId>jaxen</artifactId>
-                </include>
-              </includes>
-            </module>
-          </modules>
         </configuration>
       </plugin>
     </plugins>

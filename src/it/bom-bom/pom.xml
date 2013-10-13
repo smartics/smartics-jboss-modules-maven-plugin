@@ -52,31 +52,6 @@
         <configuration>
           <slotStrategy>main</slotStrategy>
           <attach>false</attach>
-
-          <modules>
-            <module>
-              <name>de.smartics.test</name>
-              <includes>
-                <include>
-                  <groupId>de.smartics.test.setup</groupId>
-                </include>
-                <include>
-                  <!--
-                    If it is not added explicitly, it will not be resolved
-                    as a dependency. This is because the POM project that
-                    declares the dependencies is by itself not a module.
-                    -->
-                  <groupId>de.smartics.util</groupId>
-                  <artifactId>smartics-commons</artifactId>
-                </include>
-              </includes>
-              <dependencies>
-                <dependency>
-                  <name>javax.api</name>
-                </dependency>
-              </dependencies>
-            </module>
-          </modules>
         </configuration>
       </plugin>
     </plugins>

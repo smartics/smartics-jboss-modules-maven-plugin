@@ -54,37 +54,6 @@
         </executions>
         <configuration>
           <slotStrategy>main</slotStrategy>
-          <modules>
-            <module>
-              <name>org.javassist</name>
-              <includes>
-                <include>
-                  <groupId>org.javassist</groupId>
-                  <artifactId>javassist</artifactId>
-                </include>
-              </includes>
-            </module>
-            <module>
-              <name>org.javassist</name>
-              <includes>
-                <include>
-                  <groupId>javassist</groupId>
-                  <artifactId>javassist</artifactId>
-                </include>
-              </includes>
-              <skip>true</skip>
-            </module>
-            <module>
-              <name>org.javassist</name>
-              <includes>
-                <include>
-                  <groupId>jboss</groupId>
-                  <artifactId>javassist</artifactId>
-                </include>
-              </includes>
-              <skip>true</skip>
-            </module>
-          </modules>
         </configuration>
       </plugin>
     </plugins>
