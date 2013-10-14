@@ -417,8 +417,6 @@
             <exclude>**/*.umlusc</exclude>
             <exclude>**/javadoc.xml</exclude>
             <exclude>**/header.txt</exclude>
-            <exclude>**/goals.txt</exclude> <!-- shitty plugin -->
-            <exclude>**/build.log</exclude> <!-- shitty plugin -->
           </excludes>
         </configuration>
       </plugin>

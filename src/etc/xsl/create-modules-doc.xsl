@@ -45,7 +45,7 @@
             and <a href="#Document_Schema">document schema</a> (XSD).
           </p>
           <p>
-            The XSD is also available for download: <a href="download/xsd/smartics-jboss-modules.xsd">Download smartics-jboss-modules.xsd</a>.
+            The XSD is also available for download: <a href="download/xsd/jboss-modules-descriptor.xsd">Download jboss-modules-descriptor.xsd</a>.
           </p>
           <p>
             For more information on JBoss modules, please refer to
@@ -192,7 +192,7 @@
           </subsection>
           <subsection name="Document Schema">
             <p>
-              <a href="download/xsd/smartics-jboss-modules.xsd">Download smartics-jboss-modules.xsd</a>
+              <a href="download/xsd/jboss-modules-descriptor.xsd">Download jboss-modules-descriptor.xsd</a>
             </p>
             <p>
               This is the XML schema for modules documents:

@@ -70,7 +70,7 @@
     <dependency>
       <groupId>de.smartics.config</groupId>
       <artifactId>config-smartics-jboss-modules</artifactId>
-      <version>1.0.0</version>
+      <version>2.0.1</version>
     </dependency>
   </dependencies>
 </plugin>]]></source>
@@ -79,21 +79,24 @@
           specified slot will be mapped to this default slot.
         </p>
       </subsection>
-      <subsection name="Module Descriptor Format">
+      <subsection name="Module Descriptor XSD">
         <p>
-          The content is a list of module elements as shown in <a href="module.html">Module Section</a>.
+          The content is a list of module elements as shown in
+          <a href="jboss-modules-descriptor-doc.html">smartics JBoss Modules XSD</a>.
           For instance, the following mapping is stored in a file named
           <code>jboss-modules/org.apache.commons.xml</code>
           (extension <code>.xml</code> is required):
         </p>
-      <source><![CDATA[<modules xmlns="http://smartics.de/jboss-modules-descriptor">
-  <module>
-    <name>org.apache.commons.$1</name>
-    <includes>
+      <source><![CDATA[<modules xmlns="http://smartics.de/ns/jboss-modules-descriptor/1">
+  <module name="org.apache.commons.$1">
+    <match>
+      <includes>
       <include>
+        <groupId>commons-.*</groupId>
         <artifactId>commons-(.*)</artifactId>
       </include>
-    </includes>
+      </includes>
+    </match>
   </module>
 </modules>]]></source>
       </subsection>

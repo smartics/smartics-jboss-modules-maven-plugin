@@ -95,6 +95,9 @@
       </subsection>
 
       <subsection name="An Example Configuration">
+        <p>
+          Here is an short example to get you started:
+        </p>
       <source><![CDATA[<profiles>
   <profile>
     <id>attach</id>
@@ -132,271 +135,192 @@
                 <groupId>system</groupId>
               </exclude>
             </dependencyExcludes>
-
-            <modules>
-              <module>
-                <name>de.smartics.smart-properties</name>
-                <includes>
-                  <include>
-                    <groupId>de.smartics.properties</groupId>
-                    <artifactId>smart-properties-core</artifactId>
-                  </include>
-                </includes>
-              </module>
-
-              <module>
-                <name>de.smartics.properties</name>
-                <includes>
-                  <include>
-                    <groupId>de.smartics.properties</groupId>
-                  </include>
-                </includes>
-                <dependencies>
-                  <dependency>
-                    <name>javax.api</name>
-                  </dependency>
-                </dependencies>
-                <export>
-                  <excludes>
-                    <exclude>org.infinispan</exclude>
-                    <exclude>com.mysql</exclude>
-                  </excludes>
-                </export>
-                <port>
-                  <services>
-                    <value>import</value>
-                    <includes>
-                      <include>.*</include>
-                    </includes>
-                  </services>
-                </port>
-              </module>
-              <module>
-                <name>de.smartics.exceptions</name>
-                <includes>
-                  <include>
-                    <groupId>de.smartics.exceptions</groupId>
-                  </include>
-                </includes>
-                <export>
-                  <includes>
-                    <include>.+</include>
-                  </includes>
-                </export>
-              </module>
-
-              <module>
-                <name>org.apache.commons.$1</name>
-                <includes>
-                  <include>
-                    <artifactId>commons-(.*)</artifactId>
-                  </include>
-                </includes>
-              </module>
-              <module>
-                <name>com.mysql</name>
-                <includes>
-                  <include>
-                    <artifactId>mysql-connector-java</artifactId>
-                  </include>
-                </includes>
-                <dependencies>
-                  <dependency>
-                    <name>javax.api</name>
-                  </dependency>
-                </dependencies>
-              </module>
-              <module>
-                <name>org.dom4j</name>
-                <includes>
-                  <include>
-                    <artifactId>dom4j</artifactId>
-                  </include>
-                </includes>
-                <skip>true</skip>
-              </module>
-              <module>
-                <name>org.jaxen</name>
-                <includes>
-                  <include>
-                    <artifactId>jaxen</artifactId>
-                  </include>
-                </includes>
-              </module>
-
-              <module>
-                <name>javax.inject.api</name>
-                <slot>main</slot>
-                <includes>
-                  <include>
-                    <groupId>javax.inject</groupId>
-                  </include>
-                </includes>
-                <skip>true</skip>
-              </module>
-              <module>
-                <name>javax.servlet.api</name>
-                <slot>main</slot>
-                <includes>
-                  <include>
-                    <groupId>javax.servlet</groupId>
-                    <artifactId>servlet-api</artifactId>
-                  </include>
-                </includes>
-                <skip>true</skip>
-              </module>
-              <module>
-                <name>javax.servlet.jsp.api</name>
-                <slot>main</slot>
-                <includes>
-                  <include>
-                    <groupId>javax.servlet</groupId>
-                    <artifactId>jsp-api</artifactId>
-                  </include>
-                </includes>
-                <skip>true</skip>
-              </module>
-              <module>
-                <name>javax.validation.api</name>
-                <slot>main</slot>
-                <includes>
-                  <include>
-                    <groupId>javax.validation</groupId>
-                    <artifactId>validation-api</artifactId>
-                  </include>
-                </includes>
-                <skip>true</skip>
-              </module>
-              <!--
-              <module>
-                <name>$g1.$1</name>
-                <includes>
-                  <include>
-                    <groupId>(javax\..*)</groupId>
-                    <artifactId>(.*)</artifactId>
-                  </include>
-                </includes>
-                <skip>true</skip>
-              </module> -->
-              <module>
-                <name>javax.portlet.api</name>
-                <includes>
-                  <include>
-                    <groupId>portlet-api</groupId>
-                  </include>
-                </includes>
-              </module>
-              <module>
-                <name>org.apache.xalan</name>
-                <slot>main</slot>
-                <includes>
-                  <include>
-                    <groupId>xalan</groupId>
-                    <artifactId>xalan</artifactId>
-                  </include>
-                  <include>
-                    <groupId>xalan</groupId>
-                    <artifactId>serializer</artifactId>
-                  </include>
-                </includes>
-                <dependencies>
-                  <dependency>
-                    <name>javax.api</name>
-                  </dependency>
-                </dependencies>
-                <skip>true</skip>
-              </module>
-              <module>
-                <name>org.apache.xerces</name>
-                <slot>main</slot>
-                <includes>
-                  <include>
-                    <groupId>xerces</groupId>
-                  </include>
-                </includes>
-                <dependencies>
-                  <dependency>
-                    <name>javax.api</name>
-                  </dependency>
-                </dependencies>
-                <skip>true</skip>
-              </module>
-
-              <module>
-                <name>org.javassist</name>
-                <includes>
-                  <include>
-                    <groupId>org.javassist</groupId>
-                    <artifactId>javassist</artifactId>
-                  </include>
-                </includes>
-              </module>
-              <module>
-                <name>org.javassist</name>
-                <includes>
-                  <include>
-                    <groupId>javassist</groupId>
-                    <artifactId>javassist</artifactId>
-                  </include>
-                </includes>
-                <skip>true</skip>
-              </module>
-              <module>
-                <name>org.javassist</name>
-                <includes>
-                  <include>
-                    <groupId>jboss</groupId>
-                    <artifactId>javassist</artifactId>
-                  </include>
-                </includes>
-                <skip>true</skip>
-              </module>
-
-              <module>
-                <name>org.apache.log4j</name>
-                <includes>
-                  <include>
-                    <groupId>log4j</groupId>
-                  </include>
-                </includes>
-              </module>
-
-              <module>
-                <name>org.infinispan</name>
-                <slot>main</slot>
-                <includes>
-                  <include>
-                    <groupId>org.infinispan</groupId>
-                  </include>
-                </includes>
-                <skip>true</skip>
-              </module>
-
-              <module>
-                <name>org.ognl</name>
-                <includes>
-                  <include>
-                    <groupId>ognl</groupId>
-                  </include>
-                </includes>
-                <dependencies>
-                  <dependency>
-                    <name>org.javassist</name>
-                  </dependency>
-                </dependencies>
-                <export>
-                  <includes>
-                    <include>org.javassist</include>
-                  </includes>
-                </export>
-              </module>
-            </modules>
           </configuration>
         </plugin>
       </plugins>
     </build>
   </profile>
 </profiles>]]></source>
+        <p>
+          Module descriptors are stored in XML files that adher to the
+          <a href="jboss-modules-descriptor-doc.html">smartics JBoss Modules XSD</a>.
+          Per default they are stored at
+        </p>
+        <source>src/etc/jboss-modules
+src/main/config/jboss-modules
+src/main/resources/META-INF/jboss-modules</source>
+        <p>
+          The locations to search modules XML documents is configurable via
+          the <a href="create-modules-archive-mojo.html#modules">modules</a>
+          property. Please refer to this property for more information on this
+          topic.
+        </p>
+        <p>
+          A modules XML looks like this:
+        </p>
+        <source><![CDATA[<modules xmlns="http://smartics.de/ns/jboss-modules-descriptor/1">
+  <module name="org.apache.commons.configuration">
+    <match>
+      <includes>
+        <include>
+          <artifactId>commons-configuration</artifactId>
+        </include>
+      </includes>
+    </match>
+    <apply-to-dependencies>
+      <dependencies>
+        <match>
+          <includes>
+            <include>.+</include>
+          </includes>
+          <excludes>
+            <exclude>org.apache.commons..+</exclude>
+          </excludes>
+        </match>
+        <apply>
+          <export>true</export>
+        </apply>
+      </dependencies>
+    </apply-to-dependencies>
+  </module>
+
+  <module name="org.apache.commons.$1">
+    <match>
+      <includes>
+        <include>
+          <artifactId>commons-(.*)</artifactId>
+        </include>
+      </includes>
+    </match>
+  </module>
+</modules>]]></source>
+        <p>
+          The example shows only one module descriptor, but you may add any
+          number of <code>module</code> elements to the list.
+        </p>
+      </subsection>
+      <subsection name="Example: Remapping Coordinates">
+        <p>
+          It is also allowed to add different descriptors for the same module.
+          This is e.g. useful to map different artifacts to one module in case
+          you have the same artifact in different versions but also different
+          Maven coordinates. Here is an example:
+        </p>
+        <source><![CDATA[<modules xmlns="http://smartics.de/ns/jboss-modules-descriptor/1">
+  <module name="org.javassist">
+    <match>
+      <includes>
+        <include>
+          <groupId>org.javassist</groupId>
+          <artifactId>javassist</artifactId>
+        </include>
+      </includes>
+    </match>
+
+    <apply-to-module>
+      <dependencies>
+        <module name="javax.api" />
+      </dependencies>
+    </apply-to-module>
+  </module>
+
+  <module name="org.javassist">
+    <directives>
+      <skip>true</skip>
+    </directives>
+
+    <match>
+      <includes>
+        <include>
+          <groupId>javassist</groupId>
+          <artifactId>javassist</artifactId>
+        </include>
+      </includes>
+    </match>
+
+    <apply-to-module>
+      <dependencies>
+        <module name="javax.api" />
+      </dependencies>
+    </apply-to-module>
+  </module>
+
+  <module name="org.javassist">
+    <directives>
+      <skip>true</skip>
+    </directives>
+
+    <match>
+      <includes>
+        <include>
+          <groupId>jboss</groupId>
+          <artifactId>javassist</artifactId>
+        </include>
+      </includes>
+    </match>
+
+    <apply-to-module>
+      <dependencies>
+        <module name="javax.api" />
+      </dependencies>
+    </apply-to-module>
+  </module>
+</modules>]]></source>
+      </subsection>
+      <subsection name="Example: Extensions">
+        <p>
+          If you are writing an extension you might want to add the extension
+          module itself the the <code>main</code> slot, but all its dependencies
+          to a specific slot. Here is the configuration to do this (this example
+          assumes the project coordinates to be
+          <code>de.smartics.jboss.extension:smartics-jboss-counter-extension</code>):
+        </p>
+        <source><![CDATA[<plugin>
+  <groupId>de.smartics.maven.plugin</groupId>
+  <artifactId>smartics-jboss-modules-maven-plugin</artifactId>
+  <version>@project.version@</version>
+  <executions>
+    <execution>
+      <id>create-modules-archive</id>
+      <goals>
+        <goal>create-modules-archive</goal>
+      </goals>
+      <phase>package</phase>
+    </execution>
+  </executions>
+  <configuration>
+    <defaultSlot>other</defaultSlot>
+  </configuration>
+</plugin>]]></source>
+        <p>
+          This configuration states that every dependency encountered should
+          be directed to the slot named <code>other</code> (unless specified
+          otherwise explicitly).
+        </p>
+        <source><![CDATA[<modules xmlns="http://smartics.de/ns/jboss-modules-descriptor/1">
+  <module
+    name="$g1.$1"
+    slot="main">
+    <directives>
+      <inherit-slot>false</inherit-slot>
+    </directives>
+
+    <match>
+      <includes>
+        <include>
+          <groupId>(de.smartics.jboss.extension)</groupId>
+          <artifactId>(smartics-jboss-counter-extension)</artifactId>
+        </include>
+      </includes>
+    </match>
+  </module>
+</modules>]]></source>
+        <p>
+          The directive <code>inherit-slot</code> is set to <code>false</code>
+          to indicate that the dependencies of this module should go to the
+          default slot. Otherwise all dependencies would go to the slot of its
+          module.
+        </p>
       </subsection>
     </section>
   </body>

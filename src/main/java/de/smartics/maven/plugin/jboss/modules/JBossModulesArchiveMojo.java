@@ -72,7 +72,6 @@ import de.smartics.maven.plugin.jboss.modules.domain.PrunerGenerator;
 import de.smartics.maven.plugin.jboss.modules.domain.SlotStrategy;
 import de.smartics.maven.plugin.jboss.modules.domain.TransitiveDependencyResolver;
 import de.smartics.maven.plugin.jboss.modules.parser.ModulesXmlLocator;
-import edu.emory.mathcs.backport.java.util.Collections;
 
 /**
  * Generates a archive containing modules from a BOM project.
@@ -271,13 +270,20 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
    * The root directories to search for modules XML files that contain module
    * descriptors.
    * <p>
-   * If not specified, the default location <code>src/etc/modules</code> is
-   * probed and - if exists - is appended.
+   * If not specified, the default locations
+   * <code>src/main/config/jboss-modules</code>, <code>src/main/resources/META-INF/jboss-modules</code>, and
+   * <code>src/etc/jboss-modules</code> is probed and - if exists - are
+   * appended.
    * </p>
-   *
+   * <p>
+   * You may want to use only one of the locations given above. Use <code>config</code>
+   * if you do not want to have the configuration files included. Use <code>resources/META-INF</code>
+   * if they should and use <code>etc</code> if they should not, but be stored
+   * outside the <code>main</code> folder.
+   * </p>
    * <pre>
    * &lt;modules&gt;
-   *   &lt;dir&gt;src/etc/modules&lt;/dir&gt;
+   *   &lt;dir&gt;src/etc/jboss-modules&lt;/dir&gt;
    * &lt;/modules&gt;
    * </pre>
    *
@@ -382,17 +388,13 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
     }
   }
 
-  @SuppressWarnings("unchecked")
   private List<File> calcModulesRootDirectories()
   {
     if (modules == null)
     {
-      final String defaultDir = "src/etc/modules";
-      final File rootDirectory = new File(project.getBasedir(), defaultDir);
-      if (rootDirectory.isDirectory())
-      {
-        modules = Collections.singletonList(defaultDir);
-      }
+      addDefaultDirIfExists("src/etc/jboss-modules");
+      addDefaultDirIfExists("src/main/config/jboss-modules");
+      addDefaultDirIfExists("src/main/resources/META-INF/jboss-modules");
     }
 
     if (modules != null)
@@ -418,6 +420,19 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
     }
 
     return new ArrayList<File>(0);
+  }
+
+  private void addDefaultDirIfExists(final String defaultDir)
+  {
+    if (modules == null)
+    {
+      modules = new ArrayList<String>(2);
+    }
+    final File rootDirectory = new File(project.getBasedir(), defaultDir);
+    if (rootDirectory.isDirectory())
+    {
+      modules.add(defaultDir);
+    }
   }
 
   private void runModuleCreation(final List<Dependency> dependencies)
