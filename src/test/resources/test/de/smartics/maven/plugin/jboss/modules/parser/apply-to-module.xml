@@ -33,7 +33,13 @@
 
       <dependencies>
         <module name="javax.api" />
-        <module name="javax.xml.stream.api" />
+        <module name="javax.xml.stream.api">
+          <imports>
+            <exclude-set>
+              <path name="org.jboss.example.tests" />
+            </exclude-set>
+          </imports>
+        </module>
       </dependencies>
 
       <exports>

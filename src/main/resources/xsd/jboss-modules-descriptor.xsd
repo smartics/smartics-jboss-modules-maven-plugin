@@ -346,7 +346,7 @@
           <xsd:sequence>
             <xsd:element
               name="match"
-              type="ModuleMatch">
+              type="DependencyMatch">
               <xsd:annotation>
                 <xsd:documentation>
                   The element to match modules by name. A matched module will get the additional
@@ -356,7 +356,7 @@
             </xsd:element>
             <xsd:element
               name="apply"
-              type="ModuleApply">
+              type="DependencyApply">
               <xsd:annotation>
                 <xsd:documentation>
                   The information to be applied on a module match.
@@ -369,7 +369,7 @@
     </xsd:sequence>
   </xsd:complexType>
 
-  <xsd:complexType name="ModuleMatch">
+  <xsd:complexType name="DependencyMatch">
     <xsd:annotation>
       <xsd:documentation>
         Matches modules by their names. A matched module will get the
@@ -444,7 +444,7 @@
     </xsd:sequence>
   </xsd:complexType>
 
-  <xsd:complexType name="ModuleApply">
+  <xsd:complexType name="DependencyApply">
     <xsd:annotation>
       <xsd:documentation>
         The information to apply to module dependencies.
@@ -493,7 +493,7 @@
       </xsd:element>
       <xsd:element
         name="imports"
-        type="ModuleDependencyImExports"
+        type="ModuleDependenciesImExports"
         minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>
@@ -503,7 +503,7 @@
       </xsd:element>
       <xsd:element
         name="exports"
-        type="ModuleDependencyImExports"
+        type="ModuleDependenciesImExports"
         minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>
@@ -526,111 +526,6 @@
       <xsd:enumeration value="none" />
     </xsd:restriction>
   </xsd:simpleType>
-
-  <xsd:complexType name="ModuleDependencyImExports">
-    <xsd:annotation>
-      <xsd:documentation>
-        The import or export of resources.
-      </xsd:documentation>
-    </xsd:annotation>
-    <xsd:choice maxOccurs="unbounded">
-      <xsd:element name="include">
-        <xsd:annotation>
-          <xsd:documentation>
-            A single include.
-          </xsd:documentation>
-        </xsd:annotation>
-        <xsd:complexType>
-          <xsd:attribute
-            name="path"
-            type="xsd:string"
-            use="required">
-            <xsd:annotation>
-              <xsd:documentation>
-                The path to include.
-              </xsd:documentation>
-            </xsd:annotation>
-          </xsd:attribute>
-        </xsd:complexType>
-      </xsd:element>
-
-      <xsd:element name="include-set">
-        <xsd:annotation>
-          <xsd:documentation>
-            A set of includes.
-          </xsd:documentation>
-        </xsd:annotation>
-        <xsd:complexType>
-          <xsd:sequence>
-            <xsd:element
-              name="path"
-              maxOccurs="unbounded">
-              <xsd:complexType>
-                <xsd:attribute
-                  name="name"
-                  type="xsd:string"
-                  use="required">
-                  <xsd:annotation>
-                    <xsd:documentation>
-                      The path to exclude.
-                    </xsd:documentation>
-                  </xsd:annotation>
-                </xsd:attribute>
-              </xsd:complexType>
-            </xsd:element>
-          </xsd:sequence>
-        </xsd:complexType>
-      </xsd:element>
-
-      <xsd:element name="exclude">
-        <xsd:annotation>
-          <xsd:documentation>
-            A single exclude.
-          </xsd:documentation>
-        </xsd:annotation>
-        <xsd:complexType>
-          <xsd:attribute
-            name="path"
-            type="xsd:string"
-            use="required">
-            <xsd:annotation>
-              <xsd:documentation>
-                The path to exclude.
-              </xsd:documentation>
-            </xsd:annotation>
-          </xsd:attribute>
-        </xsd:complexType>
-      </xsd:element>
-
-      <xsd:element name="exclude-set">
-        <xsd:annotation>
-          <xsd:documentation>
-            A set of excludes.
-          </xsd:documentation>
-        </xsd:annotation>
-        <xsd:complexType>
-          <xsd:sequence>
-            <xsd:element
-              name="path"
-              maxOccurs="unbounded">
-              <xsd:complexType>
-                <xsd:attribute
-                  name="name"
-                  type="xsd:string"
-                  use="required">
-                  <xsd:annotation>
-                    <xsd:documentation>
-                      The path to exclude.
-                    </xsd:documentation>
-                  </xsd:annotation>
-                </xsd:attribute>
-              </xsd:complexType>
-            </xsd:element>
-          </xsd:sequence>
-        </xsd:complexType>
-      </xsd:element>
-    </xsd:choice>
-  </xsd:complexType>
 
   <xsd:complexType name="ApplyToModule">
     <xsd:annotation>
@@ -729,118 +624,24 @@
                 <xsd:sequence>
                   <xsd:element
                     name="imports"
-                    minOccurs="0">
+                    minOccurs="0"
+                    type="ModuleDependenciesImExports">
                     <xsd:annotation>
                       <xsd:documentation>
                         As of the module.xml.
                       </xsd:documentation>
                     </xsd:annotation>
-                    <xsd:complexType>
-                      <xsd:sequence>
-                        <xsd:element
-                          name="include"
-                          minOccurs="0"
-                          maxOccurs="unbounded">
-                          <xsd:annotation>
-                            <xsd:documentation>
-                              A single include.
-                            </xsd:documentation>
-                          </xsd:annotation>
-                          <xsd:complexType>
-                            <xsd:attribute
-                              name="path"
-                              type="xsd:string"
-                              use="required">
-                              <xsd:annotation>
-                                <xsd:documentation>
-                                  The path to include.
-                                </xsd:documentation>
-                              </xsd:annotation>
-                            </xsd:attribute>
-                          </xsd:complexType>
-                        </xsd:element>
-                        <xsd:element
-                          name="exclude"
-                          minOccurs="0"
-                          maxOccurs="unbounded">
-                          <xsd:annotation>
-                            <xsd:documentation>
-                              A single exclude.
-                            </xsd:documentation>
-                          </xsd:annotation>
-                          <xsd:complexType>
-                            <xsd:attribute
-                              name="path"
-                              type="xsd:string"
-                              use="required">
-                              <xsd:annotation>
-                                <xsd:documentation>
-                                  The path to exclude.
-                                </xsd:documentation>
-                              </xsd:annotation>
-                            </xsd:attribute>
-                          </xsd:complexType>
-                        </xsd:element>
-                      </xsd:sequence>
-                    </xsd:complexType>
                   </xsd:element>
 
                   <xsd:element
                     name="exports"
-                    minOccurs="0">
+                    minOccurs="0"
+                    type="ModuleDependenciesImExports">
                     <xsd:annotation>
                       <xsd:documentation>
                         As of the module.xml.
                       </xsd:documentation>
                     </xsd:annotation>
-                    <xsd:complexType>
-                      <xsd:sequence>
-                        <xsd:element
-                          name="include"
-                          minOccurs="0"
-                          maxOccurs="unbounded">
-                          <xsd:annotation>
-                            <xsd:documentation>
-                              A single include.
-                            </xsd:documentation>
-                          </xsd:annotation>
-                          <xsd:complexType>
-                            <xsd:attribute
-                              name="path"
-                              type="xsd:string"
-                              use="required">
-                              <xsd:annotation>
-                                <xsd:documentation>
-                                  The path to include.
-                                </xsd:documentation>
-                              </xsd:annotation>
-                            </xsd:attribute>
-                          </xsd:complexType>
-                        </xsd:element>
-                        <xsd:element
-                          name="exclude"
-                          minOccurs="0"
-                          maxOccurs="unbounded">
-                          <xsd:annotation>
-                            <xsd:documentation>
-                              A single exclude.
-                            </xsd:documentation>
-                          </xsd:annotation>
-                          <xsd:complexType>
-                            <xsd:attribute
-                              name="path"
-                              type="xsd:string"
-                              use="required">
-                              <xsd:annotation>
-                                <xsd:documentation>
-                                  The path to exclude.
-                                </xsd:documentation>
-                              </xsd:annotation>
-                            </xsd:attribute>
-                          </xsd:complexType>
-                        </xsd:element>
-                      </xsd:sequence>
-                    </xsd:complexType>
                   </xsd:element>
                 </xsd:sequence>
                 <xsd:attribute
@@ -911,55 +712,92 @@
                 </xsd:attribute>
               </xsd:complexType>
             </xsd:element>
-
           </xsd:choice>
         </xsd:complexType>
       </xsd:element>
 
       <xsd:element
         name="exports"
-        minOccurs="0">
+        minOccurs="0"
+        type="ModuleDependenciesImExports">
         <xsd:annotation>
           <xsd:documentation>
             As of the module.xml.
           </xsd:documentation>
         </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ModuleDependenciesImExports">
+    <xsd:annotation>
+      <xsd:documentation>
+        The import or export of resources.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:choice maxOccurs="unbounded">
+      <xsd:element
+        name="include"
+        minOccurs="0"
+        maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>
+            A single include.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:attribute
+            name="path"
+            type="xsd:string"
+            use="required">
+            <xsd:annotation>
+              <xsd:documentation>
+                The path to include.
+              </xsd:documentation>
+            </xsd:annotation>
+          </xsd:attribute>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element
+        name="exclude"
+        minOccurs="0"
+        maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>
+            A single exclude.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:attribute
+            name="path"
+            type="xsd:string"
+            use="required">
+            <xsd:annotation>
+              <xsd:documentation>
+                The path to exclude.
+              </xsd:documentation>
+            </xsd:annotation>
+          </xsd:attribute>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element
+        name="include-set"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>
+            A set of includes.
+          </xsd:documentation>
+        </xsd:annotation>
         <xsd:complexType>
           <xsd:sequence>
             <xsd:element
-              name="include"
-              minOccurs="0"
+              name="path"
               maxOccurs="unbounded">
-              <xsd:annotation>
-                <xsd:documentation>
-                  A single include.
-                </xsd:documentation>
-              </xsd:annotation>
               <xsd:complexType>
                 <xsd:attribute
-                  name="path"
-                  type="xsd:string"
-                  use="required">
-                  <xsd:annotation>
-                    <xsd:documentation>
-                      The path to include.
-                    </xsd:documentation>
-                  </xsd:annotation>
-                </xsd:attribute>
-              </xsd:complexType>
-            </xsd:element>
-            <xsd:element
-              name="exclude"
-              minOccurs="0"
-              maxOccurs="unbounded">
-              <xsd:annotation>
-                <xsd:documentation>
-                  A single exclude.
-                </xsd:documentation>
-              </xsd:annotation>
-              <xsd:complexType>
-                <xsd:attribute
-                  name="path"
+                  name="name"
                   type="xsd:string"
                   use="required">
                   <xsd:annotation>
@@ -973,6 +811,37 @@
           </xsd:sequence>
         </xsd:complexType>
       </xsd:element>
-    </xsd:sequence>
+
+      <xsd:element
+        name="exclude-set"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>
+            A set of excludes.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element
+              name="path"
+              maxOccurs="unbounded">
+              <xsd:complexType>
+                <xsd:attribute
+                  name="name"
+                  type="xsd:string"
+                  use="required">
+                  <xsd:annotation>
+                    <xsd:documentation>
+                      The path to exclude.
+                    </xsd:documentation>
+                  </xsd:annotation>
+                </xsd:attribute>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:choice>
   </xsd:complexType>
+
 </xsd:schema>
