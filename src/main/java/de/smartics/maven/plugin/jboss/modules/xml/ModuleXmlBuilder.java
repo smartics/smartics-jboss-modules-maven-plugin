@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -134,6 +135,43 @@ public final class ModuleXmlBuilder
     {
       this.key = key;
       this.dependency = dependency;
+    }
+
+    /**
+     * Returns the hash code of the object.
+     *
+     * @return the hash code.
+     */
+    @Override
+    public int hashCode()
+    {
+      return ObjectUtils.hashCode(key);
+    }
+
+    /**
+     * Returns <code>true</code> if the given object is semantically equal to
+     * the given object, <code>false</code> otherwise.
+     *
+     * @param object the instance to compare to.
+     * @return <code>true</code> if the given object is semantically equal to
+     *         the given object, <code>false</code> otherwise.
+     */
+    @Override
+    public boolean equals(final Object object)
+    {
+      if (this == object)
+      {
+        return true;
+      }
+      else if (object == null || getClass() != object.getClass())
+      {
+        return false;
+      }
+
+      final ModuleXmlBuilder.SortElement other =
+          (ModuleXmlBuilder.SortElement) object;
+
+      return ObjectUtils.equals(key, other.key);
     }
 
     @Override

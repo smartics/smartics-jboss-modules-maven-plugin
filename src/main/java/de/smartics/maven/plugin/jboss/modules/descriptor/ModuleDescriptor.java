@@ -441,7 +441,7 @@ public final class ModuleDescriptor
    */
   public void applySlot(final String slot)
   {
-    if (slot == null)
+    if (this.slot == null)
     {
       this.slot = slot;
     }

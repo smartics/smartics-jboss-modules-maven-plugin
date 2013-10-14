@@ -20,6 +20,8 @@ import org.apache.maven.artifact.versioning.ArtifactVersion;
 import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
 import org.sonatype.aether.artifact.Artifact;
 
+import edu.emory.mathcs.backport.java.util.Arrays;
+
 /**
  * The naming strategy for module slots.
  */
@@ -88,7 +90,8 @@ public enum SlotStrategy
     }
 
     throw new IllegalArgumentException(String.format(
-        "Invalid slot strategy '%s'. Allowed values are: %s", id, values()));
+        "Invalid slot strategy '%s'. Allowed values are: %s", id,
+        Arrays.toString(values())));
   }
 
   // --- object basics ------------------------------------------------------
