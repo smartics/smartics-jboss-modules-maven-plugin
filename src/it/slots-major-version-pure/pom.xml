@@ -43,7 +43,7 @@
           </execution>
         </executions>
         <configuration>
-          <!-- Default: <slotStrategy>version-major</slotStrategy>  -->
+          <slotStrategy>version-major</slotStrategy>
           <followOptionalDependencies>true</followOptionalDependencies>
         </configuration>
       </plugin>

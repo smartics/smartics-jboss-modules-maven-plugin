@@ -42,9 +42,6 @@
             <phase>package</phase>
           </execution>
         </executions>
-        <configuration>
-          <slotStrategy>main</slotStrategy>
-        </configuration>
       </plugin>
     </plugins>
   </build>

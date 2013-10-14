@@ -247,7 +247,7 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
    *
    * @since 1.0
    */
-  @Parameter(defaultValue = "version-major")
+  @Parameter(defaultValue = "main")
   private String slotStrategy;
 
   /**

@@ -42,7 +42,6 @@
         </executions>
         <configuration>
           <attach>false</attach>
-          <slotStrategy>main</slotStrategy>
         </configuration>
       </plugin>
     </plugins>

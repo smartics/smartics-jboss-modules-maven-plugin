@@ -43,7 +43,6 @@
           </execution>
         </executions>
         <configuration>
-          <slotStrategy>main</slotStrategy>
           <defaultSlot>def</defaultSlot>
           <attach>false</attach>
         </configuration>

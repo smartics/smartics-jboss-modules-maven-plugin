@@ -48,7 +48,6 @@
           </execution>
         </executions>
         <configuration>
-          <slotStrategy>main</slotStrategy>
           <attach>false</attach>
         </configuration>
       </plugin>

@@ -43,8 +43,8 @@
           </execution>
         </executions>
         <configuration>
+          <slotStrategy>version-major</slotStrategy>
           <defaultSlot>myProd-</defaultSlot>
-          <!-- Default: <slotStrategy>version-major</slotStrategy>  -->
           <followOptionalDependencies>true</followOptionalDependencies>
         </configuration>
       </plugin>

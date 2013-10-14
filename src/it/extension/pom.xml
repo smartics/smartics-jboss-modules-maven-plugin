@@ -47,7 +47,6 @@
           </execution>
         </executions>
         <configuration>
-          <slotStrategy>main</slotStrategy>
           <defaultSlot>other</defaultSlot>
           <attach>false</attach>
         </configuration>
