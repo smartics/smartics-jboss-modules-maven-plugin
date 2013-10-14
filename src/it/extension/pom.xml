@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+
+<project
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>de.smartics.test</groupId>
+  <artifactId>extension</artifactId>
+  <version>testing</version>
+  <packaging>jar</packaging>
+
+  <name>${project.artifactId}</name>
+  <description>
+    A test case for the smartics-jboss-modules-maven-plugin.
+  </description>
+  <url>http://www.smartics.de/test</url>
+
+  <dependencies>
+    <dependency>
+      <groupId>de.smartics.util</groupId>
+      <artifactId>smartics-jboss-utils</artifactId>
+      <version>0.1.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>de.smartics.util</groupId>
+      <artifactId>smartics-validation-utils</artifactId>
+      <version>0.1.3</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>de.smartics.maven.plugin</groupId>
+        <artifactId>smartics-jboss-modules-maven-plugin</artifactId>
+        <version>@project.version@</version>
+        <executions>
+          <execution>
+            <id>create-modules-archive</id>
+            <goals>
+              <goal>create-modules-archive</goal>
+            </goals>
+            <phase>package</phase>
+          </execution>
+        </executions>
+        <configuration>
+          <slotStrategy>main</slotStrategy>
+          <defaultSlot>other</defaultSlot>
+          <attach>false</attach>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
