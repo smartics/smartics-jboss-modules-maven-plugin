@@ -422,6 +422,45 @@
           </excludes>
         </configuration>
       </plugin>
+
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.7</version><!--$NO-MVN-MAN-VER$-->
+        <executions>
+          <execution>
+            <id>transform</id>
+            <phase>pre-site</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <xslt
+                  in="${basedir}/src/main/resources/xsd/jboss-modules-descriptor.xsd"
+                  out="${project.build.directory}/generated-site/xdoc/jboss-modules-descriptor-doc.xml"
+                  style="${basedir}/src/etc/xsl/create-modules-doc.xsl" />
+                <copy todir="${project.build.directory}/generated-site/resources/download">
+                  <fileset dir="${basedir}/src/main/resources/">
+                    <include name="**/*.xsd" />
+                  </fileset>
+                </copy>
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>org.apache.ant</groupId>
+            <artifactId>ant-nodeps</artifactId>
+            <version>1.8.1</version>
+          </dependency>
+          <dependency>
+            <groupId>org.apache.ant</groupId>
+            <artifactId>ant-trax</artifactId>
+            <version>1.8.0</version>
+          </dependency>
+        </dependencies>
+      </plugin>
     </plugins>
   </build>
 

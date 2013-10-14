@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 
     Copyright 2013 smartics, Kronseder & Reiner GmbH
@@ -16,7 +16,49 @@
     limitations under the License.
 
 -->
-<modules xmlns="http://smartics.de/ns/jboss-modules-descriptor/1">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  version="1.0">
+  	<xsl:output
+		   method="xml"
+		   indent="yes"
+		   omit-xml-declaration="no"
+		   media-type="text/xml"/>
+
+
+	<xsl:template match="/">
+		<document>
+			<properties>
+				<title>The smartics JBoss Modules XSD</title>
+			</properties>
+			<body>
+				<section name="The smartics JBoss Modules XSD">
+          <p>
+            The smartics JBoss Modules XSD defines the structure for documents
+            that specify module descriptors. A module descriptor matches
+            Maven artifacts by its <code>groupId</code> and/or
+            <code>artifactId</code> and allows to apply additional module
+            information.
+          </p>
+          <p>
+            This page provides a <a href="#Document_Outline">document outline</a>
+            and <a href="#Document_Schema">document schema</a> (XSD).
+          </p>
+          <p>
+            The XSD is also available for download: <a href="download/xsd/smartics-jboss-modules.xsd">Download smartics-jboss-modules.xsd</a>.
+          </p>
+          <p>
+            For more information on JBoss modules, please refer to
+            <a href="https://docs.jboss.org/author/display/MODULES/Module+descriptors">Module dependencies</a>
+            on the <a href="https://docs.jboss.org/author/display/MODULES/Home">JBoss Modules Space</a> at
+            <a href="http://www.jboss.org/">JBoss</a>.
+          </p>
+
+          <subsection name="Document Outline">
+            <p>
+              Here is an outline of a document instance:
+            </p>
+            <source><![CDATA[<modules xmlns="http://smartics.de/ns/jboss-modules-descriptor/1">
   <module
     name=""
     slot="">
@@ -146,4 +188,26 @@
     </apply-to-module>
   </module>
   ...
-</modules>
+</modules>]]></source>
+          </subsection>
+          <subsection name="Document Schema">
+            <p>
+              <a href="download/xsd/smartics-jboss-modules.xsd">Download smartics-jboss-modules.xsd</a>
+            </p>
+            <p>
+              This is the XML schema for modules documents:
+            </p>
+  					<source><xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text>
+  			  		<xsl:apply-templates select="xs:schema"/>
+  			  		<xsl:text disable-output-escaping="yes">]]&gt;</xsl:text>
+  			    </source>
+          </subsection>
+			  </section>
+			</body>
+		</document>
+	</xsl:template>
+
+  <xsl:template match="xs:schema">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+</xsl:stylesheet>

@@ -61,7 +61,7 @@
 
     <menu name="Documentation">
       <item name="Usage Modules"   href="usage-modules.html"/>
-      <item name="Module Outline"  href="module.html"/>
+      <item name="Modules XSD"     href="jboss-modules-descriptor-doc.html"/>
       <item name="Import Module Descriptors"  href="import-modules.html"/>
       <item name="Usage Jandex"    href="usage-jandex.html"/>
       <item name="Usage Index"     href="usage-index.html"/>
