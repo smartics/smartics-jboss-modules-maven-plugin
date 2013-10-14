@@ -320,13 +320,7 @@ final class ModulesDescriptorBuilder
     final String elementName = child.getName();
     if ("dependencies".equals(elementName))
     {
-      for (final Element moduleElement : child.getChildren("module",
-          ModuleXmlBuilder.NS))
-      {
-        final String name = moduleElement.getAttributeValue("name");
-        final String fragment = outputter.outputString(moduleElement);
-        mBuilder.addDependencyXml(name, fragment);
-      }
+      handleDependencies(mBuilder, outputter, child);
     }
     else if ("properties".equals(elementName))
     {
@@ -351,6 +345,30 @@ final class ModulesDescriptorBuilder
     else
     {
       // TODO warn or add to end?
+    }
+  }
+
+  private void handleDependencies(final ApplyToModule.Builder mBuilder,
+      final XMLOutputter outputter, final Element child)
+  {
+    int nonModuleCounter = 0;
+
+    for (final Element childElement : child.getChildren())
+    {
+      final String childElementName = childElement.getName();
+      final String name;
+      if ("module".equals(childElementName))
+      {
+        name = childElement.getAttributeValue("name");
+      }
+      else
+      {
+        // i.e. system, maybe others.
+        nonModuleCounter++;
+        name = "non-module@" + nonModuleCounter;
+      }
+      final String fragment = outputter.outputString(childElement);
+      mBuilder.addDependencyXml(name, fragment);
     }
   }
 
