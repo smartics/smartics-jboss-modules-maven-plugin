@@ -31,10 +31,10 @@ assert 'jdom2-2.0.4.jar' == resourceRoots[0].@path.text()
 
 def mods = module.dependencies.module;
 assert 4 == mods.size()
-assert 'org.apache.xalan' == mods[0].@name.text()
-assert 'org.apache.xerces' == mods[1].@name.text()
-assert 'org.jaxen' == mods[2].@name.text()
-assert 'javax.api' == mods[3].@name.text()
+assert 'javax.api' == mods[0].@name.text()
+assert 'org.apache.xalan' == mods[1].@name.text()
+assert 'org.apache.xerces' == mods[2].@name.text()
+assert 'org.jaxen' == mods[3].@name.text()
 
 /*
 <?xml version="1.0" encoding="UTF-8"?>
@@ -43,10 +43,10 @@ assert 'javax.api' == mods[3].@name.text()
     <resource-root path="jdom2-2.0.4.jar" />
   </resources>
   <dependencies>
+    <module name="javax.api" />
     <module name="org.apache.xalan" optional="true" />
     <module name="org.apache.xerces" optional="true" />
     <module name="org.jaxen" optional="true" />
-    <module name="javax.api" />
   </dependencies>
 </module>
 */

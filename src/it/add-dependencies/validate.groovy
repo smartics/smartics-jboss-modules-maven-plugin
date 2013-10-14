@@ -34,8 +34,8 @@ assert 'commons-logging-1.1.1.jar' == resourceRoots[1].@path.text()
 
 def mods = module.dependencies.module;
 assert 6 == mods.size()
-assert 'javax.api' == mods[4].@name.text()
-assert 'javax.xml.stream.api' == mods[5].@name.text()
+assert 'javax.api' == mods[0].@name.text()
+assert 'javax.xml.stream.api' == mods[1].@name.text()
 
 /*
 <?xml version="1.0" encoding="UTF-8"?>
@@ -45,12 +45,12 @@ assert 'javax.xml.stream.api' == mods[5].@name.text()
     <resource-root path="commons-logging-1.1.1.jar" />
   </resources>
   <dependencies>
+    <module name="javax.api" />
+    <module name="javax.xml.stream.api" />
     <module name="avalon-framework" optional="true" />
     <module name="javax.servlet.servlet-api" optional="true" />
     <module name="log4j" optional="true" />
     <module name="logkit" optional="true" />
-    <module name="javax.api" />
-    <module name="javax.xml.stream.api" />
   </dependencies>
 </module>
 */

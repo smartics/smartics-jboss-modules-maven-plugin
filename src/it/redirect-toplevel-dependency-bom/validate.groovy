@@ -28,9 +28,9 @@ def module = new XmlSlurper().parse(modulesFile)
     <resource-root path="smartics-jboss-utils-0.1.1.jar" />
   </resources>
   <dependencies>
+    <module name="de.smartics.util.smartics-validation-utils" slot="other-v" />
     <module name="de.smartics.util.smartics-commons" slot="other" />
     <module name="org.jboss.jboss-vfs" slot="other" />
-    <module name="de.smartics.util.smartics-validation-utils" slot="other-v" />
   </dependencies>
 </module>*/
 def name = module.@name.text()
@@ -43,12 +43,12 @@ assert 'smartics-jboss-utils-0.1.1.jar' == resourceRoots[0].@path.text()
 
 def mods = module.dependencies.module;
 assert 3 == mods.size()
-assert 'de.smartics.util.smartics-commons' == mods[0].@name.text()
-assert 'other' == mods[0].@slot.text()
-assert 'org.jboss.jboss-vfs' == mods[1].@name.text()
+assert 'de.smartics.util.smartics-validation-utils' == mods[0].@name.text()
+assert 'other-v' == mods[0].@slot.text()
+assert 'de.smartics.util.smartics-commons' == mods[1].@name.text()
 assert 'other' == mods[1].@slot.text()
-assert 'de.smartics.util.smartics-validation-utils' == mods[2].@name.text()
-assert 'other-v' == mods[2].@slot.text()
+assert 'org.jboss.jboss-vfs' == mods[2].@name.text()
+assert 'other' == mods[2].@slot.text()
 
 
 /* --------------------- */

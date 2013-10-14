@@ -276,9 +276,8 @@ public final class ModuleXmlBuilder
     {
       final Element dependenciesElement = new Element("dependencies", NS);
 
-      // FIXME: Static should go before resolved
-      addResolvedDependencies(module, dependencies, dependenciesElement);
       addStaticDependencies(staticDependencies, dependenciesElement);
+      addResolvedDependencies(module, dependencies, dependenciesElement);
 
       root.addContent(dependenciesElement);
     }

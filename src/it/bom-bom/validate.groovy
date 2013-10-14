@@ -42,10 +42,10 @@ def module = new XmlSlurper().parse(modulesFile)
     <resource-root path="test-setup-artifacts-domain-1.0.0.jar" />
   </resources>
   <dependencies>
+    <module name="javax.api" />
     <module name="com.google.code.findbugs.jsr305" />
     <module name="commons-io" />
     <module name="commons-lang" />
-    <module name="javax.api" />
   </dependencies>
 </module>
 */
@@ -59,7 +59,7 @@ assert 'test-setup-artifacts-domain-1.0.0.jar' == resourceRoots[2].@path.text()
 
 def mods = module.dependencies.module;
 assert 4 == mods.size()
-assert 'com.google.code.findbugs.jsr305' == mods[0].@name.text()
-assert 'commons-io' == mods[1].@name.text()
-assert 'commons-lang' == mods[2].@name.text()
-assert 'javax.api' == mods[3].@name.text()
+assert 'javax.api' == mods[0].@name.text()
+assert 'com.google.code.findbugs.jsr305' == mods[1].@name.text()
+assert 'commons-io' == mods[2].@name.text()
+assert 'commons-lang' == mods[3].@name.text()
