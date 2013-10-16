@@ -189,14 +189,14 @@ public final class ModuleXmlBuilder
   private static String calcSlot(final ExecutionContext context,
       final ModuleDescriptor module, final Collection<Dependency> dependencies)
   {
+    final SlotStrategy strategy = context.getSlotStrategy();
     final String specifiedSlot = module.getSlot();
-    if (StringUtils.isNotBlank(specifiedSlot))
+    if (StringUtils.isNotBlank(specifiedSlot) && strategy == SlotStrategy.MAIN)
     {
       return specifiedSlot;
     }
 
     final String defaultSlot = context.getDefaultSlot();
-    final SlotStrategy strategy = context.getSlotStrategy();
     if (SlotStrategy.VERSION_MAJOR == strategy)
     {
       final Artifact artifact = calcArtifact(dependencies);

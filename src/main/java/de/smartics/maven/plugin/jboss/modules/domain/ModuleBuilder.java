@@ -126,11 +126,10 @@ public final class ModuleBuilder
 
   private String calcSlot()
   {
+    final SlotStrategy strategy = context.getSlotStrategy();
     String slot = module.getSlot();
-    if (StringUtils.isBlank(slot))
+    if (StringUtils.isBlank(slot) || strategy != SlotStrategy.MAIN)
     {
-      final SlotStrategy strategy = context.getSlotStrategy();
-
       if (!dependencies.isEmpty())
       {
         final Artifact artifact = dependencies.get(0).getArtifact();
