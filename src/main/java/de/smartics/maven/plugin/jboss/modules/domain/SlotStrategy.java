@@ -132,6 +132,24 @@ public enum SlotStrategy
     return StringUtils.isBlank(defaultSlot) ? MAIN_SLOT : defaultSlot;
   }
 
+  /**
+   * Calculates the name for the slot.
+   *
+   * @param defaultSlot the name of the default slot. May be blank.
+   * @param moduleSlot the name of the module slot. May be blank.
+   * @param artifact the artifact with additional information. If
+   *          <code>null</code>: a static prefix will be assumed.
+   * @return the name of the slot.
+   */
+  public String calcSlot(final String defaultSlot, final String moduleSlot,
+      final Artifact artifact)
+  {
+    final String fallBackSlot =
+        StringUtils.isBlank(moduleSlot) ? defaultSlot : moduleSlot;
+    final String slot = calcSlot(artifact, fallBackSlot);
+    return slot;
+  }
+
   private String calcVersion(final Artifact artifact)
   {
     if (artifact != null)

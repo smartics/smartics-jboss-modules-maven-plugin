@@ -190,23 +190,11 @@ public final class ModuleXmlBuilder
       final ModuleDescriptor module, final Collection<Dependency> dependencies)
   {
     final SlotStrategy strategy = context.getSlotStrategy();
-    final String specifiedSlot = module.getSlot();
-    if (StringUtils.isNotBlank(specifiedSlot) && strategy == SlotStrategy.MAIN)
-    {
-      return specifiedSlot;
-    }
-
+    final String moduleSlot = module.getSlot();
     final String defaultSlot = context.getDefaultSlot();
-    if (SlotStrategy.VERSION_MAJOR == strategy)
-    {
-      final Artifact artifact = calcArtifact(dependencies);
-      final String slot = strategy.calcSlot(artifact, defaultSlot);
-      return slot;
-    }
-    else
-    {
-      return defaultSlot;
-    }
+    final Artifact artifact = calcArtifact(dependencies);
+    final String slot = strategy.calcSlot(defaultSlot, moduleSlot, artifact);
+    return slot;
   }
 
   private static Artifact calcArtifact(final Collection<Dependency> dependencies)

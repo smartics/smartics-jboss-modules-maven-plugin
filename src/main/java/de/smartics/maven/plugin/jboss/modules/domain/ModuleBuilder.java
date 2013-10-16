@@ -26,7 +26,6 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
 import org.jdom2.Document;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
@@ -74,8 +73,8 @@ public final class ModuleBuilder
    * @param module the descriptor of the module to build.
    * @param dependencies the dependencies that are part of this module.
    */
-  public ModuleBuilder(final ExecutionContext context, final ModuleDescriptor module,
-      final Collection<Dependency> dependencies)
+  public ModuleBuilder(final ExecutionContext context,
+      final ModuleDescriptor module, final Collection<Dependency> dependencies)
   {
     this.context = context;
     this.module = module;
@@ -127,21 +126,37 @@ public final class ModuleBuilder
   private String calcSlot()
   {
     final SlotStrategy strategy = context.getSlotStrategy();
-    String slot = module.getSlot();
-    if (StringUtils.isBlank(slot) || strategy != SlotStrategy.MAIN)
-    {
-      if (!dependencies.isEmpty())
-      {
-        final Artifact artifact = dependencies.get(0).getArtifact();
-        slot = strategy.calcSlot(artifact, context.getDefaultSlot());
-      }
-      else
-      {
-        slot = SlotStrategy.MAIN_SLOT;
-      }
-    }
+
+    final Artifact artifact =
+        (dependencies.isEmpty() ? null : dependencies.get(0).getArtifact());
+
+    final String moduleSlot = module.getSlot();
+    final String defaultSlot = context.getDefaultSlot();
+    final String slot = strategy.calcSlot(defaultSlot, moduleSlot, artifact);
     return slot;
   }
+
+//  private static String calcSlot(final SlotStrategy strategy,
+//      final String defaultSlot, final String moduleSlot, final Artifact artifact)
+//  {
+//    final String slot;
+//    if (StringUtils.isBlank(moduleSlot) || strategy != SlotStrategy.MAIN)
+//    {
+//      if (artifact != null)
+//      {
+//        slot = strategy.calcSlot(artifact, defaultSlot);
+//      }
+//      else
+//      {
+//        slot = defaultSlot;
+//      }
+//    }
+//    else
+//    {
+//      slot = moduleSlot;
+//    }
+//    return slot;
+//  }
 
   private void createModuleXml(final File moduleFolder) throws IOException
   {
