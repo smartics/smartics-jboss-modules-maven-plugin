@@ -60,6 +60,7 @@ import de.smartics.maven.plugin.jboss.modules.aether.Mapper;
 import de.smartics.maven.plugin.jboss.modules.aether.MavenRepository;
 import de.smartics.maven.plugin.jboss.modules.aether.MojoRepositoryBuilder;
 import de.smartics.maven.plugin.jboss.modules.aether.filter.DefaultTransitiveDependencyResolver;
+import de.smartics.maven.plugin.jboss.modules.aether.filter.ExclusionFilter;
 import de.smartics.maven.plugin.jboss.modules.aether.filter.GaExclusionFilter;
 import de.smartics.maven.plugin.jboss.modules.aether.filter.TestScopeFilter;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ArtifactClusion;
@@ -641,7 +642,8 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
   {
     final List<DependencyFilter> dependencyFilters =
         new ArrayList<DependencyFilter>();
-    dependencyFilters.add(new TestScopeFilter());
+    dependencyFilters.add(TestScopeFilter.INSTANCE);
+    dependencyFilters.add(ExclusionFilter.INSTANCE);
     if (dependencyExcludes != null && !dependencyExcludes.isEmpty())
     {
       final GaExclusionFilter filter =
