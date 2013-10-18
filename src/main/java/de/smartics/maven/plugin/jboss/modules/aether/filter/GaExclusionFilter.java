@@ -15,7 +15,6 @@
  */
 package de.smartics.maven.plugin.jboss.modules.aether.filter;
 
-import java.io.Serializable;
 import java.util.List;
 
 import org.sonatype.aether.artifact.Artifact;
@@ -28,16 +27,11 @@ import de.smartics.maven.plugin.jboss.modules.descriptor.ArtifactClusion;
 /**
  * Rejects dependencies of scope <tt>test</tt>.
  */
-public final class GaExclusionFilter implements Serializable, DependencyFilter
+public final class GaExclusionFilter implements DependencyFilter
 {
   // ********************************* Fields *********************************
 
   // --- constants ------------------------------------------------------------
-
-  /**
-   * The class version identifier.
-   */
-  private static final long serialVersionUID = 1L;
 
   /**
    * The artifacts to exclude.

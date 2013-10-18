@@ -15,7 +15,6 @@
  */
 package de.smartics.maven.plugin.jboss.modules.aether.filter;
 
-import java.io.Serializable;
 import java.util.List;
 
 import org.sonatype.aether.graph.Dependency;
@@ -25,16 +24,11 @@ import org.sonatype.aether.graph.DependencyNode;
 /**
  * Rejects dependencies of scope <tt>test</tt>.
  */
-public final class TestScopeFilter implements Serializable, DependencyFilter
+public final class TestScopeFilter implements DependencyFilter
 {
   // ********************************* Fields *********************************
 
   // --- constants ------------------------------------------------------------
-
-  /**
-   * The class version identifier.
-   */
-  private static final long serialVersionUID = 1L;
 
   /**
    * The singleton instance since the filter has no state.
