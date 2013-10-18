@@ -177,6 +177,12 @@ public final class ModuleMap
               && artifact.getClassifier().equals(otherArtifact.getClassifier()) && ObjectUtils
           .equals(artifact.getFile(), otherArtifact.getFile()));
     }
+
+    @Override
+    public String toString()
+    {
+      return dependency.toString();
+    }
   }
 
   // ********************************* Methods ********************************

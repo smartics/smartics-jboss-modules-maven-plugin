@@ -180,6 +180,11 @@ public final class ModuleXmlBuilder
       return key.compareTo(o.key);
     }
 
+    @Override
+    public String toString()
+    {
+      return String.valueOf(key) + ": " + String.valueOf(dependency);
+    }
   }
 
   // ********************************* Methods ********************************
