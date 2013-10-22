@@ -16,7 +16,7 @@
 
 def base = 'target/jboss-modules/de/smartics/test/setup'
 def excludedFile = new File(basedir, base + '/test-setup-artifacts-commons/main/module.xml')
-assert !excludedFile.exists()
+assert excludedFile.exists()
 
 def modulesFile = new File(basedir, base + '/test-setup-artifacts-domain/main/module.xml')
 assert modulesFile.exists()
@@ -25,12 +25,13 @@ def module = new XmlSlurper().parse(modulesFile)
 
 /*
 <?xml version="1.0" encoding="UTF-8"?>
-<module xmlns="urn:jboss:module:1.1" name="">
+<module xmlns="urn:jboss:module:1.1" name="de.smartics.test.setup.test-setup-artifacts-domain">
   <resources>
     <resource-root path="test-setup-artifacts-domain-1.0.0.jar" />
   </resources>
   <dependencies>
     <module name="commons-lang" />
+    <module name="de.smartics.test.setup.test-setup-artifacts-commons" />
   </dependencies>
 </module>
 */
@@ -38,5 +39,6 @@ def module = new XmlSlurper().parse(modulesFile)
 assert 'de.smartics.test.setup.test-setup-artifacts-domain' == module.@name.text()
 
 def mods = module.dependencies.module;
-assert 1 == mods.size()
+assert 2 == mods.size()
 assert 'commons-lang' == mods[0].@name.text()
+assert 'de.smartics.test.setup.test-setup-artifacts-commons' == mods[1].@name.text()

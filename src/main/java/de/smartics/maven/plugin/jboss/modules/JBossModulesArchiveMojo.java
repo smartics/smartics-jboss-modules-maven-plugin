@@ -214,6 +214,14 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
   private boolean followOptionalDependencies;
 
   /**
+   * Allows to globally ignore exclusions declared in Maven dependencies.
+   *
+   * @since 1.0
+   */
+  @Parameter(defaultValue = "false")
+  private boolean ignoreDependencyExclusions;
+
+  /**
    * The name of the default slot to write to. See <code>slotStrategy</code>.
    *
    * @since 1.0
@@ -272,16 +280,19 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
    * descriptors.
    * <p>
    * If not specified, the default locations
-   * <code>src/main/config/jboss-modules</code>, <code>src/main/resources/META-INF/jboss-modules</code>, and
+   * <code>src/main/config/jboss-modules</code>,
+   * <code>src/main/resources/META-INF/jboss-modules</code>, and
    * <code>src/etc/jboss-modules</code> is probed and - if exists - are
    * appended.
    * </p>
    * <p>
-   * You may want to use only one of the locations given above. Use <code>config</code>
-   * if you do not want to have the configuration files included. Use <code>resources/META-INF</code>
-   * if they should and use <code>etc</code> if they should not, but be stored
-   * outside the <code>main</code> folder.
+   * You may want to use only one of the locations given above. Use
+   * <code>config</code> if you do not want to have the configuration files
+   * included. Use <code>resources/META-INF</code> if they should and use
+   * <code>etc</code> if they should not, but be stored outside the
+   * <code>main</code> folder.
    * </p>
+   *
    * <pre>
    * &lt;modules&gt;
    *   &lt;dir&gt;src/etc/jboss-modules&lt;/dir&gt;
@@ -643,7 +654,10 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
     final List<DependencyFilter> dependencyFilters =
         new ArrayList<DependencyFilter>();
     dependencyFilters.add(TestScopeFilter.INSTANCE);
-    dependencyFilters.add(ExclusionFilter.INSTANCE);
+    if (!ignoreDependencyExclusions)
+    {
+      dependencyFilters.add(ExclusionFilter.INSTANCE);
+    }
     if (dependencyExcludes != null && !dependencyExcludes.isEmpty())
     {
       final GaExclusionFilter filter =
