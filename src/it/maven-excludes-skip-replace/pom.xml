@@ -22,7 +22,7 @@
       <dependency>
         <groupId>de.smartics.test.setup</groupId>
         <artifactId>test-setup-artifacts-exclusion-replace</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
