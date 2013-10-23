@@ -637,7 +637,8 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
       final List<Dependency> managedDependencies)
   {
     final PrunerGenerator prunerGenerator =
-        new PrunerGenerator(dependencyExcludes, allModules);
+        new PrunerGenerator(dependencyExcludes, allModules,
+            ignoreDependencyExclusions);
     final List<DependencyFilter> dependencyFilters = createDependencyFilters();
     final MojoRepositoryBuilder builder = new MojoRepositoryBuilder();
     builder.with(repositorySystem).with(repositorySession).with(remoteRepos)

@@ -206,7 +206,9 @@ public final class MavenRepository
       final DependencyTraverser traverser =
           traverserGenerator.createDependencyTraverser(session
               .getDependencyTraverser());
-      final FilterSession filterSession = new FilterSession(session, traverser);
+      final FilterSession filterSession =
+          new FilterSession(session, traverser,
+              traverserGenerator.isIgnoreDependencyExclusions());
       final DependencyResult result =
           repositorySystem
               .resolveDependencies(filterSession, dependencyRequest);

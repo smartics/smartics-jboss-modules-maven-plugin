@@ -47,9 +47,21 @@ public class PrunerGenerator implements DependencyTraverserGenerator
    */
   private final List<ModuleDescriptor> skipModules;
 
+  /**
+   * The flag that allows to globally ignore exclusions declared in Maven
+   * dependencies.
+   */
+  private final boolean ignoreDependencyExclusions;
+
   // ****************************** Initializer *******************************
 
   // ****************************** Constructors ******************************
+
+  @Override
+  public boolean isIgnoreDependencyExclusions()
+  {
+    return ignoreDependencyExclusions;
+  }
 
   /**
    * Default constructor.
@@ -57,14 +69,18 @@ public class PrunerGenerator implements DependencyTraverserGenerator
    * @param dependencyExcludes a list of dependencies to be excluded from the
    *          transitive dependency collection process.
    * @param modules lost of modules to calculate the skip modules.
+   * @param ignoreDependencyExclusions the flag that allows to globally ignore
+   *          exclusions declared in Maven dependencies.
    */
   public PrunerGenerator(final List<ArtifactClusion> dependencyExcludes,
-      final List<ModuleDescriptor> modules)
+      final List<ModuleDescriptor> modules,
+      final boolean ignoreDependencyExclusions)
   {
     this.dependencyExcludes =
         dependencyExcludes != null ? dependencyExcludes
             : new ArrayList<ArtifactClusion>();
     this.skipModules = calcSkipModules(modules);
+    this.ignoreDependencyExclusions = ignoreDependencyExclusions;
   }
 
   // ****************************** Inner Classes *****************************
@@ -75,13 +91,15 @@ public class PrunerGenerator implements DependencyTraverserGenerator
 
   // --- get&set --------------------------------------------------------------
 
-  private List<ModuleDescriptor> calcSkipModules(final List<ModuleDescriptor> modules)
+  private List<ModuleDescriptor> calcSkipModules(
+      final List<ModuleDescriptor> modules)
   {
     if (modules == null)
     {
       return new ArrayList<ModuleDescriptor>();
     }
-    final List<ModuleDescriptor> skipModules = new ArrayList<ModuleDescriptor>(modules.size());
+    final List<ModuleDescriptor> skipModules =
+        new ArrayList<ModuleDescriptor>(modules.size());
     for (final ModuleDescriptor module : modules)
     {
       if (module.getDirectives().getSkip())

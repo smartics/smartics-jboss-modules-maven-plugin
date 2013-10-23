@@ -16,8 +16,12 @@
 package de.smartics.maven.plugin.jboss.modules.aether;
 
 import org.sonatype.aether.RepositorySystemSession;
+import org.sonatype.aether.collection.DependencySelector;
 import org.sonatype.aether.collection.DependencyTraverser;
 import org.sonatype.aether.util.FilterRepositorySystemSession;
+import org.sonatype.aether.util.graph.selector.AndDependencySelector;
+import org.sonatype.aether.util.graph.selector.OptionalDependencySelector;
+import org.sonatype.aether.util.graph.selector.ScopeDependencySelector;
 
 import de.smartics.util.lang.Arg;
 
@@ -37,6 +41,12 @@ public class FilterSession extends FilterRepositorySystemSession
    */
   private final DependencyTraverser traverser;
 
+  /**
+   * The flag that allows to globally ignore exclusions declared in Maven
+   * dependencies.
+   */
+  private final boolean ignoreDependencyExclusions;
+
   // ****************************** Initializer *******************************
 
   // ****************************** Constructors ******************************
@@ -54,14 +64,18 @@ public class FilterSession extends FilterRepositorySystemSession
    *
    * @param session the repository system session to wrap.
    * @param traverser the traverser to prune.
+   * @param ignoreDependencyExclusions the flag that allows to globally ignore
+   *          exclusions declared in Maven dependencies.
    * @throws NullPointerException if {@code session} or {@code traverser} is
    *           <code>null</code>.
    */
   public FilterSession(final RepositorySystemSession session,
-      final DependencyTraverser traverser) throws NullPointerException
+      final DependencyTraverser traverser,
+      final boolean ignoreDependencyExclusions) throws NullPointerException
   {
     super(session);
     this.traverser = Arg.checkNotNull("traverser", traverser);
+    this.ignoreDependencyExclusions = ignoreDependencyExclusions;
   }
 
   // --- business -------------------------------------------------------------
@@ -70,6 +84,21 @@ public class FilterSession extends FilterRepositorySystemSession
   public DependencyTraverser getDependencyTraverser()
   {
     return traverser;
+  }
+
+  @Override
+  public DependencySelector getDependencySelector()
+  {
+    if (ignoreDependencyExclusions)
+    {
+      // Unfortunately we cannot analyze the super dependency selector ...
+      return new AndDependencySelector(new ScopeDependencySelector("test"),
+          new OptionalDependencySelector());
+    }
+    else
+    {
+      return super.getDependencySelector();
+    }
   }
 
   // --- object basics --------------------------------------------------------

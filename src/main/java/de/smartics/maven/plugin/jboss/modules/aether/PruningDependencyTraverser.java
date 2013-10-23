@@ -60,8 +60,8 @@ public class PruningDependencyTraverser extends DelegateDependencyTraverser
    * @throws NullPointerException if {@code delegate} is <code>null</code>.
    */
   public PruningDependencyTraverser(final DependencyTraverser delegate,
-      final List<ArtifactClusion> exclusions, final List<ModuleDescriptor> skipModules)
-    throws NullPointerException
+      final List<ArtifactClusion> exclusions,
+      final List<ModuleDescriptor> skipModules) throws NullPointerException
   {
     super(delegate);
     this.exclusions = exclusions;

@@ -34,6 +34,15 @@ public interface DependencyTraverserGenerator
 
   // --- get&set --------------------------------------------------------------
 
+  /**
+   * Returns the flag that allows to globally ignore exclusions declared in
+   * Maven dependencies.
+   *
+   * @return the flag that allows to globally ignore exclusions declared in
+   *         Maven dependencies.
+   */
+  boolean isIgnoreDependencyExclusions();
+
   // --- business -------------------------------------------------------------
 
   /**
