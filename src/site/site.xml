@@ -56,6 +56,7 @@
       <item name="Goals"               href="plugin-info.html"/>
       <item name="Project Blog"        href="${webroot-projects}/productivity-a-ware/smartics-jboss-modules"/>
       <item name="Accessing Artifacts" href="http://www.smartics.de/projects/accessing-artifacts"/>
+      <item name="Latest Version"      href="${webroot}/${project.artifactId}/index.html"/>
       <item name="All Versions"        href="${webroot}/${project.groupId}/${project.artifactId}/"/>
     </menu>
 
