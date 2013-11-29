@@ -17,6 +17,10 @@ def base = 'target/jboss-modules/org/jgroups/main'
 def artifactFile = new File(basedir, base + '/jgroups-3.2.7.Final.jar')
 assert artifactFile.exists()
 
+/* dependencyManagement dependencies are not included in case of a non-pom project */
+def depMgmtFile =  new File(basedir, 'target/jboss-modules/de/smartics/test/setup/test-setup-artifacts-commons/main/test-setup-artifacts-commons-1.0.0.jar');
+assert !depMgmtFile.exists()
+
 
 def jarBase = 'target/jboss-modules/de/smartics/sandbox/jar-project/main'
 /*
