@@ -64,6 +64,7 @@
       <item name="Usage Modules"   href="usage-modules.html"/>
       <item name="Modules XSD"     href="jboss-modules-descriptor-doc.html"/>
       <item name="Import Module Descriptors"  href="import-modules.html"/>
+      <item name="Project Types"   href="project-types.html" />
       <item name="Usage Jandex"    href="usage-jandex.html"/>
       <item name="Usage Index"     href="usage-index.html"/>
     </menu>

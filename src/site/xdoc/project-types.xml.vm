@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2013 smartics, Kronseder & Reiner GmbH
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<document>
+    <head profile="http://dublincore.org/documents/dcq-html/">
+      <title>Project Types</title>
+
+      <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/>
+      <link rel="DC.rights copyright" href="license.html" />
+
+      <meta name="keywords" content="pom, bom, jar, JBoss modules, archive, maven plugin, maven"/>
+      <meta name="description" content="Provides information about how to use the plugin for different project types."/>
+      <meta name="author" content="smartics"/>
+
+      <meta name="DC.title" content="Module Outline"/>
+      <meta name="DC.creator" content="smartics"/>
+      <meta name="DC.subject" content="Tutorial on project types using the JBoss modules Maven plugin"/>
+      <meta name="DC.description" content="Provides information about how to use the plugin for different project types."/>
+      <meta name="DC.publisher" content="smartics"/>
+      <meta name="DC.rights" content="Copyright 2013 smartics"/>
+    </head>
+	<body>
+    <section name="Project Types">
+      <subsection name="BOM">
+        <p>
+          Projects that define a
+          <a href="http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Importing_Dependencies">bill of materials</a>
+          (BOM) per default also export dependencies in the dependency
+          management block as modules.
+        </p>
+      <source><![CDATA[<project
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>de.smartics.maven.plugin</groupId>
+  <artifactId>bom-bom</artifactId>
+  <version>1.0.0</version>
+  <packaging>pom</packaging>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- These dependencies will be exported -->
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>${project.artifactId}</artifactId>
+        <version>${project.version}</version>
+        <executions>
+          <execution>
+            <id>create-modules-archive</id>
+            <goals>
+              <goal>create-modules-archive</goal>
+            </goals>
+            <phase>package</phase>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>]]></source>
+      </subsection>
+
+      <subsection name="Non-POM">
+        <p>
+          Non-POM projects (eg. projects of type 'jar') export dependencies as
+          modules, but not dependencies in the dependency management block.
+        </p>
+      <source><![CDATA[<project
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>de.smartics.sandbox</groupId>
+  <artifactId>jar-project</artifactId>
+  <version>1.0.0</version>
+  <packaging>jar</packaging>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- These dependencies will NOT be exported -->
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <!-- These dependencies will be exported -->
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>${project.artifactId}</artifactId>
+        <version>${project.version}</version>
+        <executions>
+          <execution>
+            <id>create-modules-archive</id>
+            <goals>
+              <goal>create-modules-archive</goal>
+            </goals>
+            <phase>package</phase>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>]]></source>
+      </subsection>
+
+      <subsection name="Multi-module POM">
+        <p>
+          To handle projects of type 'pom' to not export dependencies defined
+          in the dependency managment block. This approach is useful in case
+          of multi-module projects.
+        </p>
+      <source><![CDATA[<project
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>de.smartics.sandbox</groupId>
+  <artifactId>multimodule-project</artifactId>
+  <version>1.0.0</version>
+  <packaging>pom</packaging>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- These dependencies will NOT be exported -->
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <!-- These dependencies will be exported -->
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>${project.artifactId}</artifactId>
+        <version>${project.version}</version>
+        <executions>
+          <execution>
+            <id>create-modules-archive</id>
+            <goals>
+              <goal>create-modules-archive</goal>
+            </goals>
+            <phase>package</phase>
+          </execution>
+        </executions>
+        <configuration>
+          <excludeDependencyManagmentDependenciesInPomProject>true</excludeDependencyManagmentDependenciesInPomProject>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>]]></source>
+      </subsection>
+    </section>
+  </body>
+</document>
