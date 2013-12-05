@@ -460,7 +460,7 @@
   <profiles>
     <profile>
       <id>it</id>
-      <!-- mvn -Pit integration-test -->
+      <!-- mvn -Pit integration-test -Dinvoker.test=multimodule-project -->
       <build>
         <defaultGoal>install</defaultGoal>
         <plugins>

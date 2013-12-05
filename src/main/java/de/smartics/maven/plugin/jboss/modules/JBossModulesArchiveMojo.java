@@ -332,6 +332,21 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
    */
   private List<ModuleDescriptor> allModules;
 
+  /**
+   * Exclude the dependencies in the dependency management block if the project
+   * is a POM project. If the project is not a POM project, these dependencies
+   * are never included.
+   * <p>
+   * For BOM projects the default of <code>false</code> is usually appropriate.
+   * In case of a multi module POM, the property usually is set to
+   * <code>true</code>.
+   * </p>
+   *
+   * @since 1.0
+   */
+  @Parameter(defaultValue = "false")
+  private boolean excludeDependencyManagmentDependenciesInPomProject;
+
   // ****************************** Initializer *******************************
 
   // ****************************** Constructors ******************************
@@ -451,7 +466,7 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
     throws MojoExecutionException
   {
     final boolean isPomProject = "pom".equals(project.getPackaging());
-    if (!isPomProject)
+    if (!isPomProject || excludeDependencyManagmentDependenciesInPomProject)
     {
       final Mapper mapper = new Mapper();
       final Artifact projectArtifact = mapper.map(project.getArtifact());
@@ -587,12 +602,16 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
     final boolean isPomProject = "pom".equals(project.getPackaging());
     if (isPomProject)
     {
-      final DependencyManagement management = project.getDependencyManagement();
-      if (management != null)
+      if (!excludeDependencyManagmentDependenciesInPomProject)
       {
-        final List<org.apache.maven.model.Dependency> managedDependencies =
-            management.getDependencies();
-        addMappedDependencies(rootDependencies, managedDependencies);
+        final DependencyManagement management =
+            project.getDependencyManagement();
+        if (management != null)
+        {
+          final List<org.apache.maven.model.Dependency> managedDependencies =
+              management.getDependencies();
+          addMappedDependencies(rootDependencies, managedDependencies);
+        }
       }
     }
 

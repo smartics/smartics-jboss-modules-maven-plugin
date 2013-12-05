@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+
+<project
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>de.smartics.sandbox</groupId>
+  <artifactId>multimodule-project</artifactId>
+  <version>testing</version>
+  <packaging>pom</packaging>
+
+  <name>${project.artifactId}</name>
+  <description>
+    A test case for the smartics-jboss-modules-maven-plugin that simulates a
+    multi module POM. Actually there are no submodules, since it is not
+    necessary for the test. The multi module case is the defaut scenario for
+    using the 'excludeDependencyManagmentDependenciesInPomProject' property.
+  </description>
+  <url>http://www.smartics.de/test</url>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>de.smartics.test.setup</groupId>
+        <artifactId>test-setup-artifacts-commons</artifactId>
+        <version>1.0.0</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.jgroups</groupId>
+      <artifactId>jgroups</artifactId>
+      <version>3.2.7.Final</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>de.smartics.maven.plugin</groupId>
+        <artifactId>smartics-jboss-modules-maven-plugin</artifactId>
+        <version>@project.version@</version>
+        <executions>
+          <execution>
+            <id>create-modules-archive</id>
+            <goals>
+              <goal>create-modules-archive</goal>
+            </goals>
+            <phase>package</phase>
+          </execution>
+        </executions>
+        <configuration>
+          <attach>false</attach>
+          <excludeDependencyManagmentDependenciesInPomProject>true</excludeDependencyManagmentDependenciesInPomProject>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
