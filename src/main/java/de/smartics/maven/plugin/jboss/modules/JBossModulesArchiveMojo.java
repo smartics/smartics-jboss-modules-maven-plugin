@@ -345,7 +345,7 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
    * @since 1.0
    */
   @Parameter(defaultValue = "false")
-  private boolean excludeDependencyManagmentDependenciesInPomProject;
+  private boolean excludeDependencyManagementDependenciesInPomProject;
 
   // ****************************** Initializer *******************************
 
@@ -466,7 +466,7 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
     throws MojoExecutionException
   {
     final boolean isPomProject = "pom".equals(project.getPackaging());
-    if (!isPomProject || excludeDependencyManagmentDependenciesInPomProject)
+    if (!isPomProject || excludeDependencyManagementDependenciesInPomProject)
     {
       final Mapper mapper = new Mapper();
       final Artifact projectArtifact = mapper.map(project.getArtifact());
@@ -602,7 +602,7 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
     final boolean isPomProject = "pom".equals(project.getPackaging());
     if (isPomProject)
     {
-      if (!excludeDependencyManagmentDependenciesInPomProject)
+      if (!excludeDependencyManagementDependenciesInPomProject)
       {
         final DependencyManagement management =
             project.getDependencyManagement();
