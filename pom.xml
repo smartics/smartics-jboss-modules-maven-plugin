@@ -74,12 +74,6 @@
     <!--  ... maven ....................................................... -->
 
     <dependency>
-      <groupId>de.smartics.util</groupId>
-      <artifactId>smartics-maven-utils</artifactId>
-      <version>0.6.0</version>
-    </dependency>
-
-    <dependency>
       <groupId>org.apache.maven.plugin-tools</groupId>
       <artifactId>maven-plugin-annotations</artifactId>
       <version>3.2</version>
@@ -158,19 +152,9 @@
     <!-- ... other ........................................................ -->
 
     <dependency>
-      <groupId>com.thoughtworks.xstream</groupId>
-      <artifactId>xstream</artifactId>
-      <version>1.4.4</version>
-    </dependency>
-    <dependency>
       <groupId>org.jdom</groupId>
       <artifactId>jdom2</artifactId>
       <version>2.0.5</version>
-    </dependency>
-    <dependency>
-      <groupId>com.google.guava</groupId>
-      <artifactId>guava</artifactId>
-      <version>14.0.1</version>
     </dependency>
 
     <dependency>
