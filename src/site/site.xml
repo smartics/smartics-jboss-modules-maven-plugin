@@ -29,6 +29,7 @@
     Origin: http://mattahan.deviantart.com/art/Buuf-37966044
               thepngs/Benders/Open Ended/Cabinets.png
    -->
+
   <bannerLeft>
     <name>${project.name}</name>
     <src>images/logos/logo.png</src>

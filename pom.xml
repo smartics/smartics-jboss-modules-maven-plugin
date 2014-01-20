@@ -1,12 +1,15 @@
 <?xml version="1.0"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>de.smartics.config.pom</groupId>
     <artifactId>pom-java</artifactId>
-    <version>33.0.0</version>
+    <version>33.0.1</version>
   </parent>
 
   <groupId>de.smartics.maven.plugin</groupId>
@@ -126,14 +129,14 @@
       <version>${aether.version}</version>
     </dependency>
     <dependency>
-        <groupId>org.eclipse.aether</groupId>
-        <artifactId>aether-connector-wagon</artifactId>
-        <version>${aether.version}</version>
+      <groupId>org.eclipse.aether</groupId>
+      <artifactId>aether-connector-wagon</artifactId>
+      <version>${aether.version}</version>
     </dependency>
     <dependency>
-        <groupId>org.eclipse.aether</groupId>
-        <artifactId>aether-connector-file</artifactId>
-        <version>${aether.version}</version>
+      <groupId>org.eclipse.aether</groupId>
+      <artifactId>aether-connector-file</artifactId>
+      <version>${aether.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven.wagon</groupId>
@@ -330,7 +333,10 @@
             </goals>
             <configuration>
               <target>
-                <xslt in="${basedir}/src/main/resources/xsd/jboss-modules-descriptor.xsd" out="${project.build.directory}/generated-site/xdoc/jboss-modules-descriptor-doc.xml" style="${basedir}/src/etc/xsl/create-modules-doc.xsl" />
+                <xslt
+                  in="${basedir}/src/main/resources/xsd/jboss-modules-descriptor.xsd"
+                  out="${project.build.directory}/generated-site/xdoc/jboss-modules-descriptor-doc.xml"
+                  style="${basedir}/src/etc/xsl/create-modules-doc.xsl" />
                 <copy todir="${project.build.directory}/generated-site/resources/download">
                   <fileset dir="${basedir}/src/main/resources/">
                     <include name="**/*.xsd" />
