@@ -1,9 +1,6 @@
 <?xml version="1.0"?>
 
-<project
-  xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -14,7 +11,7 @@
 
   <groupId>de.smartics.maven.plugin</groupId>
   <artifactId>smartics-jboss-modules-maven-plugin</artifactId>
-  <version>0.3.2-SNAPSHOT</version>
+  <version>0.3.2</version>
   <packaging>maven-plugin</packaging>
 
   <name>${project.artifactId}</name>
@@ -34,9 +31,9 @@
   </licenses>
 
   <scm>
-    <connection>scm:svn:https://www.smartics.eu/svn/public/maven/smartics-jboss-modules-maven-plugin/trunk</connection>
-    <developerConnection>scm:svn:https://www.smartics.eu/svn/public/maven/smartics-jboss-modules-maven-plugin/trunk</developerConnection>
-    <url>https://www.smartics.eu/svn/public/maven/smartics-jboss-modules-maven-plugin/trunk</url>
+    <connection>scm:svn:https://www.smartics.eu/svn/public/maven/smartics-jboss-modules-maven-plugin/tags/smartics-jboss-modules-maven-plugin-0.3.2</connection>
+    <developerConnection>scm:svn:https://www.smartics.eu/svn/public/maven/smartics-jboss-modules-maven-plugin/tags/smartics-jboss-modules-maven-plugin-0.3.2</developerConnection>
+    <url>https://www.smartics.eu/svn/public/maven/smartics-jboss-modules-maven-plugin/tags/smartics-jboss-modules-maven-plugin-0.3.2</url>
   </scm>
 
   <distributionManagement>
@@ -334,10 +331,7 @@
             </goals>
             <configuration>
               <target>
-                <xslt
-                  in="${basedir}/src/main/resources/xsd/jboss-modules-descriptor.xsd"
-                  out="${project.build.directory}/generated-site/xdoc/jboss-modules-descriptor-doc.xml"
-                  style="${basedir}/src/etc/xsl/create-modules-doc.xsl" />
+                <xslt in="${basedir}/src/main/resources/xsd/jboss-modules-descriptor.xsd" out="${project.build.directory}/generated-site/xdoc/jboss-modules-descriptor-doc.xml" style="${basedir}/src/etc/xsl/create-modules-doc.xsl" />
                 <copy todir="${project.build.directory}/generated-site/resources/download">
                   <fileset dir="${basedir}/src/main/resources/">
                     <include name="**/*.xsd" />
