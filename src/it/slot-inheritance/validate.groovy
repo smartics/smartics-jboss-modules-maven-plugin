@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 smartics, Kronseder & Reiner GmbH
+ * Copyright 2013-2014 smartics, Kronseder & Reiner GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 def setup = 'target/jboss-modules/de/smartics/test/setup/special'
 def setupCommonsFile = new File(basedir, setup + '/test-setup-artifacts-commons-1.0.0.jar')
 assert setupCommonsFile.exists()

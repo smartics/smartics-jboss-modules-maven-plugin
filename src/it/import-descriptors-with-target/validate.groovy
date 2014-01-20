@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 smartics, Kronseder & Reiner GmbH
+ * Copyright 2013-2014 smartics, Kronseder & Reiner GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 def base = 'target/jboss-modules/org/apache/commons/lang/def'
 def artifactFile = new File(basedir, base + '/commons-lang-2.5.jar')
 assert artifactFile.exists()

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!--
 
-    Copyright 2013 smartics, Kronseder & Reiner GmbH
+    Copyright 2013-2014 smartics, Kronseder & Reiner GmbH
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
     limitations under the License.
 
 -->
-
 <modules
   xmlns="http://smartics.de/ns/jboss-modules-descriptor/1">
   <module
