@@ -32,7 +32,7 @@
       <meta name="DC.subject" content="Homepage of the JBoss modules Maven plugin"/>
       <meta name="DC.description" content="Homepage of the JBoss modules Maven plugin. This plugin plugin creates an archive with JBoss modules to be applyable to a JBoss server installation. "/>
       <meta name="DC.publisher" content="smartics"/>
-      <meta name="DC.rights" content="Copyright 2013 smartics"/>
+      <meta name="DC.rights" content="Copyright 2013-2014 smartics"/>
     </head>
 	<body>
     <section name="Overview">
@@ -64,6 +64,13 @@
       <p>
         In <a href="plugin-info.html">Goals</a> you'll find a short description
         of the goals and its parameters.
+      </p>
+      <p>
+        Please note that this plugin only supports Maven up to 3.0.x due to
+        incompatibilities to the <a href="http://eclipse.org/aether/">Aether</a>
+        implementation used in Maven 3.1.x. Please refer to
+        <a href="http://www.smartics.eu/bugzilla/show_bug.cgi?id=843">Bug 843</a>
+        for details.
       </p>
     </section>
   </body>
