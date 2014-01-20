@@ -315,7 +315,6 @@
             <exclude>**/javadoc.xml</exclude>
             <exclude>**/header.txt</exclude>
           </excludes>
-          <skip>true</skip>
         </configuration>
       </plugin>
 
