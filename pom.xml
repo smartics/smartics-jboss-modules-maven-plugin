@@ -9,7 +9,7 @@
   <parent>
     <groupId>de.smartics.config.pom</groupId>
     <artifactId>pom-java</artifactId>
-    <version>33.0.0-SNAPSHOT</version>
+    <version>33.0.0</version>
   </parent>
 
   <groupId>de.smartics.maven.plugin</groupId>
