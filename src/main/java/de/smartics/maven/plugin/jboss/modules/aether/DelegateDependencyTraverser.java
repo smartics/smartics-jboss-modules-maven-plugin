@@ -15,9 +15,9 @@
  */
 package de.smartics.maven.plugin.jboss.modules.aether;
 
-import org.sonatype.aether.collection.DependencyCollectionContext;
-import org.sonatype.aether.collection.DependencyTraverser;
-import org.sonatype.aether.graph.Dependency;
+import org.eclipse.aether.collection.DependencyCollectionContext;
+import org.eclipse.aether.collection.DependencyTraverser;
+import org.eclipse.aether.graph.Dependency;
 
 import de.smartics.util.lang.Arg;
 

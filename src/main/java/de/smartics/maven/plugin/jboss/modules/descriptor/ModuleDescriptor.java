@@ -17,7 +17,7 @@ package de.smartics.maven.plugin.jboss.modules.descriptor;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.sonatype.aether.artifact.Artifact;
+import org.eclipse.aether.artifact.Artifact;
 
 import de.smartics.maven.plugin.jboss.modules.domain.MatchContext;
 import de.smartics.util.lang.Arg;

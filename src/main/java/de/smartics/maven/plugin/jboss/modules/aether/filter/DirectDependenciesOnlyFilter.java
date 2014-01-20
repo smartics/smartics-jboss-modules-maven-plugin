@@ -18,9 +18,9 @@ package de.smartics.maven.plugin.jboss.modules.aether.filter;
 import java.io.Serializable;
 import java.util.List;
 
-import org.sonatype.aether.graph.Dependency;
-import org.sonatype.aether.graph.DependencyFilter;
-import org.sonatype.aether.graph.DependencyNode;
+import org.eclipse.aether.graph.Dependency;
+import org.eclipse.aether.graph.DependencyFilter;
+import org.eclipse.aether.graph.DependencyNode;
 
 /**
  * Rejects a dependency if it is not a direct dependency.

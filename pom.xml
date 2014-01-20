@@ -11,7 +11,7 @@
 
   <groupId>de.smartics.maven.plugin</groupId>
   <artifactId>smartics-jboss-modules-maven-plugin</artifactId>
-  <version>0.3.3-SNAPSHOT</version>
+  <version>1.0.0-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
 
   <name>${project.artifactId}</name>
@@ -52,10 +52,10 @@
     <ohlohProjectId>710977</ohlohProjectId>
     <twitterId>smartics</twitterId>
 
-    <maven.version>3.0.5</maven.version>
+    <maven.version>3.1.0</maven.version>
     <maven.project.version>2.2.1</maven.project.version>
     <maven-plugin-plugin.version>3.2</maven-plugin-plugin.version>
-    <aether.version>1.13.1</aether.version>
+    <aether.version>0.9.0.M2</aether.version>
 
     <smartics-commons.version>0.5.2</smartics-commons.version>
 
@@ -114,27 +114,26 @@
       <version>2.5</version>
     </dependency>
 
-<!--
+
     <dependency>
-      <groupId>org.sonatype.aether</groupId>
+      <groupId>org.eclipse.aether</groupId>
       <artifactId>aether-api</artifactId>
       <version>${aether.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.sonatype.aether</groupId>
+      <groupId>org.eclipse.aether</groupId>
       <artifactId>aether-util</artifactId>
       <version>${aether.version}</version>
     </dependency>
- -->
     <dependency>
-      <groupId>org.sonatype.aether</groupId>
-      <artifactId>aether-connector-wagon</artifactId>
-      <version>${aether.version}</version>
+        <groupId>org.eclipse.aether</groupId>
+        <artifactId>aether-connector-wagon</artifactId>
+        <version>${aether.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.sonatype.aether</groupId>
-      <artifactId>aether-connector-file</artifactId>
-      <version>${aether.version}</version>
+        <groupId>org.eclipse.aether</groupId>
+        <artifactId>aether-connector-file</artifactId>
+        <version>${aether.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven.wagon</groupId>
@@ -316,6 +315,7 @@
             <exclude>**/javadoc.xml</exclude>
             <exclude>**/header.txt</exclude>
           </excludes>
+          <skip>true</skip>
         </configuration>
       </plugin>
 

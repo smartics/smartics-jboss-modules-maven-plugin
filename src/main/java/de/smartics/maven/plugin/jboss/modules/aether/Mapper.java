@@ -18,10 +18,10 @@ package de.smartics.maven.plugin.jboss.modules.aether;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.sonatype.aether.artifact.Artifact;
-import org.sonatype.aether.graph.Dependency;
-import org.sonatype.aether.graph.Exclusion;
-import org.sonatype.aether.util.artifact.DefaultArtifact;
+import org.eclipse.aether.artifact.Artifact;
+import org.eclipse.aether.graph.Dependency;
+import org.eclipse.aether.graph.Exclusion;
+import org.eclipse.aether.artifact.DefaultArtifact;
 
 /**
  * Maps instances from the Maven to the Aether world.

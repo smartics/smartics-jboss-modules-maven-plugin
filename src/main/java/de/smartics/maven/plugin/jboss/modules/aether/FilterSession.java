@@ -15,20 +15,20 @@
  */
 package de.smartics.maven.plugin.jboss.modules.aether;
 
-import org.sonatype.aether.RepositorySystemSession;
-import org.sonatype.aether.collection.DependencySelector;
-import org.sonatype.aether.collection.DependencyTraverser;
-import org.sonatype.aether.util.FilterRepositorySystemSession;
-import org.sonatype.aether.util.graph.selector.AndDependencySelector;
-import org.sonatype.aether.util.graph.selector.OptionalDependencySelector;
-import org.sonatype.aether.util.graph.selector.ScopeDependencySelector;
+import org.eclipse.aether.RepositorySystemSession;
+import org.eclipse.aether.collection.DependencySelector;
+import org.eclipse.aether.collection.DependencyTraverser;
+import org.eclipse.aether.AbstractForwardingRepositorySystemSession;
+import org.eclipse.aether.util.graph.selector.AndDependencySelector;
+import org.eclipse.aether.util.graph.selector.OptionalDependencySelector;
+import org.eclipse.aether.util.graph.selector.ScopeDependencySelector;
 
 import de.smartics.util.lang.Arg;
 
 /**
  * Used for pruning the dependency tree.
  */
-public class FilterSession extends FilterRepositorySystemSession
+public class FilterSession extends AbstractForwardingRepositorySystemSession
 {
   // ********************************* Fields *********************************
 
@@ -47,6 +47,11 @@ public class FilterSession extends FilterRepositorySystemSession
    */
   private final boolean ignoreDependencyExclusions;
 
+  /**
+   * The repository system session to forward calls to.
+   */
+  private final RepositorySystemSession session;
+
   // ****************************** Initializer *******************************
 
   // ****************************** Constructors ******************************
@@ -62,7 +67,7 @@ public class FilterSession extends FilterRepositorySystemSession
   /**
    * Creates a new repository system session that wraps the specified session.
    *
-   * @param session the repository system session to wrap.
+   * @param session the repository system session to forward calls to.
    * @param traverser the traverser to prune.
    * @param ignoreDependencyExclusions the flag that allows to globally ignore
    *          exclusions declared in Maven dependencies.
@@ -73,7 +78,7 @@ public class FilterSession extends FilterRepositorySystemSession
       final DependencyTraverser traverser,
       final boolean ignoreDependencyExclusions) throws NullPointerException
   {
-    super(session);
+    this.session = Arg.checkNotNull("session", session);
     this.traverser = Arg.checkNotNull("traverser", traverser);
     this.ignoreDependencyExclusions = ignoreDependencyExclusions;
   }
@@ -99,6 +104,12 @@ public class FilterSession extends FilterRepositorySystemSession
     {
       return super.getDependencySelector();
     }
+  }
+
+  @Override
+  protected RepositorySystemSession getSession()
+  {
+    return session;
   }
 
   // --- object basics --------------------------------------------------------

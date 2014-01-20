@@ -17,9 +17,9 @@ package de.smartics.maven.plugin.jboss.modules.aether;
 
 import java.util.List;
 
-import org.sonatype.aether.artifact.Artifact;
-import org.sonatype.aether.collection.DependencyTraverser;
-import org.sonatype.aether.graph.Dependency;
+import org.eclipse.aether.artifact.Artifact;
+import org.eclipse.aether.collection.DependencyTraverser;
+import org.eclipse.aether.graph.Dependency;
 
 import de.smartics.maven.plugin.jboss.modules.descriptor.ArtifactClusion;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleDescriptor;

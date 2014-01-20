@@ -21,7 +21,7 @@ import java.util.regex.PatternSyntaxException;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
-import org.sonatype.aether.artifact.Artifact;
+import org.eclipse.aether.artifact.Artifact;
 
 import de.smartics.maven.plugin.jboss.modules.domain.MatchContext;
 import de.smartics.maven.plugin.jboss.modules.domain.matching.DoubleMatchContext;

@@ -18,7 +18,7 @@ package de.smartics.maven.plugin.jboss.modules.aether;
 import org.apache.maven.wagon.Wagon;
 import org.apache.maven.wagon.providers.http.LightweightHttpWagon;
 import org.apache.maven.wagon.providers.http.LightweightHttpsWagon;
-import org.sonatype.aether.connector.wagon.WagonProvider;
+import org.eclipse.aether.connector.wagon.WagonProvider;
 
 /**
  * Mapper to support HTTP and HTTPS protocols.

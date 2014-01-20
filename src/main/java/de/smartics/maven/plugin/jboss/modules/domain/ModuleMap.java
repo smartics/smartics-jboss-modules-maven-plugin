@@ -26,8 +26,8 @@ import java.util.Map.Entry;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import org.apache.commons.lang.ObjectUtils;
-import org.sonatype.aether.artifact.Artifact;
-import org.sonatype.aether.graph.Dependency;
+import org.eclipse.aether.artifact.Artifact;
+import org.eclipse.aether.graph.Dependency;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;

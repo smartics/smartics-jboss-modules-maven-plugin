@@ -27,8 +27,8 @@ import org.apache.commons.lang.StringUtils;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.Namespace;
-import org.sonatype.aether.artifact.Artifact;
-import org.sonatype.aether.graph.Dependency;
+import org.eclipse.aether.artifact.Artifact;
+import org.eclipse.aether.graph.Dependency;
 
 import de.smartics.maven.plugin.jboss.modules.descriptor.ApplyToDependencies;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ApplyToModule;

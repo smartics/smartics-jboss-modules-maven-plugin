@@ -18,9 +18,9 @@ package de.smartics.maven.plugin.jboss.modules.aether.filter;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.sonatype.aether.artifact.Artifact;
-import org.sonatype.aether.graph.Dependency;
-import org.sonatype.aether.graph.DependencyNode;
+import org.eclipse.aether.artifact.Artifact;
+import org.eclipse.aether.graph.Dependency;
+import org.eclipse.aether.graph.DependencyNode;
 
 /**
  * Adds properties to artifacts of a dependency.

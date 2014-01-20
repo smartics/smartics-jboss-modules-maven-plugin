@@ -15,8 +15,8 @@
  */
 package help.de.smartics.maven.plugin.jboss.modules;
 
-import org.sonatype.aether.artifact.Artifact;
-import org.sonatype.aether.util.artifact.DefaultArtifact;
+import org.eclipse.aether.artifact.Artifact;
+import org.eclipse.aether.artifact.DefaultArtifact;
 
 /**
  * Builds test instances of {@link Artifact}.

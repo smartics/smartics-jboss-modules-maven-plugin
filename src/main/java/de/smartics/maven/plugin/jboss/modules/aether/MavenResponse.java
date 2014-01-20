@@ -18,7 +18,7 @@ package de.smartics.maven.plugin.jboss.modules.aether;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.sonatype.aether.graph.Dependency;
+import org.eclipse.aether.graph.Dependency;
 
 /**
  * The Maven response with calculated dependencies.

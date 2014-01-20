@@ -15,7 +15,7 @@
  */
 package de.smartics.maven.plugin.jboss.modules.aether;
 
-import org.sonatype.aether.collection.DependencyTraverser;
+import org.eclipse.aether.collection.DependencyTraverser;
 
 /**
  * Generates dependency traversers.

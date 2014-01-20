@@ -19,8 +19,8 @@ import java.io.File;
 import java.util.List;
 
 import org.apache.maven.plugin.logging.Log;
-import org.sonatype.aether.graph.Dependency;
-import org.sonatype.aether.resolution.DependencyResolutionException;
+import org.eclipse.aether.graph.Dependency;
+import org.eclipse.aether.resolution.DependencyResolutionException;
 
 import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleDescriptor;
 import de.smartics.util.lang.Arg;

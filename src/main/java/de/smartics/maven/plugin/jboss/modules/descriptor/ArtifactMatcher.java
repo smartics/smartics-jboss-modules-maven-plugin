@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.sonatype.aether.artifact.Artifact;
+import org.eclipse.aether.artifact.Artifact;
 
 import de.smartics.maven.plugin.jboss.modules.domain.MatchContext;
 import de.smartics.maven.plugin.jboss.modules.domain.matching.DelegationMatchContext;

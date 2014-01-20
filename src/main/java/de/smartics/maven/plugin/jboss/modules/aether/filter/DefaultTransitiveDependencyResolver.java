@@ -17,8 +17,8 @@ package de.smartics.maven.plugin.jboss.modules.aether.filter;
 
 import java.util.List;
 
-import org.sonatype.aether.graph.Dependency;
-import org.sonatype.aether.resolution.DependencyResolutionException;
+import org.eclipse.aether.graph.Dependency;
+import org.eclipse.aether.resolution.DependencyResolutionException;
 
 import de.smartics.maven.plugin.jboss.modules.aether.MavenRepository;
 import de.smartics.maven.plugin.jboss.modules.aether.MavenResponse;

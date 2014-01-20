@@ -17,8 +17,8 @@ package de.smartics.maven.plugin.jboss.modules.aether;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonatype.aether.AbstractRepositoryListener;
-import org.sonatype.aether.RepositoryEvent;
+import org.eclipse.aether.AbstractRepositoryListener;
+import org.eclipse.aether.RepositoryEvent;
 
 /**
  * Uses the underlying logger to report on repository events.
@@ -75,7 +75,7 @@ class RepositoryLogListener extends AbstractRepositoryListener
    * Logs at warn level.
    * </p>
    *
-   * @see org.sonatype.aether.AbstractRepositoryListener#artifactDescriptorMissing(org.sonatype.aether.RepositoryEvent)
+   * @see org.eclipse.aether.AbstractRepositoryListener#artifactDescriptorMissing(org.eclipse.aether.RepositoryEvent)
    */
   public void artifactDescriptorMissing(final RepositoryEvent event)
   {
@@ -88,7 +88,7 @@ class RepositoryLogListener extends AbstractRepositoryListener
    * Logs at warn level.
    * </p>
    *
-   * @see org.sonatype.aether.AbstractRepositoryListener#artifactDescriptorInvalid(org.sonatype.aether.RepositoryEvent)
+   * @see org.eclipse.aether.AbstractRepositoryListener#artifactDescriptorInvalid(org.eclipse.aether.RepositoryEvent)
    */
   public void artifactDescriptorInvalid(final RepositoryEvent event)
   {
@@ -104,7 +104,7 @@ class RepositoryLogListener extends AbstractRepositoryListener
    * Logs at warn level.
    * </p>
    *
-   * @see org.sonatype.aether.AbstractRepositoryListener#metadataInvalid(org.sonatype.aether.RepositoryEvent)
+   * @see org.eclipse.aether.AbstractRepositoryListener#metadataInvalid(org.eclipse.aether.RepositoryEvent)
    */
   public void metadataInvalid(final RepositoryEvent event)
   {
@@ -117,7 +117,7 @@ class RepositoryLogListener extends AbstractRepositoryListener
    * Logs at debug level.
    * </p>
    *
-   * @see org.sonatype.aether.AbstractRepositoryListener#metadataResolving(org.sonatype.aether.RepositoryEvent)
+   * @see org.eclipse.aether.AbstractRepositoryListener#metadataResolving(org.eclipse.aether.RepositoryEvent)
    */
   public void metadataResolving(final RepositoryEvent event)
   {
@@ -131,7 +131,7 @@ class RepositoryLogListener extends AbstractRepositoryListener
    * Logs at debug level.
    * </p>
    *
-   * @see org.sonatype.aether.AbstractRepositoryListener#metadataResolved(org.sonatype.aether.RepositoryEvent)
+   * @see org.eclipse.aether.AbstractRepositoryListener#metadataResolved(org.eclipse.aether.RepositoryEvent)
    */
   public void metadataResolved(final RepositoryEvent event)
   {
@@ -147,7 +147,7 @@ class RepositoryLogListener extends AbstractRepositoryListener
    * Logs at debug level.
    * </p>
    *
-   * @see org.sonatype.aether.AbstractRepositoryListener#artifactResolving(org.sonatype.aether.RepositoryEvent)
+   * @see org.eclipse.aether.AbstractRepositoryListener#artifactResolving(org.eclipse.aether.RepositoryEvent)
    */
   public void artifactResolving(final RepositoryEvent event)
   {
@@ -160,7 +160,7 @@ class RepositoryLogListener extends AbstractRepositoryListener
    * Logs at debug level.
    * </p>
    *
-   * @see org.sonatype.aether.AbstractRepositoryListener#artifactResolved(org.sonatype.aether.RepositoryEvent)
+   * @see org.eclipse.aether.AbstractRepositoryListener#artifactResolved(org.eclipse.aether.RepositoryEvent)
    */
   public void artifactResolved(final RepositoryEvent event)
   {
@@ -176,7 +176,7 @@ class RepositoryLogListener extends AbstractRepositoryListener
    * Logs at debug level.
    * </p>
    *
-   * @see org.sonatype.aether.AbstractRepositoryListener#artifactDownloading(org.sonatype.aether.RepositoryEvent)
+   * @see org.eclipse.aether.AbstractRepositoryListener#artifactDownloading(org.eclipse.aether.RepositoryEvent)
    */
   public void artifactDownloading(final RepositoryEvent event)
   {
@@ -190,7 +190,7 @@ class RepositoryLogListener extends AbstractRepositoryListener
    * Logs at debug level.
    * </p>
    *
-   * @see org.sonatype.aether.AbstractRepositoryListener#artifactDownloaded(org.sonatype.aether.RepositoryEvent)
+   * @see org.eclipse.aether.AbstractRepositoryListener#artifactDownloaded(org.eclipse.aether.RepositoryEvent)
    */
   public void artifactDownloaded(final RepositoryEvent event)
   {

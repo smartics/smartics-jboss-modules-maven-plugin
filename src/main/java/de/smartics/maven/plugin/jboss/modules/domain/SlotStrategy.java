@@ -18,7 +18,7 @@ package de.smartics.maven.plugin.jboss.modules.domain;
 import org.apache.commons.lang.StringUtils;
 import org.apache.maven.artifact.versioning.ArtifactVersion;
 import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
-import org.sonatype.aether.artifact.Artifact;
+import org.eclipse.aether.artifact.Artifact;
 
 import edu.emory.mathcs.backport.java.util.Arrays;
 

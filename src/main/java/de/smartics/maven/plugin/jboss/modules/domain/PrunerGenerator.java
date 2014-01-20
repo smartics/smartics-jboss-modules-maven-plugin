@@ -18,7 +18,7 @@ package de.smartics.maven.plugin.jboss.modules.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.sonatype.aether.collection.DependencyTraverser;
+import org.eclipse.aether.collection.DependencyTraverser;
 
 import de.smartics.maven.plugin.jboss.modules.aether.DependencyTraverserGenerator;
 import de.smartics.maven.plugin.jboss.modules.aether.PruningDependencyTraverser;
