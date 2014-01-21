@@ -33,6 +33,15 @@
     </license>
   </licenses>
 
+  <contributors>
+    <contributor>
+      <name>Douglas Palmer</name>
+      <roles>
+        <role>Developer</role>
+      </roles>
+    </contributor>
+  </contributors>
+
   <scm>
     <connection>scm:svn:https://www.smartics.eu/svn/public/maven/smartics-jboss-modules-maven-plugin/trunk</connection>
     <developerConnection>scm:svn:https://www.smartics.eu/svn/public/maven/smartics-jboss-modules-maven-plugin/trunk</developerConnection>

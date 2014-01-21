@@ -42,6 +42,15 @@
           are listed under <a href="dependencies.html">Project Dependencies</a>.
         </p>
       </subsection>
+      <subsection name="Contributions">
+        <p>
+          We would like to thank the following <a href="team-list.html#Contributors">developers</a>
+          for their contributions to this project:
+        </p>
+        <ul>
+          <li><a href="team-list.html#contributor-0">Douglas Palmer</a>: <a href="${project.issueManagement.url}/show_bug.cgi?id=843">Support Maven 3.1</a></li>
+        </ul>
+      </subsection>
     </section>
   </body>
 </document>
