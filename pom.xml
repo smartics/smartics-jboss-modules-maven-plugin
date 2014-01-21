@@ -275,12 +275,12 @@
               <goal>descriptor</goal>
             </goals>
           </execution>
-          <execution>
+          <!-- <execution>
             <id>help-goal</id>
             <goals>
               <goal>helpmojo</goal>
             </goals>
-          </execution>
+          </execution> -->
         </executions>
         <configuration>
           <!-- see http://jira.codehaus.org/browse/MNG-5346 -->
