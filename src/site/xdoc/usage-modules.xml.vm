@@ -278,7 +278,7 @@ src/main/resources/META-INF/jboss-modules</source>
         <source><![CDATA[<plugin>
   <groupId>de.smartics.maven.plugin</groupId>
   <artifactId>smartics-jboss-modules-maven-plugin</artifactId>
-  <version>@project.version@</version>
+  <version>${project.version}</version>
   <executions>
     <execution>
       <id>create-modules-archive</id>
