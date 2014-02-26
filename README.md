@@ -3,7 +3,7 @@ smartics-jboss-modules-maven-plugin
 
 Generates an archive of modules to be copied to an JBoss 7 installation.
 
-#Overview
+##Overview
 
 This [Maven] (http://maven.apache.org/) plugin creates an archive with [JBoss modules] (https://docs.jboss.org/author/display/MODULES/Home) to be installed to a [JBoss 7] (https://www.jboss.org/jbossas) server installation.
 
