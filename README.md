@@ -20,4 +20,4 @@ for details on how to use this plugin.
 
 In [Goals] (https://www.smartics.eu/smartics-jboss-modules-maven-plugin/plugin-info.html) you'll find a short description of the goals and its parameters.
 
-Please note that this plugin only supports Maven from 3.1.x and up due to incompatibilities to the [Aether] (http://eclipse.org/aether/) implementation used by Maven. Please refer to [Bug 843] (http://www.smartics.eu/bugzilla/show_bug.cgi?id=843) for details. If you are looking for support for Maven 3.0.x, please refer to versions 0.x of this plugin.
+Please note that this plugin only supports Maven from 3.1.x and up due to incompatibilities to the [Aether] (http://eclipse.org/aether/) implementation used by Maven. Please refer to [Bug 843] (http://www.smartics.eu/bugzilla/show_bug.cgi?id=843) for details. If you are looking for support for Maven 3.0.x, please refer to versions 0.x of this plugin or use [this branch] (https://github.com/smartics/smartics-jboss-modules-maven-plugin/tree/Last-Version-supporting-Maven-3.0.x).
