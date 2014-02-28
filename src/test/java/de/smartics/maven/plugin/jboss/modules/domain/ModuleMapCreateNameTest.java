@@ -21,12 +21,12 @@ import static org.hamcrest.Matchers.is;
 
 import org.junit.Test;
 
-import de.smartics.testdoc.annotations.Uut;
+//import de.smartics.testdoc.annotations.Uut;
 
 /**
  * Tests {@link ModuleMap#createName(String, String)}.
  */
-@Uut(type = ModuleMap.class, method = "createName(String, String)")
+//@Uut(type = ModuleMap.class, method = "createName(String, String)")
 public class ModuleMapCreateNameTest
 {
 

@@ -22,7 +22,7 @@ import org.junit.Before;
 
 import de.smartics.maven.plugin.jboss.modules.descriptor.ModulesDescriptor;
 import de.smartics.maven.plugin.jboss.modules.parser.ModulesXmlParser;
-import de.smartics.util.test.io.IoTestUtils;
+import de.smartics.maven.plugin.jboss.modules.test.utils.IoTestUtils;
 
 /**
  * Tests {@link ModulesXmlParser}.

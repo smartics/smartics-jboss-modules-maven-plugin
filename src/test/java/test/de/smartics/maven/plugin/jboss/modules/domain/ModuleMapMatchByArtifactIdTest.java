@@ -34,7 +34,7 @@ import org.eclipse.aether.graph.Dependency;
 
 import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleDescriptor;
 import de.smartics.maven.plugin.jboss.modules.domain.ModuleMap;
-import de.smartics.testdoc.annotations.Uut;
+//import de.smartics.testdoc.annotations.Uut;
 
 /**
  * Tests {@link ModuleMap} by stacking up modules by an regular expression match
@@ -53,7 +53,7 @@ public class ModuleMapMatchByArtifactIdTest
 
   // --- members --------------------------------------------------------------
 
-  @Uut
+  //@Uut
   private ModuleMap uut;
 
   // ****************************** Inner Classes *****************************

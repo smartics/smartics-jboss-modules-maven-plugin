@@ -30,7 +30,7 @@ import org.eclipse.aether.graph.Dependency;
 
 import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleDescriptor;
 import de.smartics.maven.plugin.jboss.modules.domain.ModuleMap;
-import de.smartics.testdoc.annotations.Uut;
+//import de.smartics.testdoc.annotations.Uut;
 
 /**
  * Tests {@link ModuleMap} with an empty map.
@@ -43,7 +43,7 @@ public class ModuleMapEmptyTest
 
   // --- members --------------------------------------------------------------
 
-  @Uut
+  //@Uut
   private ModuleMap uut = new ModuleMap();
 
   // ****************************** Inner Classes *****************************
