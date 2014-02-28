@@ -30,6 +30,22 @@
               thepngs/Benders/Open Ended/Cabinets.png
    -->
 
+  <publishDate position="bottom" format="dd. MMMM yyyy"/>
+  <version position="right"/>
+
+  <skin>
+    <groupId>de.smartics.maven.skins</groupId>
+    <artifactId>maven-fluido-smartics-skin</artifactId>
+    <version>${maven-fluido-smartics-skin_version}</version>
+  </skin>
+  <custom>
+    <fluidoSkin>
+      <topBarEnabled>true</topBarEnabled>
+      <sideBarEnabled>true</sideBarEnabled>
+      <navBarStyle>navbar-inverse</navBarStyle>
+    </fluidoSkin>
+  </custom>
+
   <bannerLeft>
     <name>${project.name}</name>
     <src>images/logos/logo.png</src>
@@ -70,12 +86,14 @@
       <item name="Usage Index"     href="usage-index.html"/>
     </menu>
 
+    <!--
     <menu name="Release Information">
       <item name="New and Noteworthy"  href="new-and-noteworthy.html"/>
       <item name="Release Notes"       href="release-notes-report.html"/>
       <item name="Breaking News"       href="breaking-news.html"/>
       <item name="Release Plan"        href="release-plan-report.html"/>
     </menu>
+     -->
 
     <menu name="Project Documentation">
       <item name="Project Information"  href="project-info.html" collapse="true">
@@ -95,8 +113,9 @@
         <item name="Sonar"             href="${sonar-url-project}"/>
       </item>
 
+      <!--
       <item name="Source File Reports"  href="project-reports.html" collapse="true">
-        <!-- <item name="JavaDocs"           href="apidocs/index.html"/> -->
+        <item name="JavaDocs"           href="apidocs/index.html"/>
         <item name="Source"             href="xref/index.html"/>
         <item name="Taglist"            href="taglist.html"/>
       </item>
@@ -107,14 +126,15 @@
         <item name="NCSS"               href="javancss.html"/>
         <item name="CPD"                href="cpd.html"/>
         <item name="JDepend"            href="jdepend-report.html"/>
-        <!-- <item name="Javadoc Messages"   href="apidoc-report.html"/> -->
-        </item>
+        <item name="Javadoc Messages"   href="apidoc-report.html"/>
+      </item>
       <item name="Test Reports"    href="project-reports.html" collapse="true">
         <item name="Test Report"   href="surefire-report.html"/>
-        <!-- <item name="Code Coverage" href="cobertura/index.html"/> -->
-        <!-- <item name="Javadocs"      href="testapidocs/index.html"/> -->
+        <item name="Code Coverage" href="cobertura/index.html"/
+        <item name="Javadocs"      href="testapidocs/index.html"/>
         <item name="Sources"       href="xref-test/index.html"/>
       </item>
+       -->
 
       <item name="Credits" href="credits.html"/>
     </menu>
