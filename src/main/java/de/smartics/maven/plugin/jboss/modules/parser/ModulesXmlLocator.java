@@ -30,9 +30,9 @@ import org.apache.commons.lang.StringUtils;
 import org.jdom2.JDOMException;
 
 import de.smartics.maven.plugin.jboss.modules.descriptor.ModulesDescriptor;
-import de.smartics.util.lang.classpath.ClassPathContext;
-import de.smartics.util.lang.classpath.ClassPathListing;
-import de.smartics.util.lang.classpath.JarAndFileClassPathListing;
+import de.smartics.maven.plugin.jboss.modules.util.classpath.ClassPathContext;
+import de.smartics.maven.plugin.jboss.modules.util.classpath.ClassPathListing;
+import de.smartics.maven.plugin.jboss.modules.util.classpath.JarAndFileClassPathListing;
 
 /**
  * Discovers all module descriptors on the class path.

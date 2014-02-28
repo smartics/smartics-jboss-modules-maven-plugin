@@ -24,7 +24,7 @@ import org.eclipse.aether.artifact.Artifact;
 import de.smartics.maven.plugin.jboss.modules.domain.MatchContext;
 import de.smartics.maven.plugin.jboss.modules.domain.matching.DelegationMatchContext;
 import de.smartics.maven.plugin.jboss.modules.domain.matching.SingleMatchContext;
-import de.smartics.util.lang.Arg;
+import de.smartics.maven.plugin.jboss.modules.util.Arg;
 
 /**
  * Descriptor to define the rules for matching artifacts to be included as

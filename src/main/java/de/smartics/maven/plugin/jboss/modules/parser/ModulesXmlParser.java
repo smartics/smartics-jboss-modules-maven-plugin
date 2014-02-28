@@ -23,7 +23,7 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
 import de.smartics.maven.plugin.jboss.modules.descriptor.ModulesDescriptor;
-import de.smartics.util.lang.Arg;
+import de.smartics.maven.plugin.jboss.modules.util.Arg;
 
 /**
  * Parses a modules XML document.

@@ -20,7 +20,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.eclipse.aether.artifact.Artifact;
 
 import de.smartics.maven.plugin.jboss.modules.domain.MatchContext;
-import de.smartics.util.lang.Arg;
+import de.smartics.maven.plugin.jboss.modules.util.Arg;
 
 /**
  * Holds the information of one module descriptor. The descriptor controls the

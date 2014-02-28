@@ -23,7 +23,7 @@ import org.eclipse.aether.graph.Dependency;
 import org.eclipse.aether.resolution.DependencyResolutionException;
 
 import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleDescriptor;
-import de.smartics.util.lang.Arg;
+import de.smartics.maven.plugin.jboss.modules.util.Arg;
 import edu.emory.mathcs.backport.java.util.Collections;
 
 /**

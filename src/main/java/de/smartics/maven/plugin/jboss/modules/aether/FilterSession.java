@@ -15,15 +15,15 @@
  */
 package de.smartics.maven.plugin.jboss.modules.aether;
 
+import org.eclipse.aether.AbstractForwardingRepositorySystemSession;
 import org.eclipse.aether.RepositorySystemSession;
 import org.eclipse.aether.collection.DependencySelector;
 import org.eclipse.aether.collection.DependencyTraverser;
-import org.eclipse.aether.AbstractForwardingRepositorySystemSession;
 import org.eclipse.aether.util.graph.selector.AndDependencySelector;
 import org.eclipse.aether.util.graph.selector.OptionalDependencySelector;
 import org.eclipse.aether.util.graph.selector.ScopeDependencySelector;
 
-import de.smartics.util.lang.Arg;
+import de.smartics.maven.plugin.jboss.modules.util.Arg;
 
 /**
  * Used for pruning the dependency tree.

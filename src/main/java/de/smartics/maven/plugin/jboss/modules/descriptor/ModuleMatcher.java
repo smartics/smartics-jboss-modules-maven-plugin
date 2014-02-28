@@ -20,7 +20,7 @@ import java.util.List;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-import de.smartics.util.lang.Arg;
+import de.smartics.maven.plugin.jboss.modules.util.Arg;
 
 /**
  * Descriptor to define the rules for matching modules to be matched to have

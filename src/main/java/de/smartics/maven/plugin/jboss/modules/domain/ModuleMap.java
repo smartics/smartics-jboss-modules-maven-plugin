@@ -33,7 +33,7 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
 import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleDescriptor;
-import de.smartics.util.lang.Arg;
+import de.smartics.maven.plugin.jboss.modules.util.Arg;
 
 /**
  * Maps artifacts to their modules.
