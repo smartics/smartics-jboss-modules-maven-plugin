@@ -70,13 +70,15 @@
     </contributor>
   </contributors>
   <issueManagement>
-    <system>github</system>
-    <url>https://github.com/smartics/smartics-jboss-modules-maven-plugin/issues</url>
+    <system>jira</system>
+    <url>https://www.smartics.eu/jira/projects/SJBMMP</url>
   </issueManagement>
+  <!-- 
   <ciManagement>
     <system>hudson</system>
     <url>http://www.smartics.eu/hudson</url>
   </ciManagement>
+   -->
 
   <scm>
     <connection>scm:git:git@github.com:smartics/smartics-jboss-modules-maven-plugin</connection>
@@ -114,7 +116,7 @@
     <testdoc.version>0.4.1</testdoc.version>
 
     <jdk.version>1.6</jdk.version>
-    <repo.server>http://>www.smartics.eu/nexus</repo.server>
+    <repo.server>http://www.smartics.eu/nexus</repo.server>
     <repo.server.prefix>${repo.server}/content</repo.server.prefix>
     <repo.server.upload>dav:${repo.server.prefix}/repositories</repo.server.upload>
 

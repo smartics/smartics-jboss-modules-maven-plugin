@@ -101,8 +101,8 @@
     <item name="Information Systems"  href="project-info.html" collapse="true">
         <item name="Source Repository" href="source-repository.html"/>
         <item name="Issue Management"  href="issue-tracking.html"/>
-        <item name="CI Server"         href="integration.html"/>
-        <item name="Sonar"             href="${sonar-url-project}"/>
+        <!-- <item name="CI Server"         href="integration.html"/> -->
+        <!-- <item name="Sonar"             href="${sonar-url-project}"/> -->
       </item>
 
       <!--
