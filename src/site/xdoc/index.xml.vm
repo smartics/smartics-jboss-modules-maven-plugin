@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright 2013-2014 smartics, Kronseder & Reiner GmbH
+    Copyright 2013-2015 smartics, Kronseder & Reiner GmbH
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -65,15 +65,41 @@
         In <a href="plugin-info.html">Goals</a> you'll find a short description
         of the goals and its parameters.
       </p>
+    </section>
+    <section name="Compatibility Matrix">
       <p>
-        Please note that this plugin only supports Maven from 3.1.x and up due to
+        Please note that this plugin only supports Maven from 3.2.5 and up due to
         incompatibilities to the <a href="http://eclipse.org/aether/">Aether</a>
-        implementation used by Maven. Please refer to
-        <a href="http://www.smartics.eu/bugzilla/show_bug.cgi?id=843">Bug 843</a>
-        for details. If you are looking for support for Maven 3.0.x, please
-        refer to <a href="${webroot}/${project.groupId}/${project.artifactId}/">versions 0.x</a>
-        of this plugin.
+        implementation used by Maven.
       </p>
+      <table>
+        <tr>
+          <th>Plugin Version</th>
+          <th>Maven Version</th>
+          <th>Notes</th>
+        </tr>
+        <tr>
+          <td>2.x</td>
+          <td>3.2.5+</td>
+          <td>Please refer to
+            <a href="http://www.smartics.eu/bugzilla/show_bug.cgi?id=931">Bug 931</a>
+            for details.</td>
+        </tr>
+        <tr>
+          <td>1.x</td>
+          <td>3.1.x</td>
+          <td>Please refer to
+            <a href="http://www.smartics.eu/bugzilla/show_bug.cgi?id=843">Bug 843</a>
+            for details.</td>
+        </tr>
+        <tr>
+          <td>0.x</td>
+          <td>3.0.x</td>
+          <td>If you are looking for support for Maven 3.0.x, please
+              refer to <a href="${webroot}/${project.groupId}/${project.artifactId}/">versions 0.x</a>
+              of this plugin.</td>
+        </tr>
+      </table>
     </section>
   </body>
 </document>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright 2013-2014 smartics, Kronseder & Reiner GmbH
+    Copyright 2013-2015 smartics, Kronseder & Reiner GmbH
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -49,6 +49,7 @@
         </p>
         <ul>
           <li><a href="team-list.html#contributor-0">Douglas Palmer</a>: <a href="${project.issueManagement.url}/show_bug.cgi?id=843">Support Maven 3.1</a></li>
+          <li><a href="team-list.html#contributor-1">Sandra Kosmalla</a>: <a href="${project.issueManagement.url}/show_bug.cgi?id=931">Support Maven 3.2.5</a></li>
         </ul>
       </subsection>
     </section>
