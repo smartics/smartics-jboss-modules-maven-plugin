@@ -751,7 +751,19 @@
             <exclude>**/javadoc.xml</exclude>
             <exclude>**/header.txt</exclude>
           </excludes>
-        </configuration>
+            <strictCheck>true</strictCheck>
+            <header>src/etc/header.txt</header>
+            <headerDefinitions>
+              <headerDefinition>src/etc/javadoc.xml</headerDefinition>
+            </headerDefinitions>
+            <properties>
+              <year>${build.copyright.year}</year>
+            </properties>
+            <mapping>
+              <vm>XML_STYLE</vm>
+              <jnlp>XML_STYLE</jnlp>
+            </mapping>          
+        </configuration>     
       </plugin>
 
       <plugin>
