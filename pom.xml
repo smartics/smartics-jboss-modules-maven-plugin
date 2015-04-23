@@ -709,7 +709,7 @@
               <hideCommandLineInfo>false</hideCommandLineInfo>
               <hideMavenOptsInfo>false</hideMavenOptsInfo>
               <hideJavaOptsInfo>false</hideJavaOptsInfo>
-            </configuration>            
+            </configuration>
           </execution>
         </executions>
         <configuration>
