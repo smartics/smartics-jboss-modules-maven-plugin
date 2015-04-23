@@ -142,7 +142,7 @@
     <hudson-maven-plugin.version>0.2.8</hudson-maven-plugin.version>
     <config-smartics-hudson.version>0.3.0</config-smartics-hudson.version>
 
-    <buildmetadata-maven-plugin.version>1.5.1</buildmetadata-maven-plugin.version>1
+    <buildmetadata-maven-plugin.version>1.5.1</buildmetadata-maven-plugin.version>
 
     <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
     <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
@@ -707,7 +707,7 @@
               <hideCommandLineInfo>false</hideCommandLineInfo>
               <hideMavenOptsInfo>false</hideMavenOptsInfo>
               <hideJavaOptsInfo>false</hideJavaOptsInfo>
-            </configuration>            
+            </configuration>
           </execution>
         </executions>
         <configuration>
