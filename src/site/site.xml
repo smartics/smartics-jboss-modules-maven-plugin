@@ -71,19 +71,11 @@
     <menu name="Overview">
       <item name="Introduction"        href="index.html"/>
       <item name="Goals"               href="plugin-info.html"/>
+      <item name="Homepage"            href="${webroot}/confluence/display/SJBMMP"/>
       <item name="Project Blog"        href="${webroot-projects}/productivity-a-ware/smartics-jboss-modules"/>
       <item name="Accessing Artifacts" href="http://www.smartics.de/projects/accessing-artifacts"/>
       <item name="Latest Version"      href="${webroot}/${project.artifactId}/index.html"/>
       <item name="All Versions"        href="${webroot}/${project.groupId}/${project.artifactId}/"/>
-    </menu>
-
-    <menu name="Documentation">
-      <item name="Usage Modules"   href="usage-modules.html"/>
-      <item name="Modules XSD"     href="jboss-modules-descriptor-doc.html"/>
-      <item name="Import Module Descriptors"  href="import-modules.html"/>
-      <item name="Project Types"   href="project-types.html" />
-      <item name="Usage Jandex"    href="usage-jandex.html"/>
-      <item name="Usage Index"     href="usage-index.html"/>
     </menu>
 
     <!--

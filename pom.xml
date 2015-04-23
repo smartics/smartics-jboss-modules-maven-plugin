@@ -834,7 +834,7 @@
       </plugin>
 
       <plugin>
-        <groupId>de.smartics.maven.plugin</groupId>
+        <groupId>com.redhat.rcm.maven.plugin</groupId>
         <artifactId>buildmetadata-maven-plugin</artifactId>
         <version>${buildmetadata-maven-plugin.version}</version>
       </plugin>

@@ -24,15 +24,15 @@
       <link rel="DC.rights copyright" href="license.html" />
 
       <meta name="keywords" content="JBoss modules, archive, maven plugin, maven"/>
-      <meta name="description" content="Homepage of the JBoss modules Maven plugin. This plugin plugin creates an archive with JBoss modules to be applyable to a JBoss server installation. "/>
+      <meta name="description" content="Report site of the JBoss modules Maven plugin. This plugin plugin creates an archive with JBoss modules to be applyable to a JBoss server installation. "/>
       <meta name="author" content="smartics"/>
 
       <meta name="DC.title" content="smartics-jboss-modules-maven-plugin"/>
       <meta name="DC.creator" content="smartics"/>
-      <meta name="DC.subject" content="Homepage of the JBoss modules Maven plugin"/>
-      <meta name="DC.description" content="Homepage of the JBoss modules Maven plugin. This plugin plugin creates an archive with JBoss modules to be applyable to a JBoss server installation. "/>
+      <meta name="DC.subject" content="Report site of the JBoss modules Maven plugin"/>
+      <meta name="DC.description" content="Report site of the JBoss modules Maven plugin. This plugin plugin creates an archive with JBoss modules to be applyable to a JBoss server installation. "/>
       <meta name="DC.publisher" content="smartics"/>
-      <meta name="DC.rights" content="Copyright 2013-2014 smartics"/>
+      <meta name="DC.rights" content="Copyright 2013-2015 smartics"/>
     </head>
 	<body>
     <section name="Overview">
@@ -49,57 +49,9 @@
         <a href="http://maven.apache.org/pom.html">Maven POM</a>.
       </p>
       <p>
-        Please refer to
+        Please refer to the <a href="https://www.smartics.eu/confluence/display/SJBMMP">project's homepage</a>
+        for documentation.
       </p>
-      <ul>
-        <li><a href="usage-modules.html">Usage Modules</a></li>
-        <li><a href="jboss-modules-descriptor-doc.html">Modules XSD</a></li>
-        <li><a href="import-modules.html">Import Module Descriptors</a></li>
-        <li><a href="usage-jandex.html">Usage Jandex</a></li>
-        <li><a href="usage-index.html">Usage Index</a></li>
-      </ul>
-      <p>
-        for details on how to use this plugin.
-      </p>
-      <p>
-        In <a href="plugin-info.html">Goals</a> you'll find a short description
-        of the goals and its parameters.
-      </p>
-    </section>
-    <section name="Compatibility Matrix">
-      <p>
-        Please note that this plugin only supports Maven from 3.2.5 and up due to
-        incompatibilities to the <a href="http://eclipse.org/aether/">Aether</a>
-        implementation used by Maven.
-      </p>
-      <table>
-        <tr>
-          <th>Plugin Version</th>
-          <th>Maven Version</th>
-          <th>Notes</th>
-        </tr>
-        <tr>
-          <td>2.x</td>
-          <td>3.2.5+</td>
-          <td>Please refer to
-            <a href="http://www.smartics.eu/bugzilla/show_bug.cgi?id=931">Bug 931</a>
-            for details.</td>
-        </tr>
-        <tr>
-          <td>1.x</td>
-          <td>3.1.x</td>
-          <td>Please refer to
-            <a href="http://www.smartics.eu/bugzilla/show_bug.cgi?id=843">Bug 843</a>
-            for details.</td>
-        </tr>
-        <tr>
-          <td>0.x</td>
-          <td>3.0.x</td>
-          <td>If you are looking for support for Maven 3.0.x, please
-              refer to <a href="${webroot}/${project.groupId}/${project.artifactId}/">versions 0.x</a>
-              of this plugin.</td>
-        </tr>
-      </table>
     </section>
   </body>
 </document>
