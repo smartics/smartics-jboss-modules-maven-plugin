@@ -380,7 +380,7 @@
       <version>0.1.1</version>
       <type>pom</type>
       <scope>test</scope>
-    </dependency>    
+    </dependency>
   </dependencies>
 
   <build>
@@ -677,20 +677,22 @@
         </configuration>
       </plugin>
       <plugin>
-        <!--
         <groupId>com.redhat.rcm.maven.plugin</groupId>
         <artifactId>buildmetadata-maven-plugin</artifactId>
-        <version>1.3.1</version>
-         -->
-        <groupId>de.smartics.maven.plugin</groupId>
-        <artifactId>buildmetadata-maven-plugin</artifactId>
-        <version>${buildmetadata-maven-plugin.version}</version>
+        <version>1.5.1</version>
         <executions>
           <execution>
             <phase>initialize</phase>
             <goals>
               <goal>provide-buildmetadata</goal>
             </goals>
+            <configuration>
+              <createPropertiesReport>true</createPropertiesReport>
+              <propertiesOutputFile>${project.build.outputDirectory}/META-INF/buildmetadata.properties</propertiesOutputFile>
+              <hideCommandLineInfo>false</hideCommandLineInfo>
+              <hideMavenOptsInfo>false</hideMavenOptsInfo>
+              <hideJavaOptsInfo>false</hideJavaOptsInfo>
+            </configuration>            
           </execution>
         </executions>
         <configuration>
@@ -738,12 +740,14 @@
         <configuration>
           <excludes>
             <exclude>**/.externalToolBuilders/**</exclude>
+            <exclude>**/.gitignore/**</exclude>
             <exclude>**/.fbprefs</exclude>
             <exclude>**/.pmd</exclude>
             <exclude>**/.checkstyle</exclude>
             <exclude>**/.ruleset</exclude>
             <exclude>**/COPYRIGHT.txt</exclude>
             <exclude>**/LICENSE.txt</exclude>
+            <exclude>**/README.md</exclude>
             <exclude>**/LICENSE-*</exclude>
             <exclude>**/*.xcf</exclude>
             <exclude>**/*.uml</exclude>
@@ -751,19 +755,19 @@
             <exclude>**/javadoc.xml</exclude>
             <exclude>**/header.txt</exclude>
           </excludes>
-            <strictCheck>true</strictCheck>
-            <header>src/etc/header.txt</header>
-            <headerDefinitions>
-              <headerDefinition>src/etc/javadoc.xml</headerDefinition>
-            </headerDefinitions>
-            <properties>
-              <year>${build.copyright.year}</year>
-            </properties>
-            <mapping>
-              <vm>XML_STYLE</vm>
-              <jnlp>XML_STYLE</jnlp>
-            </mapping>          
-        </configuration>     
+          <strictCheck>true</strictCheck>
+          <header>src/etc/header.txt</header>
+          <headerDefinitions>
+            <headerDefinition>src/etc/javadoc.xml</headerDefinition>
+          </headerDefinitions>
+          <properties>
+            <year>${build.copyright.year}</year>
+          </properties>
+          <mapping>
+            <vm>XML_STYLE</vm>
+            <jnlp>XML_STYLE</jnlp>
+          </mapping>
+        </configuration>
       </plugin>
 
       <plugin>
