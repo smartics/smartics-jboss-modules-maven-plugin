@@ -682,7 +682,9 @@
             </goals>
             <configuration>
               <createPropertiesReport>true</createPropertiesReport>
+              <createXmlReport>false</createXmlReport>
               <propertiesOutputFile>${project.build.outputDirectory}/META-INF/buildmetadata.properties</propertiesOutputFile>
+              <addScmInfo>true</addScmInfo>
               <hideCommandLineInfo>false</hideCommandLineInfo>
               <hideMavenOptsInfo>false</hideMavenOptsInfo>
               <hideJavaOptsInfo>false</hideJavaOptsInfo>
