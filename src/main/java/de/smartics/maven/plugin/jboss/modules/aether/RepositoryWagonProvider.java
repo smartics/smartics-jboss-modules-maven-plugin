@@ -1,5 +1,5 @@
 /*
- * Copyright 2013-2014 smartics, Kronseder & Reiner GmbH
+ * Copyright 2013-2015 smartics, Kronseder & Reiner GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ package de.smartics.maven.plugin.jboss.modules.aether;
 import org.apache.maven.wagon.Wagon;
 import org.apache.maven.wagon.providers.http.LightweightHttpWagon;
 import org.apache.maven.wagon.providers.http.LightweightHttpsWagon;
-import org.eclipse.aether.connector.wagon.WagonProvider;
+import org.eclipse.aether.transport.wagon.WagonProvider;
 
 /**
  * Mapper to support HTTP and HTTPS protocols.
