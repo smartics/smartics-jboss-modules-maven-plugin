@@ -142,7 +142,7 @@
     <hudson-maven-plugin.version>0.2.8</hudson-maven-plugin.version>
     <config-smartics-hudson.version>0.3.0</config-smartics-hudson.version>
 
-    <buildmetadata-maven-plugin.version>1.4.0</buildmetadata-maven-plugin.version>
+    <buildmetadata-maven-plugin.version>1.5.1</buildmetadata-maven-plugin.version>1
 
     <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
     <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
@@ -679,7 +679,7 @@
       <plugin>
         <groupId>com.redhat.rcm.maven.plugin</groupId>
         <artifactId>buildmetadata-maven-plugin</artifactId>
-        <version>1.5.1</version>
+        <version>${buildmetadata-maven-plugin.version}</version>
         <executions>
           <execution>
             <phase>initialize</phase>
