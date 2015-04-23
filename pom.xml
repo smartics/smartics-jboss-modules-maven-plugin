@@ -142,7 +142,7 @@
     <hudson-maven-plugin.version>0.2.8</hudson-maven-plugin.version>
     <config-smartics-hudson.version>0.3.0</config-smartics-hudson.version>
 
-    <buildmetadata-maven-plugin.version>1.5.1</buildmetadata-maven-plugin.version>1
+    <buildmetadata-maven-plugin.version>1.5.1</buildmetadata-maven-plugin.version>
 
     <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
     <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
@@ -620,6 +620,21 @@
                     <ignore />
                   </action>
                 </pluginExecution>
+
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-plugin-plugin</artifactId>
+                    <versionRange>[0.0.0,)</versionRange>
+                    <goals>
+                      <goal>descriptor</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore />
+                  </action>
+                </pluginExecution>
+
                 <pluginExecution>
                   <pluginExecutionFilter>
                     <groupId>de.smartics.maven.plugin</groupId>
@@ -688,7 +703,9 @@
             </goals>
             <configuration>
               <createPropertiesReport>true</createPropertiesReport>
+              <createXmlReport>false</createXmlReport>
               <propertiesOutputFile>${project.build.outputDirectory}/META-INF/buildmetadata.properties</propertiesOutputFile>
+              <addScmInfo>true</addScmInfo>
               <hideCommandLineInfo>false</hideCommandLineInfo>
               <hideMavenOptsInfo>false</hideMavenOptsInfo>
               <hideJavaOptsInfo>false</hideJavaOptsInfo>
@@ -840,7 +857,7 @@
       </plugin>
 
       <plugin>
-        <groupId>de.smartics.maven.plugin</groupId>
+        <groupId>com.redhat.rcm.maven.plugin</groupId>
         <artifactId>buildmetadata-maven-plugin</artifactId>
         <version>${buildmetadata-maven-plugin.version}</version>
       </plugin>
