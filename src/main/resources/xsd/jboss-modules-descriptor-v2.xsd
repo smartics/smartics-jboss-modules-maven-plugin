@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2013-2015 smartics, Kronseder & Reiner GmbH
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<xsd:schema
+  xmlns="http://smartics.de/ns/jboss-modules-descriptor/2"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="http://smartics.de/ns/jboss-modules-descriptor/2"
+  elementFormDefault="qualified">
+  <xsd:annotation>
+    <xsd:documentation>
+      Defines the modules descriptor for creating JBoss modules.
+    </xsd:documentation>
+  </xsd:annotation>
+
+  <xsd:element name="modules">
+    <xsd:annotation>
+      <xsd:documentation>
+        The set of module descriptors.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="module" type="Module" maxOccurs="unbounded" minOccurs="0">
+          <xsd:annotation>
+            <xsd:documentation>
+              A single module descriptor that defines how to catch dependencies
+              and map them to modules
+              and module dependencies.
+            </xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:complexType name="Module">
+    <xsd:sequence>
+      <xsd:element name="main-class" type="MainClass" minOccurs="0" maxOccurs="1">
+        <xsd:annotation>
+          <xsd:documentation>
+            Specifies the main class of this module; used to run the module from the command-line.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="properties" type="ModuleProperties" minOccurs="0" maxOccurs="1">
+        <xsd:annotation>
+          <xsd:documentation>
+            Lists the user-defined properties to be associated with this module (optional).
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="include" type="ArtifactInclude" minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>
+            The artifacts that should be included with this module.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="exclude" type="ArtifactExclude" minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>
+            The artifacts that should be included with this module.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="apply-to-dependencies" type="ApplyToDependencies" minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>
+            Additional information to be applied to dependencies of the module.
+            The module is matched by the using the desired module name.
+            Module dependencies can be included can excluded by using skip=true or exported
+            with export=true and have services imported / exported with services=import,
+            services=export.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="dependencies" minOccurs="0" maxOccurs="1">
+        <xsd:annotation>
+          <xsd:documentation>
+            Additional information to be applied to dependencies of the module.
+            The module is matched by using the module name for the desired dependency to add.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="module" type="ModuleDependency" minOccurs="0" maxOccurs="unbounded">
+              <xsd:annotation>
+                <xsd:documentation>
+                  The module dependency to add
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="system" type="SystemExports" minOccurs="0" maxOccurs="1">
+              <xsd:annotation>
+                <xsd:documentation>
+                  List of system exported paths
+                </xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="imports" type="ModuleImport" minOccurs="0" maxOccurs="1">
+        <xsd:annotation>
+          <xsd:documentation>
+            A list of paths to be imported.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="exports" type="ModuleExport" minOccurs="0" maxOccurs="1">
+        <xsd:annotation>
+          <xsd:documentation>
+            A list of paths to be exported.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute type="xsd:string" name="name" use="required">
+      <xsd:annotation>
+        <xsd:documentation>
+          The name of the module.
+
+          The name can be automatically generated using regular expressions.
+          For example. Consider a Maven POM which had org.springframework spring-core and spring-web
+          dependencies. The following module name:
+
+          org.springframework.$1
+
+          Together with an artifact include of:
+
+          spring-(.*)
+
+          Would result in generated module XML files for spring-core and spring-web.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute type="xsd:string" name="slot" use="optional">
+      <xsd:annotation>
+        <xsd:documentation>
+          The slot the module is in.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute type="xsd:boolean" name="skip" use="optional">
+      <xsd:annotation>
+        <xsd:documentation>
+          When skip=true no XML module definition is generated for the module and it's dependencies.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute type="xsd:boolean" name="inherit-slot" use="optional">
+      <xsd:annotation>
+        <xsd:documentation>
+          If the slot of the module should not be inherited to its dependencies,
+          this flag is set to
+          'false'.
+
+          Useful to create modules for extensions, where the extension is
+          required to be in the main folder,
+          but its dependencies should be
+          moved to a specific slot.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="ApplyToDependencies">
+    <xsd:annotation>
+      <xsd:documentation>
+        Additional information to be applied to dependencies of the module.
+        The module is matched by the using the desired module name.
+        Module dependencies can be included can excluded by using skip=true or exported
+        with export=true and have services imported / exported with services=import,
+        services=export.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="include" minOccurs="1" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>
+            A list of module dependencies.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:attribute name="module" type="xsd:string" use="required">
+            <xsd:annotation>
+              <xsd:documentation>
+                The name of the module.
+              </xsd:documentation>
+            </xsd:annotation>
+          </xsd:attribute>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="skip" type="xsd:boolean" use="optional">
+      <xsd:annotation>
+        <xsd:documentation>
+          Use skip=true to prevent specified module depdencies being included
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="slot" type="xsd:string" use="optional">
+      <xsd:annotation>
+        <xsd:documentation>
+          The slot name of the dependent module.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="export" type="xsd:boolean" use="optional">
+      <xsd:annotation>
+        <xsd:documentation>
+          Use export=true to export the module dependency.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="services" type="Services" use="optional">
+      <xsd:annotation>
+        <xsd:documentation>
+          Use services=import to import services. Use services=export to export services.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="optional" type="xsd:boolean" use="optional">
+      <xsd:annotation>
+        <xsd:documentation>
+          Use optional=true to mark the module dependency as optional.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="MainClass">
+    <xsd:annotation>
+      <xsd:documentation>
+        A class name.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="name" type="xsd:string" use="required">
+      <xsd:annotation>
+        <xsd:documentation>
+          The class name.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="ModuleProperties">
+    <xsd:sequence>
+      <xsd:element name="property" type="ModuleProperty" minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>
+            A property in this property list.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ModuleProperty">
+    <xsd:attribute name="name" type="xsd:string" use="required">
+      <xsd:annotation>
+        <xsd:documentation>
+          The property name as a string.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="value" type="xsd:string" use="optional" default="true">
+      <xsd:annotation>
+        <xsd:documentation>
+          The property value (defaults to "true").
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="ModuleImport">
+    <xsd:sequence>
+      <xsd:element name="include" type="PathInclude" minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>
+            The paths that the module should include for import.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="exclude" type="PathExclude" minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>
+            The paths that the module should exclude for import.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ModuleExport">
+    <xsd:sequence>
+      <xsd:element name="include" type="PathInclude" minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>
+            The paths that the module should include for export.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="exclude" type="PathExclude" minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>
+            The paths that the module should exclude for export.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="PathInclude">
+    <xsd:annotation>
+      <xsd:documentation>
+        A list of paths to be imported.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="path" type="xsd:string" use="required">
+      <xsd:annotation>
+        <xsd:documentation>
+          The path to import.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="PathExclude">
+    <xsd:annotation>
+      <xsd:documentation>
+        A list of paths to be excluded.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="path" type="xsd:string" use="required">
+      <xsd:annotation>
+        <xsd:documentation>
+          The path to exclude.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="ArtifactInclude">
+    <xsd:annotation>
+      <xsd:documentation>
+        The artifacts that should be included within a module.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="artifact" type="xsd:string" use="required">
+      <xsd:annotation>
+        <xsd:documentation>
+          The Maven GAV coordinates of the artifact to include.
+          Wildcards can be used to include multiple artifacts. E.g:
+
+          To include all apache commons artifacts matching commons-*:
+
+          org.apache.commons:commons-(.*)
+
+          Or ignoring the group id and matching on artifact id:
+
+          :commons-(.*)
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="ArtifactExclude">
+    <xsd:annotation>
+      <xsd:documentation>
+        The artifacts that should be excluded from a module.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="artifact" type="xsd:string" use="required">
+      <xsd:annotation>
+        <xsd:documentation>
+          The Maven GAV coordinates of the artfiact to exclude.
+          Wildcards can be used to exclude multiple artifacts. E.g:
+
+          To exclude all apache commons artifacts matching commons-*:
+
+          org.apache.commons:commons-(.*)
+
+          Or ignoring the group id and matching on artifact id:
+
+          :commons-(.*)
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:simpleType name="Services">
+    <xsd:annotation>
+      <xsd:documentation>
+        The options for a module dependency services attributes.
+
+        Import imports services into the module. Export exports services for other modules.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="import"/>
+      <xsd:enumeration value="export"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:complexType name="SystemExports">
+    <xsd:annotation>
+      <xsd:documentation>
+        A list of system exports.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="paths" minOccurs="1" maxOccurs="1">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="path" minOccurs="0" maxOccurs="unbounded">
+              <xsd:annotation>
+                <xsd:documentation>
+                  The system path to export.
+                </xsd:documentation>
+              </xsd:annotation>
+              <xsd:complexType>
+                <xsd:annotation>
+                  <xsd:documentation>
+                    The name of the path to export.
+                  </xsd:documentation>
+                </xsd:annotation>
+                <xsd:attribute name="name" type="xsd:string" use="required"/>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="export" type="xsd:boolean" use="optional">
+      <xsd:annotation>
+        <xsd:documentation>
+          Use export=true to export the system dependencies.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="ModuleDependency">
+    <xsd:annotation>
+      <xsd:documentation>
+        A dependency reference for a module.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="imports" type="ModuleImport" minOccurs="0" maxOccurs="1">
+        <xsd:annotation>
+          <xsd:documentation>
+            A list of paths to be imported.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="exports" type="ModuleExport" minOccurs="0" maxOccurs="1">
+        <xsd:annotation>
+          <xsd:documentation>
+            A list of paths to be exported.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="name" type="xsd:string" use="required">
+      <xsd:annotation>
+        <xsd:documentation>
+          The name of the module to include within the generated module XML dependencies section.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="slot" type="xsd:string" use="optional">
+      <xsd:annotation>
+        <xsd:documentation>
+          The slot name of the dependent module.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="export" type="xsd:boolean" use="optional">
+      <xsd:annotation>
+        <xsd:documentation>
+          Use export=true to export the module dependency.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="services" type="Services" use="optional">
+      <xsd:annotation>
+        <xsd:documentation>
+          Use services=import to import services. Use services=export to export services.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="optional" type="xsd:boolean" use="optional">
+      <xsd:annotation>
+        <xsd:documentation>
+          Use optional=true to mark the module dependency as optional.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+</xsd:schema>

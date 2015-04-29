@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-def setup = 'target/jboss-modules/de/smartics/test/setup/special'
+def setup = "${targetDir}/de/smartics/test/setup/special"
 def setupCommonsFile = new File(basedir, setup + '/test-setup-artifacts-commons-1.0.0.jar')
 assert setupCommonsFile.exists()
 def setupDomainFile = new File(basedir, setup + '/test-setup-artifacts-domain-1.0.0.jar')
@@ -59,7 +59,7 @@ assert 'special' == mods[0].@slot.text()
   <dependencies />
 </module>
 */
-def commons = 'target/jboss-modules/commons-lang/special'
+def commons = "${targetDir}/commons-lang/special"
 def commonsFile = new File(basedir, commons + '/commons-lang-2.5.jar')
 assert commonsFile.exists()
 

@@ -84,10 +84,14 @@ public final class ModulesXmlParser
     final Document document =
         builder.build(Arg.checkNotNull("input", input),
             Arg.checkNotBlank("systemId", systemId));
-    final ModulesDescriptorBuilder builder =
-        new ModulesDescriptorBuilder(systemId, document);
-    final ModulesDescriptor descriptor = builder.build();
-    return descriptor;
+    ModulesDescriptor rc=null;
+    if( document.getRootElement().getNamespace() == ModulesDescriptorBuilderV2.NS ) {
+        rc = new ModulesDescriptorBuilderV2(systemId, document).build();
+    } else {
+        rc = new ModulesDescriptorBuilder(systemId, document).build();
+    }
+
+    return rc;
   }
 
   // --- object basics --------------------------------------------------------

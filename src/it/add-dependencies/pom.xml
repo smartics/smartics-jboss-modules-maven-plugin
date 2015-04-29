@@ -49,6 +49,10 @@
         </executions>
         <configuration>
           <attach>false</attach>
+          <modules>
+            <dir>${module.source.dir}</dir>
+          </modules>
+          <targetFolder>${module.target.dir}</targetFolder>
         </configuration>
       </plugin>
     </plugins>
