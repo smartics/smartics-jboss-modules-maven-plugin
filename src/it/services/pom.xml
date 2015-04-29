@@ -42,6 +42,12 @@
             <phase>package</phase>
           </execution>
         </executions>
+        <configuration>
+          <modules>
+            <dir>${module.source.dir}</dir>
+          </modules>
+          <targetFolder>${module.target.dir}</targetFolder>
+        </configuration>
       </plugin>
     </plugins>
   </build>

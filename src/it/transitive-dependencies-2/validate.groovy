@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-def base = 'target/jboss-modules/org/apache/commons/jxpath/main'
+def base = "${targetDir}/org/apache/commons/jxpath/main"
 def artifactFile = new File(basedir, base + '/commons-jxpath-1.3.jar')
 assert artifactFile.exists()
 

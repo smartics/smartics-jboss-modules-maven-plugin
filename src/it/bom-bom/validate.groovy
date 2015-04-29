@@ -17,11 +17,11 @@
   Resolution will derive version 2.5, although smartics-commons depends on 2.6.
   This is due to Maven's resolution algorithm.
  */
-def baseC = 'target/jboss-modules/commons-lang/main'
+def baseC = "${targetDir}/commons-lang/main"
 def artifactFileC = new File(basedir, baseC + '/commons-lang-2.5.jar')
 assert artifactFileC.exists()
 
-def base = 'target/jboss-modules/de/smartics/test/main'
+def base = "${targetDir}/de/smartics/test/main"
 def artifactFile1 = new File(basedir, base + '/smartics-commons-0.5.2.jar')
 assert artifactFile1.exists()
 def artifactFile2 = new File(basedir, base + '/test-setup-artifacts-commons-1.0.0.jar')

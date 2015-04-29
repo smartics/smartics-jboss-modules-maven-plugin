@@ -226,7 +226,7 @@ public final class ModuleXmlBuilder
   {
     addMainClass(module);
     addProperties(module);
-    addResources(dependencies);
+    addResources(module, dependencies);
     addDependencies(module, dependencies);
     addExports(module);
 
@@ -260,11 +260,19 @@ public final class ModuleXmlBuilder
     root.addContent(propertiesElement);
   }
 
-  private void addResources(final Collection<Dependency> dependencies)
+  private void addResources(ModuleDescriptor module, final Collection<Dependency> dependencies)
   {
+    final Element resources = new Element("resources", NS);
+
+    List<String> resourceRootsXml = module.getApplyToModule().getResourceRootsXml();
+    for (final String xml : resourceRootsXml)
+    {
+      final Element element = xmlFragmentParser.parse(xml);
+      resources.addContent(element);
+    }
+
     if (!dependencies.isEmpty())
     {
-      final Element resources = new Element("resources", NS);
 
       final List<SortElement> sorted = createSortedResources(dependencies);
       for (final SortElement element : sorted)
@@ -274,8 +282,10 @@ public final class ModuleXmlBuilder
         resource.setAttribute("path", fileName);
         resources.addContent(resource);
       }
+    }
 
-      root.addContent(resources);
+    if( !resources.getChildren().isEmpty() ) {
+        root.addContent(resources);
     }
   }
 
@@ -334,7 +344,9 @@ public final class ModuleXmlBuilder
       handleExport(moduleElement, dd);
       handleServices(moduleElement, dd);
       handleSlot(module, element, moduleElement);
-      dependenciesElement.addContent(moduleElement);
+      if( dd.getSkip() == null || dd.getSkip()==false ) {
+          dependenciesElement.addContent(moduleElement);
+      }
     }
   }
 
