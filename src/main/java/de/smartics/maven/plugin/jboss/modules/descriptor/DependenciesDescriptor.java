@@ -17,6 +17,7 @@ package de.smartics.maven.plugin.jboss.modules.descriptor;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 
 /**
  * Stores information about a matcher on modules to apply dependency information
@@ -42,6 +43,10 @@ public final class DependenciesDescriptor
    * The slot of the dependency.
    */
   private final String slot;
+  /**
+   * Should the dependency be skipped?
+   */
+  private final Boolean skip;
 
   /**
    * The export attribute for the dependency.
@@ -76,6 +81,7 @@ public final class DependenciesDescriptor
   {
     matcher = builder.matcher;
     slot = builder.slot;
+    skip = builder.skip;
     export = builder.export;
     services = builder.services;
     optional = builder.optional;
@@ -105,6 +111,11 @@ public final class DependenciesDescriptor
      * The slot of the dependency.
      */
     private String slot;
+
+    /**
+     * Should the dependency be skipped?
+     */
+    private Boolean skip;
 
     /**
      * The export attribute for the dependency.
@@ -169,6 +180,21 @@ public final class DependenciesDescriptor
       }
       return this;
     }
+
+      /**
+       * Sets if the dependency should be skipped
+       *
+       * @param skip
+       * @return a reference to this builder.
+       */
+      public Builder withSkip(final String skip)
+      {
+        if (StringUtils.isNotBlank(skip))
+        {
+          this.skip = Boolean.parseBoolean(skip);
+        }
+        return this;
+      }
 
     /**
      * Sets the export attribute for the dependency.
@@ -254,6 +280,7 @@ public final class DependenciesDescriptor
         final DependenciesDescriptor descriptor)
     {
       slot = merge("slot", moduleName, slot, descriptor.slot);
+      skip = merge("skip", moduleName, skip, descriptor.skip);
       export = merge("export", moduleName, export, descriptor.export);
       services = merge("services", moduleName, services, descriptor.services);
       optional = merge("optional", moduleName, optional, descriptor.optional);
@@ -330,6 +357,16 @@ public final class DependenciesDescriptor
   }
 
   /**
+   * Returns if the dependency should be skipped.
+   *
+   * @return if the dependency should be skipped.
+   */
+  public Boolean getSkip()
+    {
+      return skip;
+    }
+
+  /**
    * Returns the export attribute for the dependency.
    *
    * @return the export attribute for the dependency.
@@ -404,7 +441,7 @@ public final class DependenciesDescriptor
   @Override
   public String toString()
   {
-    return ToStringBuilder.reflectionToString(this);
+      return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE, false, null);
   }
 
 }

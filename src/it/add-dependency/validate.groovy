@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-def base = 'target/jboss-modules/org/jdom2/main'
+def base = "${targetDir}/org/jdom2/main"
 def artifactFile = new File(basedir, base + '/jdom2-2.0.4.jar')
 assert artifactFile.exists()
 
