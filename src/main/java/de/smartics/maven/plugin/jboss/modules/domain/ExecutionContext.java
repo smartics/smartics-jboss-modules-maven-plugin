@@ -67,6 +67,12 @@ public final class ExecutionContext
    */
   private final ModuleMap moduleMap;
 
+  /**
+   * Whether to ignore optional dependencies
+   */
+  private final Boolean ignoreOptionalDependencies;
+
+
   // ****************************** Initializer *******************************
 
   // ****************************** Constructors ******************************
@@ -79,6 +85,7 @@ public final class ExecutionContext
     this.slotStrategy = builder.slotStrategy;
     this.defaultSlot = builder.defaultSlot;
     this.moduleMap = builder.moduleMap;
+    this.ignoreOptionalDependencies = builder.ignoreOptionalDependencies;
   }
 
   // ****************************** Inner Classes *****************************
@@ -123,6 +130,12 @@ public final class ExecutionContext
      * The map of modules encountered so far.
      */
     private ModuleMap moduleMap;
+
+    /**
+     * Whether to ignore optional dependencies
+     */
+    private Boolean ignoreOptionalDependencies;
+
 
     // ***************************** Initializer ******************************
 
@@ -205,6 +218,19 @@ public final class ExecutionContext
     public Builder with(final ModuleMap moduleMap)
     {
       this.moduleMap = moduleMap;
+      return this;
+    }
+
+
+    /**
+     * Sets the value of whether to ignore optional dependencies
+     *
+     * @param ignoreOptionalDependencies whether optional dependencies are ignored
+     * @return a reference to this builder.
+     */
+    public Builder with(final Boolean ignoreOptionalDependencies)
+    {
+      this.ignoreOptionalDependencies = ignoreOptionalDependencies;
       return this;
     }
 
@@ -294,6 +320,16 @@ public final class ExecutionContext
   public ModuleMap getModuleMap()
   {
     return moduleMap;
+  }
+
+  /**
+   * Returns whether optional dependencies should be ignored.
+   *
+   * @return the value of whether optional dependencies are being ignored.
+   */
+  public Boolean isIgnoreOptionalDependencies()
+  {
+    return ignoreOptionalDependencies;
   }
 
   // --- business -------------------------------------------------------------

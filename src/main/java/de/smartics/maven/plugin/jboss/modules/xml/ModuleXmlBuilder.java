@@ -340,14 +340,38 @@ public final class ModuleXmlBuilder
       moduleElement.setAttribute("name", name);
 
       final DependenciesDescriptor dd = apply.getDescriptorThatMatches(name);
-      handleOptional(element, moduleElement, dd);
-      handleExport(moduleElement, dd);
-      handleServices(moduleElement, dd);
-      handleSlot(module, element, moduleElement);
-      if( dd.getSkip() == null || dd.getSkip()==false ) {
-          dependenciesElement.addContent(moduleElement);
+
+      if(isIncludableDependency(element, dd))
+      {
+        handleOptional(element, moduleElement, dd);
+        handleExport(moduleElement, dd);
+        handleServices(moduleElement, dd);
+        handleSlot(module, element, moduleElement);
+        dependenciesElement.addContent(moduleElement);
       }
     }
+  }
+
+  private boolean isIncludableDependency(final SortElement element, final DependenciesDescriptor dd)
+  {
+    /*
+     * A dependency is considered NOT valid for inclusion within a module if:
+     *   - The dependency is flagged as 'skipped'
+     *   - The dependency is optional and the ignoreOptionalDependencies property is true
+     */
+
+    boolean isSkipped = dd.getSkip() != null && dd.getSkip() == true;
+    boolean isOptional = (dd.getOptional() != null && dd.getOptional() == true) || element.dependency.isOptional();
+
+    if(isSkipped) {
+      return false;
+    }
+
+    if(isOptional && context.isIgnoreOptionalDependencies()) {
+      return false;
+    }
+
+    return true;
   }
 
   private void handleOptional(final SortElement element,
