@@ -21,6 +21,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Test;
 
@@ -84,10 +85,10 @@ public class ModulesXmlParserDependenciesXmlTest extends
 
     final ApplyToDependencies applyToDependencies =
         descriptor.getApplyToDependencies();
-    final List<DependenciesDescriptor> dependenciesDescriptors =
+    final Set<DependenciesDescriptor> dependenciesDescriptors =
         applyToDependencies.getDescriptors();
     assertThat(dependenciesDescriptors.size(), is(equalTo(1)));
-    final DependenciesDescriptor dependencies = dependenciesDescriptors.get(0);
+    final DependenciesDescriptor dependencies = dependenciesDescriptors.iterator().next();
     final ModuleMatcher moduleMatcher = dependencies.getMatcher();
     final List<ModuleClusion> moduleIncludes = moduleMatcher.getIncludes();
     assertThat(moduleIncludes.size(), is(equalTo(1)));

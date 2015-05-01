@@ -444,4 +444,32 @@ public final class DependenciesDescriptor
       return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE, false, null);
   }
 
+  @Override
+  public boolean equals(final Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    final DependenciesDescriptor that = (DependenciesDescriptor) o;
+
+    if (slot != null ? !slot.equals(that.slot) : that.slot != null) return false;
+    if (skip != null ? !skip.equals(that.skip) : that.skip != null) return false;
+    if (export != null ? !export.equals(that.export) : that.export != null) return false;
+    if (services != null ? !services.equals(that.services) : that.services != null) return false;
+    if (optional != null ? !optional.equals(that.optional) : that.optional != null) return false;
+    if (importsXml != null ? !importsXml.equals(that.importsXml) : that.importsXml != null) return false;
+    return !(exportsXml != null ? !exportsXml.equals(that.exportsXml) : that.exportsXml != null);
+
+  }
+
+  @Override
+  public int hashCode() {
+    int result = slot != null ? slot.hashCode() : 0;
+    result = 31 * result + (skip != null ? skip.hashCode() : 0);
+    result = 31 * result + (export != null ? export.hashCode() : 0);
+    result = 31 * result + (services != null ? services.hashCode() : 0);
+    result = 31 * result + (optional != null ? optional.hashCode() : 0);
+    result = 31 * result + (importsXml != null ? importsXml.hashCode() : 0);
+    result = 31 * result + (exportsXml != null ? exportsXml.hashCode() : 0);
+    return result;
+  }
 }

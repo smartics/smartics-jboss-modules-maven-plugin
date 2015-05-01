@@ -19,6 +19,7 @@ import de.smartics.maven.plugin.jboss.modules.descriptor.*;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -75,10 +76,10 @@ public class ModulesXmlParserDependenciesXmlV2Test extends
 
     final ApplyToDependencies applyToDependencies =
         descriptor.getApplyToDependencies();
-    final List<DependenciesDescriptor> dependenciesDescriptors =
+    final Set<DependenciesDescriptor> dependenciesDescriptors =
         applyToDependencies.getDescriptors();
     assertThat(dependenciesDescriptors.size(), is(equalTo(1)));
-    final DependenciesDescriptor dependencies = dependenciesDescriptors.get(0);
+    final DependenciesDescriptor dependencies = dependenciesDescriptors.iterator().next();
     final ModuleMatcher moduleMatcher = dependencies.getMatcher();
     final List<ModuleClusion> moduleIncludes = moduleMatcher.getIncludes();
     assertThat(moduleIncludes.size(), is(equalTo(1)));

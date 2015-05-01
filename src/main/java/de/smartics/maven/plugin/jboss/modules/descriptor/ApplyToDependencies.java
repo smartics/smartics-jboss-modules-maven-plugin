@@ -15,14 +15,13 @@
  */
 package de.smartics.maven.plugin.jboss.modules.descriptor;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.lang.builder.ToStringBuilder;
-
-import de.smartics.maven.plugin.jboss.modules.util.Arg;
+import de.smartics.util.lang.Arg;
 import edu.emory.mathcs.backport.java.util.Collections;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Stores information that has to be applied to dependencies if the matcher
@@ -40,7 +39,7 @@ public final class ApplyToDependencies
    * The descriptors of dependencies to match modules names to have their
    * information applied.
    */
-  private final List<DependenciesDescriptor> descriptors;
+  private final Set<DependenciesDescriptor> descriptors;
 
   // ****************************** Initializer *******************************
 
@@ -68,8 +67,8 @@ public final class ApplyToDependencies
      * The descriptors of dependencies to match modules names to have their
      * information applied.
      */
-    private final List<DependenciesDescriptor> descriptors =
-        new ArrayList<DependenciesDescriptor>();
+    private final Set<DependenciesDescriptor> descriptors =
+        new HashSet<DependenciesDescriptor>();
 
     // ***************************** Initializer ******************************
 
@@ -124,9 +123,9 @@ public final class ApplyToDependencies
    *         their information applied.
    */
   @SuppressWarnings("unchecked")
-  public List<DependenciesDescriptor> getDescriptors()
+  public Set<DependenciesDescriptor> getDescriptors()
   {
-    return Collections.unmodifiableList(descriptors);
+    return Collections.unmodifiableSet(descriptors);
   }
 
   /**
