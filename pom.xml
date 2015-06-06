@@ -27,7 +27,7 @@
       <name>The Apache Software License, Version 2.0</name>
       <url>http://www.apache.org/licenses/LICENSE-2.0</url>
       <distribution>repo</distribution>
-      <comments>Copyright 2013-2014 Kronseder &amp; Reiner GmbH, smartics</comments>
+      <comments>Copyright 2013-2015 Kronseder &amp; Reiner GmbH, smartics</comments>
     </license>
   </licenses>
 
@@ -73,7 +73,7 @@
     <system>jira</system>
     <url>https://www.smartics.eu/jira/projects/SJBMMP</url>
   </issueManagement>
-  <!-- 
+  <!--
   <ciManagement>
     <system>hudson</system>
     <url>http://www.smartics.eu/hudson</url>
