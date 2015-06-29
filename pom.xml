@@ -288,17 +288,25 @@
       <scope>test</scope>
     </dependency>
 
+    <!--
     <dependency>
       <groupId>de.smartics.testdoc</groupId>
       <artifactId>testdoc-core</artifactId>
       <version>${testdoc.version}</version>
       <scope>test</scope>
     </dependency>
+     -->
     <dependency>
       <groupId>de.smartics.testdoc</groupId>
       <artifactId>testdoc-annotations</artifactId>
       <version>${testdoc.version}</version>
       <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>com.sun</groupId>
+          <artifactId>tools</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <dependency>
