@@ -35,23 +35,15 @@
     <developer>
       <id>robert.reiner</id>
       <name>Robert Reiner</name>
-      <url>
-        http://www.smartics.de/about-us/robert-reiner
-      </url>
-      <organization>
-        Kronseder &amp; Reiner GmbH, smartics
-      </organization>
+      <url>https://www.smartics.de/go/robertreiner</url>
+      <organization>Kronseder &amp; Reiner GmbH, smartics</organization>
       <organizationUrl>http://www.smartics.de/</organizationUrl>
     </developer>
     <developer>
       <id>anton.kronseder</id>
       <name>Anton Kronseder</name>
-      <url>
-        http://www.smartics.de/about-us/anton-kronseder
-      </url>
-      <organization>
-        Kronseder &amp; Reiner GmbH, smartics
-      </organization>
+      <url>https://www.smartics.de/go/antonkronseder</url>
+      <organization>Kronseder &amp; Reiner GmbH, smartics</organization>
       <organizationUrl>http://www.smartics.de/</organizationUrl>
     </developer>
   </developers>
