@@ -156,7 +156,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
     <!-- Plugin Versions -->
-    <maven-fluido-smartics-skin_version>2.0.4</maven-fluido-smartics-skin_version>
+    <maven-fluido-smartics-skin_version>2.0.5</maven-fluido-smartics-skin_version>
 
     <hudson-maven-plugin.version>0.2.8</hudson-maven-plugin.version>
     <config-smartics-hudson.version>0.3.0</config-smartics-hudson.version>
@@ -169,7 +169,7 @@
     <maven-resources-plugin.version>2.6</maven-resources-plugin.version>
     <maven-deploy-plugin.version>2.8.1</maven-deploy-plugin.version>
     <maven-jar-plugin.version>2.4</maven-jar-plugin.version>
-    <maven-release-plugin.version>2.4.2</maven-release-plugin.version>
+    <maven-release-plugin.version>2.5.2</maven-release-plugin.version>
     <maven-install-plugin.version>2.5.1</maven-install-plugin.version>
     <maven-scm-plugin.version>1.8.1</maven-scm-plugin.version>
     <maven-project-info-reports-plugin.version>2.7</maven-project-info-reports-plugin.version>
