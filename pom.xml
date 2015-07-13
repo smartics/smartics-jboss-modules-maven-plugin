@@ -99,8 +99,8 @@
 
   <repositories>
     <repository>
-      <id>${project-visibility}</id>
-      <url>${repo.server.base}/${project-visibility}</url>
+      <id>smartics-${project-visibility}</id>
+      <url>${repo.server.group}</url>
       <releases>
         <enabled>true</enabled>
       </releases>
@@ -109,8 +109,8 @@
       </snapshots>
     </repository>
     <repository>
-      <id>${project-visibility}-snapshot</id>
-      <url>${repo.server.base}/${project-visibility}-snapshot</url>
+      <id>smartics-${project-visibility}-snapshot</id>
+      <url>${repo.server.group}</url>
       <releases>
         <enabled>false</enabled>
       </releases>
@@ -133,6 +133,7 @@
     <jdk.version>1.6</jdk.version>
     <repo.server>http://www.smartics.eu/nexus</repo.server>
     <repo.server.prefix>${repo.server}/content</repo.server.prefix>
+    <repo.server.group>${repo.server.prefix}/groups/public-group</repo.server.group>
     <repo.server.base>${repo.server.prefix}/repositories</repo.server.base>
     <repo.server.upload>dav:${repo.server.base}</repo.server.upload>
 
