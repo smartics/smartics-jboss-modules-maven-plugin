@@ -97,6 +97,29 @@
     </site>
   </distributionManagement>
 
+  <repositories>
+    <repository>
+      <id>${project-visibility}</id>
+      <url>${repo.server.base}/${project-visibility}</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>${project-visibility}-snapshot</id>
+      <url>${repo.server.base}/${project-visibility}-snapshot</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
   <properties>
     <project-visibility>public</project-visibility>
     <donationId>ZNFSBTAQJ49HA</donationId>
@@ -110,7 +133,8 @@
     <jdk.version>1.6</jdk.version>
     <repo.server>http://www.smartics.eu/nexus</repo.server>
     <repo.server.prefix>${repo.server}/content</repo.server.prefix>
-    <repo.server.upload>dav:${repo.server.prefix}/repositories</repo.server.upload>
+    <repo.server.base>${repo.server.prefix}/repositories</repo.server.base>
+    <repo.server.upload>dav:${repo.server.base}</repo.server.upload>
 
     <site.root>scp://www.smartics.eu/home/smartics/public_html/${project-visibility}</site.root>
 
