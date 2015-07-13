@@ -97,6 +97,13 @@
     </site>
   </distributionManagement>
 
+  <repositories>
+    <repository>
+      <id>smartics-repository</id>
+      <url>https://www.smartics.eu/nexus/content/groups/public-group/</url>
+    </repository>
+  </repositories>
+  
   <properties>
     <project-visibility>public</project-visibility>
     <donationId>ZNFSBTAQJ49HA</donationId>
