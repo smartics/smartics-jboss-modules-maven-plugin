@@ -777,6 +777,7 @@
             <exclude>**/*.umlusc</exclude>
             <exclude>**/javadoc.xml</exclude>
             <exclude>**/header.txt</exclude>
+            <exclude>**/.idea/**</exclude>
           </excludes>
           <strictCheck>true</strictCheck>
           <header>src/etc/header.txt</header>
@@ -890,7 +891,7 @@
         <plugins>
           <plugin>
             <artifactId>maven-invoker-plugin</artifactId>
-            <version>1.8</version>
+            <version>1.9</version>
             <configuration>
               <debug>true</debug>
               <projectsDirectory>src/it</projectsDirectory>
@@ -912,7 +913,32 @@
             </configuration>
             <executions>
               <execution>
-                <id>integration-test</id>
+                <id>integration-test-v1</id>
+                <configuration>
+                  <properties>
+                    <module.source.dir>src/etc/jboss-modules/v1</module.source.dir>
+                    <module.target.dir>target/jboss-modules/v1</module.target.dir>
+                  </properties>
+                  <scriptVariables>
+                    <targetDir>target/jboss-modules/v1</targetDir>
+                  </scriptVariables>
+                </configuration>
+                <goals>
+                  <goal>install</goal>
+                  <goal>run</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>integration-test-v2</id>
+                <configuration>
+                  <properties>
+                    <module.source.dir>src/etc/jboss-modules/v2</module.source.dir>
+                    <module.target.dir>target/jboss-modules/v2</module.target.dir>
+                  </properties>
+                  <scriptVariables>
+                    <targetDir>target/jboss-modules/v2</targetDir>
+                  </scriptVariables>
+                </configuration>
                 <goals>
                   <goal>install</goal>
                   <goal>run</goal>

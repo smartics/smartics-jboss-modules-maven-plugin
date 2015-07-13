@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-def base = 'target/jboss-modules/org/apache/commons/lang/main'
+def base = "${targetDir}/org/apache/commons/lang/main"
 def artifactFile = new File(basedir, base + '/commons-lang-2.6.jar')
 assert artifactFile.exists()
 

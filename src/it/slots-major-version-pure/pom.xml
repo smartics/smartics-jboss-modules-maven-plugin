@@ -45,6 +45,11 @@
         <configuration>
           <slotStrategy>version-major</slotStrategy>
           <followOptionalDependencies>true</followOptionalDependencies>
+          <attach>false</attach>
+          <modules>
+            <dir>${module.source.dir}</dir>
+          </modules>
+          <targetFolder>${module.target.dir}</targetFolder>
         </configuration>
       </plugin>
     </plugins>

@@ -17,11 +17,13 @@ package de.smartics.maven.plugin.jboss.modules.descriptor;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 
 /**
  * Stores information that has to be applied to a module if the matcher matches
@@ -60,6 +62,11 @@ public final class ApplyToModule
    */
   private String exportsXml;
 
+  /**
+   * The resource root XML fragments.
+   */
+  private final List<String> resourceRootsXml;
+
   // ****************************** Initializer *******************************
 
   // ****************************** Constructors ******************************
@@ -70,6 +77,7 @@ public final class ApplyToModule
     propertiesXml = builder.propertiesXml;
     dependenciesXml = builder.dependenciesXml;
     exportsXml = builder.exportsXml;
+    resourceRootsXml = builder.resourceRootsXml;
   }
 
   // ****************************** Inner Classes *****************************
@@ -112,6 +120,11 @@ public final class ApplyToModule
      */
     private String exportsXml;
 
+    /**
+     * The resource XML fragments.
+     */
+    private final List<String> resourceRootsXml = new LinkedList<String>();
+
     // ***************************** Initializer ******************************
 
     // ***************************** Constructors *****************************
@@ -146,6 +159,19 @@ public final class ApplyToModule
     {
       // TODO: Warn if element is already stored?
       propertiesXml.put(name, fragment);
+    }
+
+    /**
+     * Adds the given resource root.
+     *
+     * @param value the XML fragment containing the resource information.
+     */
+    public void addResourceRootXml(final String value)
+    {
+      // TODO: Warn if element is already stored?
+        if( !resourceRootsXml.contains(value) ) {
+            resourceRootsXml.add(value);
+        }
     }
 
     /**
@@ -226,6 +252,15 @@ public final class ApplyToModule
   }
 
   /**
+   * Returns the list of resource root XML fragments.
+   *
+   * @return the list of resource root XML fragments.
+   */
+  public List<String> getResourceRootsXml()
+  {
+    return new ArrayList<String>(resourceRootsXml);
+  }
+  /**
    * Returns the exports XML fragment.
    *
    * @return the exports XML fragment.
@@ -246,8 +281,18 @@ public final class ApplyToModule
   {
     mergeMainClass(applyToModule);
     mergeExports(applyToModule);
+    mergeResourceRootsXML(applyToModule);
+
     merge("properties", propertiesXml, applyToModule.propertiesXml);
     merge("dependencies", dependenciesXml, applyToModule.dependenciesXml);
+  }
+
+  private void mergeResourceRootsXML(ApplyToModule applyToModule) {
+      for (String value : new ArrayList<String>(applyToModule.resourceRootsXml)) {
+          if( !this.resourceRootsXml.contains(value) ) {
+              this.resourceRootsXml.add(value);
+          }
+      }
   }
 
   private void mergeMainClass(final ApplyToModule applyToModule)
@@ -313,6 +358,6 @@ public final class ApplyToModule
   @Override
   public String toString()
   {
-    return ToStringBuilder.reflectionToString(this);
+      return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE, false, null);
   }
 }

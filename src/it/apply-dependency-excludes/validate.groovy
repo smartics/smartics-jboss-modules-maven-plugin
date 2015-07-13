@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-def base = 'target/jboss-modules/test-setup-artifacts-domain/main'
+def base = "${targetDir}/test-setup-artifacts-domain/main"
 def moduleFile = new File(basedir, base + '/module.xml')
 assert moduleFile.exists()
 

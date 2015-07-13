@@ -17,6 +17,7 @@ package de.smartics.maven.plugin.jboss.modules.descriptor;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 import org.eclipse.aether.artifact.Artifact;
 
 import de.smartics.maven.plugin.jboss.modules.domain.MatchContext;
@@ -525,6 +526,6 @@ public final class ModuleDescriptor
   @Override
   public String toString()
   {
-    return ToStringBuilder.reflectionToString(this);
+      return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE, false, null);
   }
 }

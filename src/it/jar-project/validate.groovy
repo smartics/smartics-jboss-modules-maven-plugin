@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-def base = 'target/jboss-modules/org/jgroups/main'
+def base = "${targetDir}/org/jgroups/main"
 def artifactFile = new File(basedir, base + '/jgroups-3.2.7.Final.jar')
 assert artifactFile.exists()
 
 /* dependencyManagement dependencies are not included in case of a non-pom project */
-def depMgmtFile =  new File(basedir, 'target/jboss-modules/de/smartics/test/setup/test-setup-artifacts-commons/main/test-setup-artifacts-commons-1.0.0.jar');
+def depMgmtFile =  new File(basedir, targetDir + '/de/smartics/test/setup/test-setup-artifacts-commons/main/test-setup-artifacts-commons-1.0.0.jar');
 assert !depMgmtFile.exists()
 
 
-def jarBase = 'target/jboss-modules/de/smartics/sandbox/jar-project/main'
+def jarBase = targetDir + '/de/smartics/sandbox/jar-project/main'
 /*
 def file = new File(basedir, jarBase + '/jar-project-testing.jar')
 assert file.exists()

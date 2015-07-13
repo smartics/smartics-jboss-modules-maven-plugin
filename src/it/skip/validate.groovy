@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-def base = 'target/jboss-modules/org/reflections/main'
-def artifactFile = new File(basedir, base + '/reflections-0.9.7.RC1sm.jar')
+def base = "${targetDir}/org/reflections/main"
+def artifactFile = new File(basedir, base + '/reflections-0.9.7.jar')
 assert artifactFile.exists()
 
 def notExists1 = new File(basedir, base + '/dom4j')
@@ -32,7 +32,7 @@ assert 'org.reflections' == name
 
 def resourceRoots = module.resources."resource-root"
 assert 1 == resourceRoots.size()
-assert 'reflections-0.9.7.RC1sm.jar' == resourceRoots[0].@path.text()
+assert 'reflections-0.9.7.jar' == resourceRoots[0].@path.text()
 
 def mods = module.dependencies.module;
 assert 8 == mods.size()
