@@ -123,7 +123,7 @@
   <properties>
     <project-visibility>public</project-visibility>
     <donationId>ZNFSBTAQJ49HA</donationId>
-    <ohlohProjectId>710977</ohlohProjectId>
+    <!-- <ohlohProjectId>710977</ohlohProjectId> -->
     <twitterId>smartics</twitterId>
     <sonarId>${project.groupId}:${project.artifactId}</sonarId>
 
