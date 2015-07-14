@@ -22,6 +22,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import de.smartics.maven.plugin.jboss.modules.util.Arg;
 import edu.emory.mathcs.backport.java.util.Collections;
+import org.apache.commons.lang.builder.ToStringStyle;
 
 /**
  * Descriptor containing information on modules configurations. This information
@@ -137,6 +138,6 @@ public final class ModulesDescriptor
   @Override
   public String toString()
   {
-    return ToStringBuilder.reflectionToString(this);
+    return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE, false, null);
   }
 }

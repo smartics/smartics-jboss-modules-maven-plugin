@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-def base = 'target/jboss-modules/org/apache/commons/configuration/main'
+def base = "${targetDir}/org/apache/commons/configuration/main"
 def artifactFile = new File(basedir, base + '/commons-configuration-1.8.jar')
 assert artifactFile.exists()
 
@@ -70,3 +70,5 @@ assert 'true' == mods[12].@export.text()
   </dependencies>
 </module>
 */
+
+

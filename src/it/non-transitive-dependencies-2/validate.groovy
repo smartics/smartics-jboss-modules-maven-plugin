@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-def langBase = 'target/jboss-modules/org/apache/commons/lang/main'
+def langBase = "${targetDir}/org/apache/commons/lang/main"
 def langArtifactFile = new File(basedir, langBase + '/commons-lang-2.6.jar')
 assert langArtifactFile.exists()
 
@@ -31,7 +31,7 @@ assert 1 == langResourceRoots.size()
 assert 'commons-lang-2.6.jar' == langResourceRoots[0].@path.text()
 
 
-def loggingBase = 'target/jboss-modules/org/apache/commons/logging/main'
+def loggingBase = "${targetDir}/org/apache/commons/logging/main"
 def loggingArtifactFile = new File(basedir, loggingBase + '/commons-logging-1.1.1.jar')
 assert loggingArtifactFile.exists()
 

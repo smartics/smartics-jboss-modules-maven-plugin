@@ -21,6 +21,7 @@ import java.util.List;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import de.smartics.maven.plugin.jboss.modules.util.Arg;
+import org.apache.commons.lang.builder.ToStringStyle;
 
 /**
  * Descriptor to define the rules for matching modules to be matched to have
@@ -202,6 +203,6 @@ public final class ModuleMatcher
   @Override
   public String toString()
   {
-    return ToStringBuilder.reflectionToString(this);
+      return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE, false, null);
   }
 }
