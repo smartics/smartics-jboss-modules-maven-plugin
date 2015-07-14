@@ -13,8 +13,9 @@ Crafting the modules by hand is more cumbersome than to define a recipe that all
 
 Please visit
 
-  * the [plugin's homepage] (https://www.smartics.eu/confluence/display/SJBMMP/) and
+  * the [plugin's homepage] (https://www.smartics.eu/confluence/display/SJBMMP/)
   * the [plugin's report site] (https://www.smartics.eu/smartics-jboss-modules-maven-plugin/)
+  * the [Config smartics JBoss Modules] (https://github.com/smartics/config-smartics-jboss-modules)
 
 for more information.
 
