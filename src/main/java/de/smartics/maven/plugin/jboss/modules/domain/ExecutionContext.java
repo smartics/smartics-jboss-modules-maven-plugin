@@ -72,6 +72,10 @@ public final class ExecutionContext
    */
   private final Boolean ignoreOptionalDependencies;
 
+  /**
+   * Whether to generate a feature pack definition
+   */
+  private Boolean generateFeaturePackDefinition;
 
   // ****************************** Initializer *******************************
 
@@ -86,6 +90,7 @@ public final class ExecutionContext
     this.defaultSlot = builder.defaultSlot;
     this.moduleMap = builder.moduleMap;
     this.ignoreOptionalDependencies = builder.ignoreOptionalDependencies;
+    this.generateFeaturePackDefinition = builder.generateFeaturePackDefinition;
   }
 
   // ****************************** Inner Classes *****************************
@@ -136,6 +141,10 @@ public final class ExecutionContext
      */
     private Boolean ignoreOptionalDependencies;
 
+    /**
+     * Whether to generate a feature pack definition
+     */
+    private Boolean generateFeaturePackDefinition;
 
     // ***************************** Initializer ******************************
 
@@ -228,9 +237,21 @@ public final class ExecutionContext
      * @param ignoreOptionalDependencies whether optional dependencies are ignored
      * @return a reference to this builder.
      */
-    public Builder with(final Boolean ignoreOptionalDependencies)
+    public Builder withIgnoreOptionalDependencies(final Boolean ignoreOptionalDependencies)
     {
       this.ignoreOptionalDependencies = ignoreOptionalDependencies;
+      return this;
+    }
+
+    /**
+     * Sets the value of whether to generate a feature pack definition
+     *
+     * @param generateFeaturePackDefinition whether to generate a feature pack definition
+     * @return a reference to this builder.
+     */
+    public Builder withGenerateFeaturePackDefinition(final Boolean generateFeaturePackDefinition)
+    {
+      this.generateFeaturePackDefinition = generateFeaturePackDefinition;
       return this;
     }
 
@@ -330,6 +351,16 @@ public final class ExecutionContext
   public Boolean isIgnoreOptionalDependencies()
   {
     return ignoreOptionalDependencies;
+  }
+
+  /**
+   * Returns whether to generate a feature pack definition
+   *
+   * @return the value of whether optional dependencies are being ignored.
+   */
+  public Boolean isGenerateFeaturePackDefinition()
+  {
+    return generateFeaturePackDefinition;
   }
 
   // --- business -------------------------------------------------------------

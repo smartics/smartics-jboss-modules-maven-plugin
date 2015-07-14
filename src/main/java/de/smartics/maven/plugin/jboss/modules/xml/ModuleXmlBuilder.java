@@ -277,10 +277,18 @@ public final class ModuleXmlBuilder
       final List<SortElement> sorted = createSortedResources(dependencies);
       for (final SortElement element : sorted)
       {
-        final Element resource = new Element("resource-root", NS);
-        final String fileName = element.key;
-        resource.setAttribute("path", fileName);
-        resources.addContent(resource);
+        if (context.isGenerateFeaturePackDefinition())
+        {
+            Artifact depart = element.dependency.getArtifact();
+            final Element artifact = new Element("artifact", NS);
+            artifact.setAttribute("name", "${" + depart.getGroupId() + ":" + depart.getArtifactId() + "}");
+            resources.addContent(artifact);
+        } else {
+            final Element resource = new Element("resource-root", NS);
+            final String fileName = element.key;
+            resource.setAttribute("path", fileName);
+            resources.addContent(resource);
+        }
       }
     }
 

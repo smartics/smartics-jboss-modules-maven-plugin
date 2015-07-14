@@ -103,7 +103,9 @@ public final class ModuleBuilder
     {
       final File moduleFolder = createModuleFolder();
       createModuleXml(moduleFolder);
-      copyResources(moduleFolder);
+      if (!context.isGenerateFeaturePackDefinition()) {
+          copyResources(moduleFolder);
+      }
     }
   }
 

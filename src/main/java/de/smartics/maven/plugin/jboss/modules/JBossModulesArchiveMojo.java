@@ -355,6 +355,12 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
   @Parameter(defaultValue = "false")
   private boolean ignoreOptionalDependencies;
 
+  /**
+   * Whether to generate a feature pack definition
+   */
+  @Parameter(defaultValue = "false")
+  private boolean generateFeaturePackDefinition;
+
   // ****************************** Initializer *******************************
 
   // ****************************** Constructors ******************************
@@ -589,7 +595,8 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
 
     final ModuleMap moduleMap = new ModuleMap(allModules, dependencies);
     builder.with(moduleMap);
-    builder.with(ignoreOptionalDependencies);
+    builder.withIgnoreOptionalDependencies(ignoreOptionalDependencies);
+    builder.withGenerateFeaturePackDefinition(generateFeaturePackDefinition);
 
     if (verbose)
     {
