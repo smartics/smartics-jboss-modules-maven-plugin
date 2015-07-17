@@ -226,7 +226,7 @@ public final class ModuleXmlBuilder
   {
     addMainClass(module);
     addProperties(module);
-    addResources(dependencies);
+    addResources(module, dependencies);
     addDependencies(module, dependencies);
     addExports(module);
 
@@ -260,22 +260,40 @@ public final class ModuleXmlBuilder
     root.addContent(propertiesElement);
   }
 
-  private void addResources(final Collection<Dependency> dependencies)
+  private void addResources(ModuleDescriptor module, final Collection<Dependency> dependencies)
   {
+    final Element resources = new Element("resources", NS);
+
+    List<String> resourceRootsXml = module.getApplyToModule().getResourceRootsXml();
+    for (final String xml : resourceRootsXml)
+    {
+      final Element element = xmlFragmentParser.parse(xml);
+      resources.addContent(element);
+    }
+
     if (!dependencies.isEmpty())
     {
-      final Element resources = new Element("resources", NS);
 
       final List<SortElement> sorted = createSortedResources(dependencies);
       for (final SortElement element : sorted)
       {
-        final Element resource = new Element("resource-root", NS);
-        final String fileName = element.key;
-        resource.setAttribute("path", fileName);
-        resources.addContent(resource);
+        if (context.isGenerateFeaturePackDefinition())
+        {
+            Artifact depart = element.dependency.getArtifact();
+            final Element artifact = new Element("artifact", NS);
+            artifact.setAttribute("name", "${" + depart.getGroupId() + ":" + depart.getArtifactId() + "}");
+            resources.addContent(artifact);
+        } else {
+            final Element resource = new Element("resource-root", NS);
+            final String fileName = element.key;
+            resource.setAttribute("path", fileName);
+            resources.addContent(resource);
+        }
       }
+    }
 
-      root.addContent(resources);
+    if( !resources.getChildren().isEmpty() ) {
+        root.addContent(resources);
     }
   }
 
@@ -330,12 +348,38 @@ public final class ModuleXmlBuilder
       moduleElement.setAttribute("name", name);
 
       final DependenciesDescriptor dd = apply.getDescriptorThatMatches(name);
-      handleOptional(element, moduleElement, dd);
-      handleExport(moduleElement, dd);
-      handleServices(moduleElement, dd);
-      handleSlot(module, element, moduleElement);
-      dependenciesElement.addContent(moduleElement);
+
+      if(isIncludableDependency(element, dd))
+      {
+        handleOptional(element, moduleElement, dd);
+        handleExport(moduleElement, dd);
+        handleServices(moduleElement, dd);
+        handleSlot(module, element, moduleElement);
+        dependenciesElement.addContent(moduleElement);
+      }
     }
+  }
+
+  private boolean isIncludableDependency(final SortElement element, final DependenciesDescriptor dd)
+  {
+    /*
+     * A dependency is considered NOT valid for inclusion within a module if:
+     *   - The dependency is flagged as 'skipped'
+     *   - The dependency is optional and the ignoreOptionalDependencies property is true
+     */
+
+    boolean isSkipped = dd.getSkip() != null && dd.getSkip() == true;
+    boolean isOptional = (dd.getOptional() != null && dd.getOptional() == true) || element.dependency.isOptional();
+
+    if(isSkipped) {
+      return false;
+    }
+
+    if(isOptional && context.isIgnoreOptionalDependencies()) {
+      return false;
+    }
+
+    return true;
   }
 
   private void handleOptional(final SortElement element,

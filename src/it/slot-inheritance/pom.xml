@@ -46,6 +46,10 @@
           <!-- Required to set, since slot inheritance does not affect the
                referenced module slot. -->
           <defaultSlot>special</defaultSlot>
+            <modules>
+              <dir>${module.source.dir}</dir>
+            </modules>
+            <targetFolder>${module.target.dir}</targetFolder>
         </configuration>
       </plugin>
     </plugins>

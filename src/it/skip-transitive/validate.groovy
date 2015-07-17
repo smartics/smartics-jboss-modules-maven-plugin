@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-def base = 'target/jboss-modules/de/smartics/util/smartics-commons/main'
+def base = "${targetDir}/de/smartics/util/smartics-commons/main"
 def artifactFile = new File(basedir, base + '/smartics-commons-0.5.2.jar')
 assert !artifactFile.exists()
 
-def baseTransDep = 'target/jboss-modules/commons-io/main'
+def baseTransDep = targetDir + '/commons-io/main'
 def artifactFileTransDep = new File(basedir, baseTransDep + '/commons-io-1.4.jar')
 assert !artifactFileTransDep.exists()

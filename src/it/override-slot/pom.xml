@@ -45,6 +45,10 @@
         <configuration>
           <defaultSlot>other-slot</defaultSlot>
           <followOptionalDependencies>true</followOptionalDependencies>
+          <modules>
+            <dir>${module.source.dir}</dir>
+          </modules>
+          <targetFolder>${module.target.dir}</targetFolder>
         </configuration>
       </plugin>
     </plugins>

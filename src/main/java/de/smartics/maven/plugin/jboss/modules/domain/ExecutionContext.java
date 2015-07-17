@@ -67,6 +67,16 @@ public final class ExecutionContext
    */
   private final ModuleMap moduleMap;
 
+  /**
+   * Whether to ignore optional dependencies
+   */
+  private final Boolean ignoreOptionalDependencies;
+
+  /**
+   * Whether to generate a feature pack definition
+   */
+  private Boolean generateFeaturePackDefinition;
+
   // ****************************** Initializer *******************************
 
   // ****************************** Constructors ******************************
@@ -79,6 +89,8 @@ public final class ExecutionContext
     this.slotStrategy = builder.slotStrategy;
     this.defaultSlot = builder.defaultSlot;
     this.moduleMap = builder.moduleMap;
+    this.ignoreOptionalDependencies = builder.ignoreOptionalDependencies;
+    this.generateFeaturePackDefinition = builder.generateFeaturePackDefinition;
   }
 
   // ****************************** Inner Classes *****************************
@@ -123,6 +135,16 @@ public final class ExecutionContext
      * The map of modules encountered so far.
      */
     private ModuleMap moduleMap;
+
+    /**
+     * Whether to ignore optional dependencies
+     */
+    private Boolean ignoreOptionalDependencies;
+
+    /**
+     * Whether to generate a feature pack definition
+     */
+    private Boolean generateFeaturePackDefinition;
 
     // ***************************** Initializer ******************************
 
@@ -205,6 +227,31 @@ public final class ExecutionContext
     public Builder with(final ModuleMap moduleMap)
     {
       this.moduleMap = moduleMap;
+      return this;
+    }
+
+
+    /**
+     * Sets the value of whether to ignore optional dependencies
+     *
+     * @param ignoreOptionalDependencies whether optional dependencies are ignored
+     * @return a reference to this builder.
+     */
+    public Builder withIgnoreOptionalDependencies(final Boolean ignoreOptionalDependencies)
+    {
+      this.ignoreOptionalDependencies = ignoreOptionalDependencies;
+      return this;
+    }
+
+    /**
+     * Sets the value of whether to generate a feature pack definition
+     *
+     * @param generateFeaturePackDefinition whether to generate a feature pack definition
+     * @return a reference to this builder.
+     */
+    public Builder withGenerateFeaturePackDefinition(final Boolean generateFeaturePackDefinition)
+    {
+      this.generateFeaturePackDefinition = generateFeaturePackDefinition;
       return this;
     }
 
@@ -294,6 +341,26 @@ public final class ExecutionContext
   public ModuleMap getModuleMap()
   {
     return moduleMap;
+  }
+
+  /**
+   * Returns whether optional dependencies should be ignored.
+   *
+   * @return the value of whether optional dependencies are being ignored.
+   */
+  public Boolean isIgnoreOptionalDependencies()
+  {
+    return ignoreOptionalDependencies;
+  }
+
+  /**
+   * Returns whether to generate a feature pack definition
+   *
+   * @return the value of whether optional dependencies are being ignored.
+   */
+  public Boolean isGenerateFeaturePackDefinition()
+  {
+    return generateFeaturePackDefinition;
   }
 
   // --- business -------------------------------------------------------------
