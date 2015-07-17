@@ -22,7 +22,7 @@
       <dependency>
         <groupId>org.reflections</groupId>
         <artifactId>reflections</artifactId>
-        <version>0.9.7.RC1sm</version>
+        <version>0.9.7</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -42,6 +42,12 @@
             <phase>package</phase>
           </execution>
         </executions>
+        <configuration>
+          <modules>
+            <dir>${module.source.dir}</dir>
+          </modules>
+          <targetFolder>${module.target.dir}</targetFolder>
+        </configuration>
       </plugin>
     </plugins>
   </build>

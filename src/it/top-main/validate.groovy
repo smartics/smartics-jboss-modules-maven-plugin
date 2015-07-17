@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-def base = 'target/jboss-modules/de/smartics/util/smartics-jboss-utils/main'
+def base = "${targetDir}/de/smartics/util/smartics-jboss-utils/main"
 def artifactFile = new File(basedir, base + '/smartics-jboss-utils-0.1.1.jar')
 assert artifactFile.exists()
 
@@ -51,7 +51,7 @@ assert 'other' == mods[1].@slot.text()
 /* --------------------- */
 
 
-def baseDep = 'target/jboss-modules/de/smartics/util/smartics-commons/other'
+def baseDep = "${targetDir}/de/smartics/util/smartics-commons/other"
 def artifactFileDep = new File(basedir, baseDep + '/smartics-commons-0.5.2.jar')
 assert artifactFileDep.exists()
 

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-def commons = 'target/jboss-modules/org/apache/commons'
+def commons = "${targetDir}/org/apache/commons"
 def base = commons + '/beanutils/myProd-1'
 def artifactFile = new File(basedir, base + '/commons-beanutils-1.8.3.jar')
 assert artifactFile.exists()
