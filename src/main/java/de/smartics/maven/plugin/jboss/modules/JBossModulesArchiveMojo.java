@@ -350,13 +350,20 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
 
   /**
    * Exclude any dependencies or transitive dependencies that are marked as
-   * optional = true.
+   * <code>optional = true</code>.
+   *
+   * @since 2.1.0
    */
   @Parameter(defaultValue = "false")
   private boolean ignoreOptionalDependencies;
 
   /**
-   * Whether to generate a feature pack definition
+   * Whether to generate a feature pack definition (<code>true</code>) or not
+   * (<code>false</code>). Refer to
+   * <a href="https://github.com/wildfly-extras/wildfly-camel/issues/11">Provide camel subsystem as feature pack</a>
+   * for details.
+   *
+   * @since 2.1.0
    */
   @Parameter(defaultValue = "false")
   private boolean generateFeaturePackDefinition;
