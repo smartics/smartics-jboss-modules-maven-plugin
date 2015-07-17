@@ -18,6 +18,7 @@ package de.smartics.maven.plugin.jboss.modules.xml;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -490,7 +491,31 @@ public final class ModuleXmlBuilder
         final String name = module.getName();
         if (!name.equals(owningModule.getName()))
         {
-          sorted.add(new SortElement(name, dependency));
+          /*
+           * It's possible for a module to have resources that share the same dependencies. Potentially these
+           * dependencies could be declared differently in their respective POM files. E.g one resource may specify the
+           * dependency as optional and another resource may declare it as being mandatory.
+           *
+           * In this scenario, always assume that the dependency should be mandatory.
+           */
+          final SortElement e = new SortElement(name, dependency);
+          if(sorted.contains(e))
+          {
+            final Iterator<SortElement> iter = sorted.iterator();
+            while (iter.hasNext())
+            {
+              final SortElement current = iter.next();
+
+              // We are processing a non-optional dependency that has already been added to the set as optional
+              if(current.equals(e) && current.dependency.isOptional() && !dependency.isOptional())
+              {
+                // Remove so that it can be replaced later with a non-optional dependency
+                sorted.remove(current);
+                break;
+              }
+            }
+          }
+          sorted.add(e);
         }
       }
       catch (final IllegalArgumentException e)
