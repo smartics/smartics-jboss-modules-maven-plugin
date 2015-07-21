@@ -47,8 +47,7 @@ public class ProjectClassLoader extends AbstractProjectClassLoader
   // ****************************** Constructors ******************************
 
   /**
-   * Convenience constructor using the {@link
-   * Thread.currentThread()#getContextClassLoader()}.
+   * Convenience constructor using the {@code Thread.currentThread().getContextClassLoader()}.
    *
    * @param rootDirectories the list of root directories to search for classes.
    */
@@ -59,7 +58,7 @@ public class ProjectClassLoader extends AbstractProjectClassLoader
 
   /**
    * Convenience constructor to specify the directories as {@link String}s and
-   * using the {@link Thread.currentThread()#getContextClassLoader()}.
+   * using the {@code Thread.currentThread().getContextClassLoader()}.
    *
    * @param rootDirectoryNames the list of root directory names to search for
    *          classes.

@@ -43,6 +43,7 @@ public final class DependenciesDescriptor
    * The slot of the dependency.
    */
   private final String slot;
+
   /**
    * Should the dependency be skipped?
    */
@@ -184,7 +185,7 @@ public final class DependenciesDescriptor
       /**
        * Sets if the dependency should be skipped
        *
-       * @param skip
+       * @param skip a boolean value in its string representation.
        * @return a reference to this builder.
        */
       public Builder withSkip(final String skip)
