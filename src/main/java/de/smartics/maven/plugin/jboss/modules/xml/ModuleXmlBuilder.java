@@ -188,6 +188,46 @@ public final class ModuleXmlBuilder
     }
   }
 
+  private static final class ModuleDependencyElement
+  {
+    private Element moduleElement;
+    private String  moduleName;
+
+    public ModuleDependencyElement(Element moduleElement)
+    {
+      this.moduleElement = moduleElement;
+      this.moduleName = moduleElement.getAttributeValue("name");
+    }
+
+    protected Element getModuleElement() {
+      return this.moduleElement;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+      if (this == o)
+      {
+        return true;
+      }
+
+      if (o == null || getClass() != o.getClass())
+      {
+        return false;
+      }
+
+      ModuleDependencyElement that = (ModuleDependencyElement) o;
+
+      return ObjectUtils.equals(this.moduleName, that.moduleName);
+    }
+
+    @Override
+    public int hashCode()
+    {
+      return ObjectUtils.hashCode(this.moduleName);
+    }
+  }
+
   // ********************************* Methods ********************************
 
   // --- init -----------------------------------------------------------------
@@ -326,21 +366,34 @@ public final class ModuleXmlBuilder
     {
       final Element dependenciesElement = new Element("dependencies", NS);
 
-      addStaticDependencies(staticDependencies, dependenciesElement);
-      addResolvedDependencies(module, dependencies, dependenciesElement);
+      final List<ModuleDependencyElement> staticDependencyElements = getStaticDependencyElements(staticDependencies);
+      final List<ModuleDependencyElement> resolvedDependencyElements = getResolvedDependencyElements(module, dependencies);
+      final List<ModuleDependencyElement> combinedDependencies = new ArrayList<ModuleDependencyElement>();
+
+      // Make static module dependencies take precedence over resolved dependencies with the same module name
+      resolvedDependencyElements.removeAll(staticDependencyElements);
+      combinedDependencies.addAll(staticDependencyElements);
+      combinedDependencies.addAll(resolvedDependencyElements);
+
+      // Add <module> content to <dependencies> element
+      for(ModuleDependencyElement element : combinedDependencies)
+      {
+        dependenciesElement.addContent(element.getModuleElement());
+      }
 
       root.addContent(dependenciesElement);
     }
   }
 
-  private void addResolvedDependencies(final ModuleDescriptor module,
-      final Collection<Dependency> dependencies,
-      final Element dependenciesElement)
+  private List<ModuleDependencyElement> getResolvedDependencyElements(final ModuleDescriptor module,
+      final Collection<Dependency> dependencies)
   {
     final Set<SortElement> sorted =
         createSortedDependencies(module, dependencies);
 
     final ApplyToDependencies apply = module.getApplyToDependencies();
+
+    final List<ModuleDependencyElement> moduleDependencyElements = new ArrayList<ModuleDependencyElement>();
 
     for (final SortElement element : sorted)
     {
@@ -356,9 +409,11 @@ public final class ModuleXmlBuilder
         handleExport(moduleElement, dd);
         handleServices(moduleElement, dd);
         handleSlot(module, element, moduleElement);
-        dependenciesElement.addContent(moduleElement);
+        moduleDependencyElements.add(new ModuleDependencyElement(moduleElement));
       }
     }
+
+    return moduleDependencyElements;
   }
 
   private boolean isIncludableDependency(final SortElement element, final DependenciesDescriptor dd)
@@ -465,17 +520,20 @@ public final class ModuleXmlBuilder
   }
 
   // CHECKSTYLE:OFF
-  private void addStaticDependencies(final List<String> staticDependencies,
-      final Element dependenciesElement)
+  private List<ModuleDependencyElement> getStaticDependencyElements(final List<String> staticDependencies)
   {
+    final List<ModuleDependencyElement> moduleElements = new ArrayList<ModuleDependencyElement>();
+
     if (!staticDependencies.isEmpty())
     {
       for (final String xml : staticDependencies)
       {
-        final Element element = xmlFragmentParser.parse(xml);
-        dependenciesElement.addContent(element);
+        final ModuleDependencyElement element = new ModuleDependencyElement(xmlFragmentParser.parse(xml));
+        moduleElements.add(element);
       }
     }
+
+    return moduleElements;
   }
 
   // CHECKSTYLE:ON
