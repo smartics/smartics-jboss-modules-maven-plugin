@@ -199,7 +199,7 @@
     <!--  Dependency versions -->
     <version.maven>3.2.5</version.maven>
     <version.maven.project>2.2.1</version.maven.project>
-    <version.maven-plugin-plugin>3.2</version.maven-plugin-plugin>
+    <version.maven-plugin-plugin>3.4</version.maven-plugin-plugin>
     <version.aether>1.0.0.v20140518</version.aether>
   </properties>
 
@@ -783,12 +783,12 @@
               <goal>descriptor</goal>
             </goals>
           </execution>
-          <!-- <execution>
+          <execution>
             <id>help-goal</id>
             <goals>
               <goal>helpmojo</goal>
             </goals>
-          </execution> -->
+          </execution>
         </executions>
         <configuration>
           <!-- see http://jira.codehaus.org/browse/MNG-5346 -->
