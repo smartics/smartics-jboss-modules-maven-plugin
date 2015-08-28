@@ -1,7 +1,7 @@
 smartics JBoss Modules Maven Plugin
 ===================================
 
-Generates an archive of modules to be copied to an JBoss 7 installation.
+Generates an archive of modules based on information in a POM to be copied to an JBoss 7 installation.
 
 ## Overview
 
