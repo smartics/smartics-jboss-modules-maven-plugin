@@ -10,7 +10,8 @@
 
   <name>${project.artifactId}</name>
   <description>
-    Generates an archive of modules to be copied to an JBoss 7 installation.
+    Generates an archive of modules based on information in a POM to be copied
+    to an JBoss 7 installation.
   </description>
   <url>${weburl}</url>
   <inceptionYear>2013</inceptionYear>
