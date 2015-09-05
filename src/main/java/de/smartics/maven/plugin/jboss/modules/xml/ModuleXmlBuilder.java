@@ -190,10 +190,10 @@ public final class ModuleXmlBuilder
 
   private static final class ModuleDependencyElement
   {
-    private Element moduleElement;
-    private String  moduleName;
+    private final Element moduleElement;
+    private final String  moduleName;
 
-    public ModuleDependencyElement(Element moduleElement)
+    public ModuleDependencyElement(final Element moduleElement)
     {
       this.moduleElement = moduleElement;
       this.moduleName = moduleElement.getAttributeValue("name");
@@ -204,7 +204,7 @@ public final class ModuleXmlBuilder
     }
 
     @Override
-    public boolean equals(Object o)
+    public boolean equals(final Object o)
     {
       if (this == o)
       {
