@@ -178,7 +178,7 @@
     <config-smartics-hudson.version>0.3.0</config-smartics-hudson.version>
      -->
 
-    <version.buildmetadata-maven-plugin>1.5.0.RC1</version.buildmetadata-maven-plugin>
+    <version.buildmetadata-maven-plugin>1.6.0</version.buildmetadata-maven-plugin>
 
     <version.maven-compiler-plugin>3.1</version.maven-compiler-plugin>
     <version.maven-clean-plugin>2.5</version.maven-clean-plugin>
