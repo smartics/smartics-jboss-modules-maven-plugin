@@ -15,13 +15,16 @@
  */
 package de.smartics.maven.plugin.jboss.modules.descriptor;
 
-import de.smartics.util.lang.Arg;
-import edu.emory.mathcs.backport.java.util.Collections;
+
+import de.smartics.maven.plugin.jboss.modules.util.Arg;
+
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import edu.emory.mathcs.backport.java.util.Collections;
 
 /**
  * Stores information that has to be applied to dependencies if the matcher

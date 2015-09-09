@@ -170,8 +170,7 @@
     <repo-download-url>${repo-url}/service/local/artifact/maven/redirect</repo-download-url>
      -->
 
-    <version.smartics-commons>0.5.2</version.smartics-commons>
-    <version.testdoc>0.4.1</version.testdoc>
+    <!-- <version.testdoc>0.4.1</version.testdoc> -->
 
     <!-- Plugin Versions -->
     <!--
@@ -196,6 +195,7 @@
     <version.maven-license-plugin>1.9.0</version.maven-license-plugin>
     <version.maven-javadoc-plugin>2.10.3</version.maven-javadoc-plugin>
     <version.maven-source-plugin>2.4</version.maven-source-plugin>
+    <version.maven-enforcer-plugin>1.3.1</version.maven-enforcer-plugin>
 
     <!--  Dependency versions -->
     <version.maven>3.2.5</version.maven>
@@ -206,14 +206,14 @@
 
   <dependencies>
     <dependency>
-      <groupId>de.smartics.util</groupId>
-      <artifactId>smartics-commons</artifactId>
-      <version>${version.smartics-commons}</version>
-    </dependency>
-    <dependency>
       <groupId>commons-lang</groupId>
       <artifactId>commons-lang</artifactId>
       <version>2.5</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.findbugs</groupId>
+      <artifactId>jsr305</artifactId>
+      <version>2.0.0</version>
     </dependency>
 
 
@@ -259,7 +259,6 @@
       <artifactId>maven-archiver</artifactId>
       <version>2.5</version>
     </dependency>
-
 
     <dependency>
       <groupId>org.eclipse.aether</groupId>
@@ -326,7 +325,6 @@
       <version>${version.testdoc}</version>
       <scope>test</scope>
     </dependency>
-     -->
     <dependency>
       <groupId>de.smartics.testdoc</groupId>
       <artifactId>testdoc-annotations</artifactId>
@@ -339,89 +337,7 @@
         </exclusion>
       </exclusions>
     </dependency>
-
-    <dependency>
-      <groupId>de.smartics.util</groupId>
-      <artifactId>smartics-jboss-utils</artifactId>
-      <version>0.1.1</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>de.smartics.test.setup</groupId>
-      <artifactId>test-setup-artifacts-app</artifactId>
-      <version>1.0.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>de.smartics.test.setup</groupId>
-      <artifactId>test-setup-artifacts-bom</artifactId>
-      <version>1.0.0</version>
-      <type>pom</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>de.smartics.test.setup</groupId>
-      <artifactId>test-setup-artifacts-broken</artifactId>
-      <version>1.0.0</version>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>test-setup-artifacts-does-not-exist</artifactId>
-          <groupId>de.smartics.test.setup</groupId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>de.smartics.test.setup</groupId>
-      <artifactId>test-setup-artifacts-broken-optional</artifactId>
-      <version>1.0.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>de.smartics.test.setup</groupId>
-      <artifactId>test-setup-artifacts-commons</artifactId>
-      <version>1.0.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>de.smartics.test.setup</groupId>
-      <artifactId>test-setup-artifacts-dep-pom</artifactId>
-      <version>1.0.0</version>
-      <type>pom</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>de.smartics.test.setup</groupId>
-      <artifactId>test-setup-artifacts-domain</artifactId>
-      <version>1.0.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>de.smartics.test.setup</groupId>
-      <artifactId>test-setup-artifacts-exclusion</artifactId>
-      <version>1.0.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>de.smartics.test.setup</groupId>
-      <artifactId>test-setup-artifacts-exclusion-replace</artifactId>
-      <version>1.0.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>de.smartics.test.setup</groupId>
-      <artifactId>test-setup-artifacts-lib-bom</artifactId>
-      <version>1.0.0</version>
-      <type>pom</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>de.smartics.test.setup</groupId>
-      <artifactId>test-setup-artifacts-pom</artifactId>
-      <version>0.1.1</version>
-      <type>pom</type>
-      <scope>test</scope>
-    </dependency>
+     -->
   </dependencies>
 
   <build>
@@ -720,7 +636,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
-        <version>1.3.1</version>
+        <version>${version.maven-enforcer-plugin}</version>
         <executions>
           <execution>
             <id>enforce-versions</id>
@@ -744,7 +660,6 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>${version.maven-compiler-plugin}</version>
-
         <configuration>
           <source>${build.java.version}</source>
           <target>${build.java.version}</target>
@@ -926,6 +841,86 @@
     <profile>
       <id>it</id>
       <!-- mvn -Pit integration-test -Dinvoker.test=multimodule-project -->
+
+      <dependencies>
+        <dependency>
+          <groupId>de.smartics.test.setup</groupId>
+          <artifactId>test-setup-artifacts-app</artifactId>
+          <version>1.0.0</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>de.smartics.test.setup</groupId>
+          <artifactId>test-setup-artifacts-bom</artifactId>
+          <version>1.0.0</version>
+          <type>pom</type>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>de.smartics.test.setup</groupId>
+          <artifactId>test-setup-artifacts-broken</artifactId>
+          <version>1.0.0</version>
+          <scope>test</scope>
+          <exclusions>
+            <exclusion>
+              <artifactId>test-setup-artifacts-does-not-exist</artifactId>
+              <groupId>de.smartics.test.setup</groupId>
+            </exclusion>
+          </exclusions>
+        </dependency>
+        <dependency>
+          <groupId>de.smartics.test.setup</groupId>
+          <artifactId>test-setup-artifacts-broken-optional</artifactId>
+          <version>1.0.0</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>de.smartics.test.setup</groupId>
+          <artifactId>test-setup-artifacts-commons</artifactId>
+          <version>1.0.0</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>de.smartics.test.setup</groupId>
+          <artifactId>test-setup-artifacts-dep-pom</artifactId>
+          <version>1.0.0</version>
+          <type>pom</type>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>de.smartics.test.setup</groupId>
+          <artifactId>test-setup-artifacts-domain</artifactId>
+          <version>1.0.0</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>de.smartics.test.setup</groupId>
+          <artifactId>test-setup-artifacts-exclusion</artifactId>
+          <version>1.0.0</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>de.smartics.test.setup</groupId>
+          <artifactId>test-setup-artifacts-exclusion-replace</artifactId>
+          <version>1.0.0</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>de.smartics.test.setup</groupId>
+          <artifactId>test-setup-artifacts-lib-bom</artifactId>
+          <version>1.0.0</version>
+          <type>pom</type>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>de.smartics.test.setup</groupId>
+          <artifactId>test-setup-artifacts-pom</artifactId>
+          <version>0.1.1</version>
+          <type>pom</type>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+
       <build>
         <defaultGoal>install</defaultGoal>
         <plugins>
