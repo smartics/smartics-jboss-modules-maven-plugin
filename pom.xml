@@ -399,7 +399,7 @@
           <configuration>
             <useReleaseProfile>false</useReleaseProfile>
             <releaseProfiles>release</releaseProfiles>
-            <goals>deploy</goals>
+            <goals>deploy site-deploy</goals>
           </configuration>
         </plugin>
         <plugin>
@@ -802,6 +802,14 @@
   <profiles>
     <profile>
       <id>release</id>
+
+      <activation>
+        <property>
+          <name>performRelease</name>
+          <value>true</value>
+        </property>
+      </activation>
+
       <build>
         <plugins>
           <plugin>
@@ -829,6 +837,13 @@
                 </goals>
               </execution>
             </executions>
+          </plugin>
+          <plugin>
+            <artifactId>maven-deploy-plugin</artifactId>
+            <version>${version.maven-deploy-plugin}</version>
+            <configuration>
+              <updateReleaseInfo>true</updateReleaseInfo>
+            </configuration>
           </plugin>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
