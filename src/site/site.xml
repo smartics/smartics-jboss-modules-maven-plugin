@@ -71,9 +71,8 @@
     <menu name="Overview">
       <item name="Introduction"        href="index.html"/>
       <item name="Goals"               href="plugin-info.html"/>
-      <item name="Homepage"            href="${webroot}/confluence/display/SJBMMP"/>
-      <item name="Project Blog"        href="${webroot}/confluence/display/SJBMMP#smarticsJBossModulesMavenPlugin-ProjectBlog"/>
-      <item name="Accessing Artifacts" href="http://www.smartics.de/projects/accessing-artifacts"/>
+      <item name="Homepage"            href="${homepage}"/>
+      <item name="Project Blog"        href="${homepage}#smarticsJBossModulesMavenPlugin-ProjectBlog"/>
       <item name="Latest Version"      href="${webroot}/${project.artifactId}/index.html"/>
       <item name="All Versions"        href="${webroot}/${project.groupId}/${project.artifactId}/"/>
     </menu>

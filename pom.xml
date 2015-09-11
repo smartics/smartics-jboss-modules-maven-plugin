@@ -118,6 +118,7 @@
     <info.project.visibility>public</info.project.visibility>
 
     <info.server.web>https://www.smartics.eu/confluence/display</info.server.web>
+    <homepage>${info.server.web}/SJBMMP</homepage>
     <info.server.issues>https://www.smartics.eu/jira/projects</info.server.issues>
     <info.server.repo>https://www.smartics.eu/nexus</info.server.repo>
     <info.server.scm>https://www.smartics.eu/svn/public</info.server.scm>
@@ -152,7 +153,7 @@
     <config-smartics-hudson.version>0.3.0</config-smartics-hudson.version>
      -->
 
-    <version.buildmetadata-maven-plugin>1.6.0</version.buildmetadata-maven-plugin>
+    <version.buildmetadata-maven-plugin>1.6.1-SNAPSHOT</version.buildmetadata-maven-plugin>
 
     <version.maven-compiler-plugin>3.1</version.maven-compiler-plugin>
     <version.maven-clean-plugin>2.5</version.maven-clean-plugin>
