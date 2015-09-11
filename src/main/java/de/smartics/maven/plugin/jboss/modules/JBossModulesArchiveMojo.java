@@ -99,13 +99,13 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
    *
    * @since 1.0
    */
-  @Component
+  @Parameter(defaultValue = "${project}", readonly=true)
   private MavenProject project;
 
   /**
    * The Maven session.
    */
-  @Component
+  @Parameter(defaultValue = "${session}", readonly=true)
   private MavenSession session;
 
   /**
