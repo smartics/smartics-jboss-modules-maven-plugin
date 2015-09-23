@@ -121,7 +121,7 @@
     <homepage>${info.server.web}/SJBMMP</homepage>
     <info.server.issues>https://www.smartics.eu/jira/projects</info.server.issues>
     <info.server.repo>https://www.smartics.eu/nexus</info.server.repo>
-    <info.server.scm>https://www.smartics.eu/svn/public</info.server.scm>
+    <info.server.scm>https://github.com/smartics/smartics-jboss-modules-maven-plugin</info.server.scm>
     <info.server.site>https://www.smartics.eu</info.server.site>
 
     <info.server.repo.prefix>${info.server.repo}/content</info.server.repo.prefix>
