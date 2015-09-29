@@ -32,6 +32,8 @@ import org.eclipse.aether.resolution.DependencyResolutionException;
 import org.eclipse.aether.resolution.DependencyResult;
 import org.eclipse.aether.util.filter.AndDependencyFilter;
 import org.eclipse.aether.util.graph.visitor.PreorderNodeListGenerator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.smartics.maven.plugin.jboss.modules.aether.filter.DependencyFlagger;
 import de.smartics.maven.plugin.jboss.modules.aether.filter.DirectDependenciesOnlyFilter;
@@ -87,6 +89,11 @@ public final class MavenRepository
    */
   private final DependencyTraverserGenerator traverserGenerator;
 
+  /**
+   * The logger to log to.
+   */
+  private final Logger log = LoggerFactory.getLogger(MavenRepository.class);
+
   // ****************************** Initializer *******************************
 
   // ****************************** Constructors ******************************
@@ -125,7 +132,7 @@ public final class MavenRepository
     throws DependencyResolutionException
   {
     final DependencyRequest dependencyRequest = createRequest(dependency, true);
-    return configureRequest(dependencyRequest);
+    return configureRequest(dependencyRequest, false);
   }
 
   /**
@@ -143,7 +150,7 @@ public final class MavenRepository
   {
     final DependencyRequest dependencyRequest =
         createRequest(dependency, false);
-    return configureRequest(dependencyRequest);
+    return configureRequest(dependencyRequest, false);
   }
 
   private DependencyRequest createRequest(final Dependency dependency,
@@ -194,11 +201,11 @@ public final class MavenRepository
   {
     final DependencyRequest dependencyRequest =
         createRequest(dependencies, true);
-    return configureRequest(dependencyRequest);
+    return configureRequest(dependencyRequest, true);
   }
 
   private MavenResponse configureRequest(
-      final DependencyRequest dependencyRequest)
+      final DependencyRequest dependencyRequest, final boolean isRootDependencies)
     throws DependencyResolutionException
   {
     try
@@ -209,9 +216,28 @@ public final class MavenRepository
       final FilterSession filterSession =
           new FilterSession(session, traverser,
               traverserGenerator.isIgnoreDependencyExclusions());
-      final DependencyResult result =
-          repositorySystem
-              .resolveDependencies(filterSession, dependencyRequest);
+
+      DependencyResult result;
+      try
+      {
+        result = repositorySystem
+                .resolveDependencies(filterSession, dependencyRequest);
+      }
+      catch (final DependencyResolutionException e)
+      {
+        if (isRootDependencies)
+        {
+          // If we are resolving the root project dependencies just rethrow the exception
+          throw e;
+        }
+        else
+        {
+          // Otherwise use the dependencies that were resolved without error
+          log.warn("Cannot resolve dependency: " + e.getMessage());
+          result = e.getResult();
+        }
+      }
+
       final DependencyNode rootNode = result.getRoot();
       final PreorderNodeListGenerator generator =
           new PreorderNodeListGenerator();
