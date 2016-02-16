@@ -1,5 +1,5 @@
 /*
- * Copyright 2013-2015 smartics, Kronseder & Reiner GmbH
+ * Copyright 2013-2016 smartics, Kronseder & Reiner GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 def base = 'target/jboss-modules/ognl/main'
 def moduleFile = new File(basedir, base + '/module.xml')
 assert moduleFile.exists()
