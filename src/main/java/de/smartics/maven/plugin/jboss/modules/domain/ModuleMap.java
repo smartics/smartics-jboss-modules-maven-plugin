@@ -257,8 +257,17 @@ public final class ModuleMap
       {
         if (matchContext.hasGroupMatch())
         {
-          final ModuleDescriptor newModule = createModule(matchContext, module);
-          return newModule;
+          final String name = matchContext.translateName(module.getName());
+          final ModuleDescriptor matchingModule = findMatchingModule(name);
+          if (matchingModule != null)
+          {
+            return matchingModule;
+          }
+          else
+          {
+            final ModuleDescriptor newModule = createModule(matchContext, module);
+            return newModule;
+          }
         }
         else
         {
@@ -269,6 +278,18 @@ public final class ModuleMap
 
     final ModuleDescriptor module = createModule(key.dependency);
     return module;
+  }
+
+  private ModuleDescriptor findMatchingModule(String name)
+  {
+    for (ModuleDescriptor moduleDescriptor : modules)
+    {
+      if (moduleDescriptor.getName().equals(name) && !moduleDescriptor.getDirectives().getSkip())
+      {
+        return moduleDescriptor;
+      }
+    }
+    return null;
   }
 
   private void storeArtifact(final ModuleDescriptor module,
