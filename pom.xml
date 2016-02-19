@@ -5,7 +5,7 @@
 
   <groupId>de.smartics.maven.plugin</groupId>
   <artifactId>smartics-jboss-modules-maven-plugin</artifactId>
-  <version>2.1.2-SNAPSHOT</version>
+  <version>2.1.2</version>
   <packaging>maven-plugin</packaging>
 
   <name>${project.artifactId}</name>
@@ -86,7 +86,7 @@
     <connection>scm:git:git@github.com:smartics/smartics-jboss-modules-maven-plugin</connection>
     <developerConnection>scm:git:git@github.com:smartics/smartics-jboss-modules-maven-plugin</developerConnection>
     <url>https://github.com/smartics/smartics-jboss-modules-maven-plugin</url>
-    <tag>HEAD</tag>
+    <tag>smartics-jboss-modules-maven-plugin-2.1.2</tag>
   </scm>
 
   <distributionManagement>
