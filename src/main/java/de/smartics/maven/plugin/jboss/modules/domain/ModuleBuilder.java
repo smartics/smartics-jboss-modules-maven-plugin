@@ -68,13 +68,12 @@ public final class ModuleBuilder
   /**
    * Default constructor.
    *
-   * @param context the configuration to control the building of the modules
-   *          archive.
+   * @param context the configuration to control the building of the modules archive.
    * @param module the descriptor of the module to build.
    * @param dependencies the dependencies that are part of this module.
    */
-  public ModuleBuilder(final ExecutionContext context,
-      final ModuleDescriptor module, final Collection<Dependency> dependencies)
+  public ModuleBuilder(final ExecutionContext context, final ModuleDescriptor module,
+      final Collection<Dependency> dependencies)
   {
     this.context = context;
     this.module = module;
@@ -94,8 +93,7 @@ public final class ModuleBuilder
   /**
    * Creates the module.
    *
-   * @throws IOException on any problem creating the module in the given base
-   *           directory.
+   * @throws IOException on any problem creating the module in the given base directory.
    */
   public void create() throws IOException
   {
@@ -103,8 +101,9 @@ public final class ModuleBuilder
     {
       final File moduleFolder = createModuleFolder();
       createModuleXml(moduleFolder);
-      if (!context.isGenerateFeaturePackDefinition()) {
-          copyResources(moduleFolder);
+      if (!context.isGenerateFeaturePackDefinition())
+      {
+        copyResources(moduleFolder);
       }
     }
   }
@@ -115,12 +114,14 @@ public final class ModuleBuilder
 
     final File folder = new File(context.getTargetFolder(), path);
     final File slotFolder = new File(folder, calcSlot());
-    final boolean created = slotFolder.mkdirs();
-    if (!created)
+    if (!slotFolder.exists())
     {
-      throw new IOException(String.format(
-          "Cannot created folder '%s' for module '%s'.",
-          slotFolder.getAbsolutePath(), module.getName()));
+      final boolean created = slotFolder.mkdirs();
+      if (!created)
+      {
+        throw new IOException(String.format("Cannot created folder '%s' for module '%s'.", slotFolder.getAbsolutePath(),
+            module.getName()));
+      }
     }
     return slotFolder;
   }
@@ -129,8 +130,7 @@ public final class ModuleBuilder
   {
     final SlotStrategy strategy = context.getSlotStrategy();
 
-    final Artifact artifact =
-        (dependencies.isEmpty() ? null : dependencies.get(0).getArtifact());
+    final Artifact artifact = (dependencies.isEmpty() ? null : dependencies.get(0).getArtifact());
 
     final String moduleSlot = module.getSlot();
     final String defaultSlot = context.getDefaultSlot();
@@ -138,32 +138,31 @@ public final class ModuleBuilder
     return slot;
   }
 
-//  private static String calcSlot(final SlotStrategy strategy,
-//      final String defaultSlot, final String moduleSlot, final Artifact artifact)
-//  {
-//    final String slot;
-//    if (StringUtils.isBlank(moduleSlot) || strategy != SlotStrategy.MAIN)
-//    {
-//      if (artifact != null)
-//      {
-//        slot = strategy.calcSlot(artifact, defaultSlot);
-//      }
-//      else
-//      {
-//        slot = defaultSlot;
-//      }
-//    }
-//    else
-//    {
-//      slot = moduleSlot;
-//    }
-//    return slot;
-//  }
+  // private static String calcSlot(final SlotStrategy strategy,
+  // final String defaultSlot, final String moduleSlot, final Artifact artifact)
+  // {
+  // final String slot;
+  // if (StringUtils.isBlank(moduleSlot) || strategy != SlotStrategy.MAIN)
+  // {
+  // if (artifact != null)
+  // {
+  // slot = strategy.calcSlot(artifact, defaultSlot);
+  // }
+  // else
+  // {
+  // slot = defaultSlot;
+  // }
+  // }
+  // else
+  // {
+  // slot = moduleSlot;
+  // }
+  // return slot;
+  // }
 
   private void createModuleXml(final File moduleFolder) throws IOException
   {
-    final ModuleXmlBuilder xml =
-        new ModuleXmlBuilder(context, module, dependencies);
+    final ModuleXmlBuilder xml = new ModuleXmlBuilder(context, module, dependencies);
     final XMLOutputter outputter = new XMLOutputter();
     outputter.setFormat(Format.getPrettyFormat());
     final File file = new File(moduleFolder, "module.xml");
@@ -193,10 +192,8 @@ public final class ModuleBuilder
       }
       else
       {
-        context.getLog().warn(
-            String.format(
-                "Cannot copy non-existing remote file for dependency '%s'.",
-                dependency.getArtifact()));
+        context.getLog()
+            .warn(String.format("Cannot copy non-existing remote file for dependency '%s'.", dependency.getArtifact()));
       }
     }
   }
