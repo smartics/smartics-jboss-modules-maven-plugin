@@ -18,8 +18,3 @@ Please visit
   * the [Config smartics JBoss Modules] (https://github.com/smartics/config-smartics-jboss-modules)
 
 for more information.
-
-
-
-
-
