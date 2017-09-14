@@ -1041,6 +1041,9 @@
                   <scriptVariables>
                     <targetDir>target/jboss-modules/v1</targetDir>
                   </scriptVariables>
+                  <pomExcludes>
+                    <pomExclude>resource-filter/pom.xml</pomExclude> <!-- resource filters are not supported in v1 -->
+                  </pomExcludes>
                 </configuration>
                 <goals>
                   <goal>install</goal>

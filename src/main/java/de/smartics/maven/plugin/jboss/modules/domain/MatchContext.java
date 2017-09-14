@@ -17,6 +17,8 @@ package de.smartics.maven.plugin.jboss.modules.domain;
 
 import java.util.regex.MatchResult;
 
+import de.smartics.maven.plugin.jboss.modules.descriptor.ArtifactClusion;
+
 /**
  * Contains the result of a regular expression match.
  */
@@ -67,6 +69,11 @@ public interface MatchContext
    *         <code>false</code> otherwise.
    */
   boolean hasGroupMatch();
+
+  /**
+   * @return the matching {@link ArtifactClusion}
+   */
+  public ArtifactClusion getClusion();
 
   // --- object basics --------------------------------------------------------
 }

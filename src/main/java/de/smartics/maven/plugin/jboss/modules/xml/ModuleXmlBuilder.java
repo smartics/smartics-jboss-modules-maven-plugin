@@ -25,11 +25,11 @@ import java.util.TreeSet;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.aether.artifact.Artifact;
+import org.eclipse.aether.graph.Dependency;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.Namespace;
-import org.eclipse.aether.artifact.Artifact;
-import org.eclipse.aether.graph.Dependency;
 
 import de.smartics.maven.plugin.jboss.modules.descriptor.ApplyToDependencies;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ApplyToModule;
@@ -323,16 +323,29 @@ public final class ModuleXmlBuilder
       final List<SortElement> sorted = createSortedResources(dependencies);
       for (final SortElement element : sorted)
       {
+        final Artifact depart = element.dependency.getArtifact();
         if (context.isGenerateFeaturePackDefinition())
         {
-            Artifact depart = element.dependency.getArtifact();
             final Element artifact = new Element("artifact", context.getTargetNamespace());
             artifact.setAttribute("name", "${" + depart.getGroupId() + ":" + depart.getArtifactId() + "}");
+
+            String filter = module.getMatcher().findFilter(depart);
+            if (filter != null) {
+              final Element filterElement = adopt(filter);
+              artifact.addContent(filterElement);
+            }
+
             resources.addContent(artifact);
         } else {
             final Element resource = new Element("resource-root", context.getTargetNamespace());
             final String fileName = element.key;
             resource.setAttribute("path", fileName);
+
+            String filter = module.getMatcher().findFilter(depart);
+            if (filter != null) {
+              final Element filterElement = adopt(filter);
+              resource.addContent(filterElement);
+            }
             resources.addContent(resource);
         }
       }

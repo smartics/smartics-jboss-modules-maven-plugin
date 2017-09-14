@@ -95,6 +95,11 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
 
   // --- members --------------------------------------------------------------
 
+  /**
+   * An immutable variant of {@link #dependencyExcludes}, initialized in {@link #execute()}.
+   */
+  private List<ArtifactClusion> dependencyExcludesInternal;
+
   // ... Mojo infrastructure ..................................................
 
   /**
@@ -276,7 +281,7 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
    * </pre>
    */
   @Parameter
-  private List<ArtifactClusion> dependencyExcludes;
+  private List<ArtifactClusion.Builder> dependencyExcludes; // see also dependencyExcludesInternal
 
   /**
    * The root directories to search for modules XML files that contain module
@@ -404,6 +409,7 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
       return;
     }
 
+    this.dependencyExcludesInternal = ArtifactClusion.buildList(dependencyExcludes);
     this.modulesDescriptors = initModulesDescriptors();
     this.allModules = initModules();
     this.repositorySession = adjustSession();
@@ -691,7 +697,7 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
       final List<Dependency> managedDependencies)
   {
     final PrunerGenerator prunerGenerator =
-        new PrunerGenerator(dependencyExcludes, allModules,
+        new PrunerGenerator(dependencyExcludesInternal, allModules,
             ignoreDependencyExclusions);
     final List<DependencyFilter> dependencyFilters = createDependencyFilters();
     final MojoRepositoryBuilder builder = new MojoRepositoryBuilder();
@@ -716,7 +722,7 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
     if (dependencyExcludes != null && !dependencyExcludes.isEmpty())
     {
       final GaExclusionFilter filter =
-          new GaExclusionFilter(dependencyExcludes);
+          new GaExclusionFilter(dependencyExcludesInternal);
       dependencyFilters.add(filter);
     }
     return dependencyFilters;

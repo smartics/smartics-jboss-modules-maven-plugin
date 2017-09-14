@@ -15,17 +15,25 @@
  */
 package de.smartics.maven.plugin.jboss.modules.parser;
 
-import de.smartics.maven.plugin.jboss.modules.descriptor.*;
-import de.smartics.maven.plugin.jboss.modules.descriptor.DependenciesDescriptor.Builder;
-import de.smartics.maven.plugin.jboss.modules.xml.ModuleXmlBuilder;
+import java.util.List;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.Namespace;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
-import java.util.ArrayList;
-import java.util.List;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ApplyToDependencies;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ApplyToModule;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ArtifactClusion;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ArtifactMatcher;
+import de.smartics.maven.plugin.jboss.modules.descriptor.DependenciesDescriptor;
+import de.smartics.maven.plugin.jboss.modules.descriptor.DependenciesDescriptor.Builder;
+import de.smartics.maven.plugin.jboss.modules.descriptor.Directives;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleClusion;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleDescriptor;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleMatcher;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ModulesDescriptor;
 
 /**
  * The worker to do the parsing on a given document. It provides internal state

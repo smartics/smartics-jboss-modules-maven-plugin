@@ -155,12 +155,7 @@ public final class ClusionBuilder
    */
   public ArtifactClusion build()
   {
-    final ArtifactClusion clusion = new ArtifactClusion();
-
-    clusion.setGroupId(groupId);
-    clusion.setArtifactId(artifactId);
-
-    return clusion;
+    return new ArtifactClusion(groupId, artifactId);
   }
 
   // --- object basics --------------------------------------------------------

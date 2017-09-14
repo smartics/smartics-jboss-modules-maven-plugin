@@ -179,8 +179,25 @@ public final class ArtifactMatcher
     }
     else
     {
-      return new SingleMatchContext(result);
+      return new SingleMatchContext(result, null);
     }
+  }
+
+  /**
+   * Finds the {@link ArtifactClusion} maching the given {@code artifact} and returns its {@link ArtifactClusion#getFilter()}.
+   *
+   * @param artifact the {@link Artifact} to find the filter for
+   * @return an XML fragment or {@code null}
+   */
+  public String findFilter(final Artifact artifact) {
+    MatchContext matchResult = match(artifact);
+    if (matchResult != null && matchResult.isMatched()) {
+      ArtifactClusion clusion = matchResult.getClusion();
+      if (clusion != null) {
+        return clusion.getFilter();
+      }
+    }
+    return null;
   }
 
   private MatchContext cludes(final List<ArtifactClusion> clusions,
@@ -197,7 +214,7 @@ public final class ArtifactMatcher
         }
       }
     }
-    return new SingleMatchContext(false);
+    return new SingleMatchContext(false, null);
   }
 
   // --- object basics --------------------------------------------------------
