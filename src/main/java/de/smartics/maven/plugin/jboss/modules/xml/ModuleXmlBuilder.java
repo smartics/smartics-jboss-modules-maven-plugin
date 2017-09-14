@@ -37,6 +37,7 @@ import de.smartics.maven.plugin.jboss.modules.descriptor.DependenciesDescriptor;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleDescriptor;
 import de.smartics.maven.plugin.jboss.modules.domain.ExecutionContext;
 import de.smartics.maven.plugin.jboss.modules.domain.SlotStrategy;
+import de.smartics.maven.plugin.jboss.modules.util.XmlUtils;
 import edu.emory.mathcs.backport.java.util.Collections;
 
 /**
@@ -51,8 +52,12 @@ public final class ModuleXmlBuilder
   /**
    * The default namespace for the <code>module.xml</code> descriptor.
    */
-  public static final Namespace NS = Namespace
-      .getNamespace("urn:jboss:module:1.1");
+  public static final Namespace MODULE_NS_1_1;
+  public static final String MODULE_NS_1_1_URI = "urn:jboss:module:1.1";
+
+  static {
+    MODULE_NS_1_1 = Namespace.getNamespace(MODULE_NS_1_1_URI);
+  }
 
   // --- members --------------------------------------------------------------
 
@@ -105,7 +110,7 @@ public final class ModuleXmlBuilder
     this.module = module;
     this.dependencies = dependencies;
 
-    root = new Element("module", NS);
+    root = new Element("module", context.getTargetNamespace());
     root.setAttribute("name", module.getName());
     final String slot = calcSlot(context, module, dependencies);
     if (!SlotStrategy.MAIN_SLOT.equals(slot))
@@ -279,7 +284,7 @@ public final class ModuleXmlBuilder
     final String xml = module.getApplyToModule().getMainClassXml();
     if (xml != null)
     {
-      final Element element = xmlFragmentParser.parse(xml);
+      final Element element = adopt(xml);
       root.addContent(element);
     }
   }
@@ -292,10 +297,10 @@ public final class ModuleXmlBuilder
       return;
     }
 
-    final Element propertiesElement = new Element("properties", NS);
+    final Element propertiesElement = new Element("properties", context.getTargetNamespace());
     for (final String xml : xmls)
     {
-      final Element element = xmlFragmentParser.parse(xml);
+      final Element element = adopt(xml);
       propertiesElement.addContent(element);
     }
     root.addContent(propertiesElement);
@@ -303,12 +308,12 @@ public final class ModuleXmlBuilder
 
   private void addResources(ModuleDescriptor module, final Collection<Dependency> dependencies)
   {
-    final Element resources = new Element("resources", NS);
+    final Element resources = new Element("resources", context.getTargetNamespace());
 
     List<String> resourceRootsXml = module.getApplyToModule().getResourceRootsXml();
     for (final String xml : resourceRootsXml)
     {
-      final Element element = xmlFragmentParser.parse(xml);
+      final Element element = adopt(xml);
       resources.addContent(element);
     }
 
@@ -321,11 +326,11 @@ public final class ModuleXmlBuilder
         if (context.isGenerateFeaturePackDefinition())
         {
             Artifact depart = element.dependency.getArtifact();
-            final Element artifact = new Element("artifact", NS);
+            final Element artifact = new Element("artifact", context.getTargetNamespace());
             artifact.setAttribute("name", "${" + depart.getGroupId() + ":" + depart.getArtifactId() + "}");
             resources.addContent(artifact);
         } else {
-            final Element resource = new Element("resource-root", NS);
+            final Element resource = new Element("resource-root", context.getTargetNamespace());
             final String fileName = element.key;
             resource.setAttribute("path", fileName);
             resources.addContent(resource);
@@ -364,7 +369,7 @@ public final class ModuleXmlBuilder
     final List<String> staticDependencies = applyToModule.getDependenciesXml();
     if (!(dependencies.isEmpty() && staticDependencies.isEmpty()))
     {
-      final Element dependenciesElement = new Element("dependencies", NS);
+      final Element dependenciesElement = new Element("dependencies", context.getTargetNamespace());
 
       final List<ModuleDependencyElement> staticDependencyElements = getStaticDependencyElements(staticDependencies);
       final List<ModuleDependencyElement> resolvedDependencyElements = getResolvedDependencyElements(module, dependencies);
@@ -398,7 +403,7 @@ public final class ModuleXmlBuilder
     for (final SortElement element : sorted)
     {
       final String name = element.key;
-      final Element moduleElement = new Element("module", NS);
+      final Element moduleElement = new Element("module", context.getTargetNamespace());
       moduleElement.setAttribute("name", name);
 
       final DependenciesDescriptor dd = apply.getDescriptorThatMatches(name);
@@ -528,7 +533,7 @@ public final class ModuleXmlBuilder
     {
       for (final String xml : staticDependencies)
       {
-        final ModuleDependencyElement element = new ModuleDependencyElement(xmlFragmentParser.parse(xml));
+        final ModuleDependencyElement element = new ModuleDependencyElement(adopt(xml));
         moduleElements.add(element);
       }
     }
@@ -591,9 +596,15 @@ public final class ModuleXmlBuilder
     final String xml = module.getApplyToModule().getExportsXml();
     if (xml != null)
     {
-      final Element element = xmlFragmentParser.parse(xml);
+      final Element element = adopt(xml);
       root.addContent(element);
     }
+  }
+
+  private Element adopt(String xml) {
+    final Element element = xmlFragmentParser.parse(xml);
+    XmlUtils.adjustNamespaces(element, context.getTargetNamespace());
+    return element;
   }
 
   // --- object basics --------------------------------------------------------

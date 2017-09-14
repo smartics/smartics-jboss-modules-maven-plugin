@@ -25,6 +25,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.maven.archiver.MavenArchiveConfiguration;
 import org.apache.maven.archiver.MavenArchiver;
 import org.apache.maven.execution.MavenSession;
@@ -55,6 +56,7 @@ import org.eclipse.aether.util.graph.selector.AndDependencySelector;
 import org.eclipse.aether.util.graph.selector.ExclusionDependencySelector;
 import org.eclipse.aether.util.graph.selector.OptionalDependencySelector;
 import org.eclipse.aether.util.graph.selector.ScopeDependencySelector;
+import org.jdom2.Namespace;
 
 import de.smartics.maven.plugin.jboss.modules.aether.Mapper;
 import de.smartics.maven.plugin.jboss.modules.aether.MavenRepository;
@@ -73,6 +75,7 @@ import de.smartics.maven.plugin.jboss.modules.domain.PrunerGenerator;
 import de.smartics.maven.plugin.jboss.modules.domain.SlotStrategy;
 import de.smartics.maven.plugin.jboss.modules.domain.TransitiveDependencyResolver;
 import de.smartics.maven.plugin.jboss.modules.parser.ModulesXmlLocator;
+import de.smartics.maven.plugin.jboss.modules.xml.ModuleXmlBuilder;
 
 /**
  * Generates a archive containing modules from a BOM project.
@@ -368,6 +371,14 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
   @Parameter(defaultValue = "false")
   private boolean generateFeaturePackDefinition;
 
+  /**
+   * The namespace to use in the generated module.xml files.
+   *
+   * @since 2.1.4
+   */
+  @Parameter(defaultValue = ModuleXmlBuilder.MODULE_NS_1_1_URI)
+  private String targetNamespace;
+
   // ****************************** Initializer *******************************
 
   // ****************************** Constructors ******************************
@@ -604,6 +615,7 @@ public final class JBossModulesArchiveMojo extends AbstractMojo
     builder.with(moduleMap);
     builder.withIgnoreOptionalDependencies(ignoreOptionalDependencies);
     builder.withGenerateFeaturePackDefinition(generateFeaturePackDefinition);
+    builder.withTargetNamespaceUri(targetNamespace);
 
     if (verbose)
     {

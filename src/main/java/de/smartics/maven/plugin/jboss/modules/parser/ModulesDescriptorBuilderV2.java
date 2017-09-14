@@ -255,32 +255,14 @@ final class ModulesDescriptorBuilderV2
     final Element importElement = dependenciesElement.getChild("imports", NS);
     if (importElement != null)
     {
-      adjustNamespaces(importElement);
       final String imports = outputter.outputString(importElement);
       builder.withImportsXml(imports);
     }
     final Element exportElement = dependenciesElement.getChild("exports", NS);
     if (exportElement != null)
     {
-      adjustNamespaces(exportElement);
       final String exports = outputter.outputString(exportElement);
       builder.withExportsXml(exports);
-    }
-  }
-
-  private void adjustNamespaces(final Element element)
-  {
-    element.setNamespace(null);
-    final List<Namespace> namespaces =
-        new ArrayList<Namespace>(element.getAdditionalNamespaces());
-    for (final Namespace namespace : namespaces)
-    {
-      element.removeNamespaceDeclaration(namespace);
-    }
-    element.setNamespace(ModuleXmlBuilder.NS);
-    for (final Element child : element.getChildren())
-    {
-      adjustNamespaces(child);
     }
   }
 
@@ -293,7 +275,6 @@ final class ModulesDescriptorBuilderV2
 
     final ApplyToModule.Builder mBuilder = new ApplyToModule.Builder();
 
-    adjustNamespaces(applyToModuleElement);
     final XMLOutputter outputter = new XMLOutputter(Format.getCompactFormat());
     for (final Element child : applyToModuleElement.getChildren())
     {
@@ -314,7 +295,7 @@ final class ModulesDescriptorBuilderV2
     else if ("properties".equals(elementName))
     {
       for (final Element propertyElement : child.getChildren("property",
-          ModuleXmlBuilder.NS))
+          NS))
       {
         final String name = propertyElement.getAttributeValue("name");
         final String fragment = outputter.outputString(propertyElement);

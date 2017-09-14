@@ -106,19 +106,19 @@ public class ModulesXmlParserApplyToModuleXmlV2Test extends
     final String mainClassXml = apply.getMainClassXml();
     assertThat(
         mainClassXml,
-        is(equalTo("<main-class xmlns=\"urn:jboss:module:1.1\" name=\"de.smartics.test.Main\" />")));
+        is(equalTo("<main-class xmlns=\"http://smartics.de/ns/jboss-modules-descriptor/2\" name=\"de.smartics.test.Main\" />")));
     final List<String> dependenciesXmls = apply.getDependenciesXml();
     assertThat(dependenciesXmls.size(), is(equalTo(2)));
     assertThat(
         dependenciesXmls.get(0),
-        is(equalTo("<module xmlns=\"urn:jboss:module:1.1\" name=\"javax.api\" />")));
+        is(equalTo("<module xmlns=\"http://smartics.de/ns/jboss-modules-descriptor/2\" name=\"javax.api\" />")));
     assertThat(
         dependenciesXmls.get(1),
-        is(equalTo("<module xmlns=\"urn:jboss:module:1.1\" name=\"javax.xml.stream.api\">"
+        is(equalTo("<module xmlns=\"http://smartics.de/ns/jboss-modules-descriptor/2\" name=\"javax.xml.stream.api\">"
                    + "<imports><exclude path=\"org.jboss.example.tests\" /></imports></module>")));
     final String exportsXml = apply.getExportsXml();
     assertThat(
         exportsXml,
-        is(equalTo("<exports xmlns=\"urn:jboss:module:1.1\"><exclude path=\"**/impl/*\" /></exports>")));
+        is(equalTo("<exports xmlns=\"http://smartics.de/ns/jboss-modules-descriptor/2\"><exclude path=\"**/impl/*\" /></exports>")));
   }
 }

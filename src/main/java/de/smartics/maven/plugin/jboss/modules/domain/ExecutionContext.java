@@ -21,9 +21,11 @@ import java.util.List;
 import org.apache.maven.plugin.logging.Log;
 import org.eclipse.aether.graph.Dependency;
 import org.eclipse.aether.resolution.DependencyResolutionException;
+import org.jdom2.Namespace;
 
 import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleDescriptor;
 import de.smartics.maven.plugin.jboss.modules.util.Arg;
+import de.smartics.maven.plugin.jboss.modules.xml.ModuleXmlBuilder;
 import edu.emory.mathcs.backport.java.util.Collections;
 
 /**
@@ -77,6 +79,8 @@ public final class ExecutionContext
    */
   private Boolean generateFeaturePackDefinition;
 
+  private final Namespace targetNamespace;
+
   // ****************************** Initializer *******************************
 
   // ****************************** Constructors ******************************
@@ -91,6 +95,7 @@ public final class ExecutionContext
     this.moduleMap = builder.moduleMap;
     this.ignoreOptionalDependencies = builder.ignoreOptionalDependencies;
     this.generateFeaturePackDefinition = builder.generateFeaturePackDefinition;
+    this.targetNamespace = builder.targetNamespace;
   }
 
   // ****************************** Inner Classes *****************************
@@ -145,6 +150,8 @@ public final class ExecutionContext
      * Whether to generate a feature pack definition
      */
     private Boolean generateFeaturePackDefinition;
+
+    private Namespace targetNamespace = ModuleXmlBuilder.MODULE_NS_1_1;
 
     // ***************************** Initializer ******************************
 
@@ -252,6 +259,31 @@ public final class ExecutionContext
     public Builder withGenerateFeaturePackDefinition(final Boolean generateFeaturePackDefinition)
     {
       this.generateFeaturePackDefinition = generateFeaturePackDefinition;
+      return this;
+    }
+
+    /**
+     * Sets the namespace to use during the generation of module.xml files.
+     *
+     * @param targetNamespace a module.xml namespace
+     * @return a reference to this builder.
+     */
+    public Builder withTargetNamespace(final Namespace targetNamespace)
+    {
+      this.targetNamespace = targetNamespace;
+      return this;
+    }
+
+    /**
+     * First creates a {@link Namespace} using {@code Namespace.getNamespace(targetNamespaceUri)}
+     * and assigns iit to this builders {@link #targetNamespace}.
+     *
+     * @param targetNamespaceUri a module.xml namespace URI
+     * @return a reference to this builder.
+     */
+    public Builder withTargetNamespaceUri(final String targetNamespaceUri)
+    {
+      this.targetNamespace = Namespace.getNamespace(targetNamespaceUri);
       return this;
     }
 
@@ -406,6 +438,11 @@ public final class ExecutionContext
                                          + dependency);
     }
     return module;
+  }
+
+  public Namespace getTargetNamespace()
+  {
+    return targetNamespace;
   }
 
   // --- object basics --------------------------------------------------------

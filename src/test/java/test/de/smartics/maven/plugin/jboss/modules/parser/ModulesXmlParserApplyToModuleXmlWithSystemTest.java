@@ -76,7 +76,7 @@ public class ModulesXmlParserApplyToModuleXmlWithSystemTest extends
     assertThat(dependenciesXmls.size(), is(equalTo(1)));
     assertThat(
         dependenciesXmls.get(0),
-        is(equalTo("<system xmlns=\"urn:jboss:module:1.1\""
+        is(equalTo("<system xmlns=\"http://smartics.de/ns/jboss-modules-descriptor/1\""
                    + " export=\"true\"><paths><path name=\"org/example/one\" />"
                    + "<path name=\"org/example/one/another\" />"
                    + "</paths></system>")));
