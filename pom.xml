@@ -893,6 +893,12 @@
 
       <dependencies>
         <dependency>
+          <groupId>de.smartics.config</groupId>
+          <artifactId>config-smartics-jboss-modules</artifactId>
+          <version>2.0.1</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
           <groupId>de.smartics.test.setup</groupId>
           <artifactId>test-setup-artifacts-app</artifactId>
           <version>1.0.0</version>
@@ -968,7 +974,36 @@
           <type>pom</type>
           <scope>test</scope>
         </dependency>
+        <dependency>
+          <groupId>de.smartics.util</groupId>
+          <artifactId>smartics-jboss-utils</artifactId>
+          <version>0.1.1</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>de.smartics.util</groupId>
+          <artifactId>smartics-validation-utils</artifactId>
+          <version>0.1.3</version>
+          <scope>test</scope>
+        </dependency>
       </dependencies>
+
+      <repositories>
+          <repository>
+              <id>smartics-public-repository</id>
+              <name>Smartics Public Repository</name>
+              <url>https://www.smartics.eu/nexus/content/repositories/public/</url>
+              <layout>default</layout>
+              <releases>
+                  <enabled>true</enabled>
+                  <updatePolicy>never</updatePolicy>
+              </releases>
+              <snapshots>
+                  <enabled>true</enabled>
+                  <updatePolicy>never</updatePolicy>
+              </snapshots>
+          </repository>
+      </repositories>
 
       <build>
         <defaultGoal>install</defaultGoal>
