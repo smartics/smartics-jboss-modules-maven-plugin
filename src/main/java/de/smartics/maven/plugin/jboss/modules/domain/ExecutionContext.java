@@ -26,7 +26,7 @@ import org.jdom2.Namespace;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleDescriptor;
 import de.smartics.maven.plugin.jboss.modules.util.Arg;
 import de.smartics.maven.plugin.jboss.modules.xml.ModuleXmlBuilder;
-import edu.emory.mathcs.backport.java.util.Collections;
+import java.util.Collections;
 
 /**
  * The context and configuration to control the building of the module archive.

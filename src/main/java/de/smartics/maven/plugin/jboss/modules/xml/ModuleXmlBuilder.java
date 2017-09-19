@@ -38,7 +38,7 @@ import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleDescriptor;
 import de.smartics.maven.plugin.jboss.modules.domain.ExecutionContext;
 import de.smartics.maven.plugin.jboss.modules.domain.SlotStrategy;
 import de.smartics.maven.plugin.jboss.modules.util.XmlUtils;
-import edu.emory.mathcs.backport.java.util.Collections;
+import java.util.Collections;
 
 /**
  * Creates <code>module.xml</code> descriptors for JBoss modules.
