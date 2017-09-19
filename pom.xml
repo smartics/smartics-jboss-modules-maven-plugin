@@ -31,6 +31,10 @@
 
   <developers>
     <developer>
+      <id>jamesnetherton</id>
+      <name>James Netherton</name>
+    </developer>
+    <developer>
       <id>robert.reiner</id>
       <name>Robert Reiner</name>
       <url>https://www.smartics.de/go/robertreiner</url>
@@ -47,7 +51,7 @@
   </developers>
   <contributors>
     <contributor>
-      <name>Douglas Palmer</name>
+      <name>Thomas Diesler</name>
       <roles>
         <role>Developer</role>
       </roles>
@@ -59,13 +63,13 @@
       </roles>
     </contributor>
     <contributor>
-      <name>James Netherton</name>
+      <name>Peter Palaga</name>
       <roles>
         <role>Developer</role>
       </roles>
     </contributor>
     <contributor>
-      <name>Thomas Diesler</name>
+      <name>Douglas Palmer</name>
       <roles>
         <role>Developer</role>
       </roles>
