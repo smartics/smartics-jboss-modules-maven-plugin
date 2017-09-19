@@ -107,14 +107,14 @@ public class ModulesXmlParserDependenciesFullXmlTest extends
     assertThat(dependencies.getOptional(), is(equalTo(Boolean.TRUE)));
 
     assertThat(dependencies.getImportsXml(),
-        is(equalTo("<imports xmlns=\"urn:jboss:module:1.1\"><include path=\"de/smartics/test/one\" />"
+        is(equalTo("<imports xmlns=\"http://smartics.de/ns/jboss-modules-descriptor/1\"><include path=\"de/smartics/test/one\" />"
                    + "<include-set><path name=\"de/smartics/sandbox/one\" />"
                    + "<path name=\"de/smartics/sandbox/two\" /></include-set>"
                    + "<exclude-set><path name=\"org/jboss/example/tests1\" />"
                    + "<path name=\"org/jboss/example/tests2\" />"
                    + "</exclude-set></imports>")));
     assertThat(dependencies.getExportsXml(),
-        is(equalTo("<exports xmlns=\"urn:jboss:module:1.1\"><include path=\"de/smartics/test/one\" />"
+        is(equalTo("<exports xmlns=\"http://smartics.de/ns/jboss-modules-descriptor/1\"><include path=\"de/smartics/test/one\" />"
                    + "<include-set><path name=\"de/smartics/api\" />"
                    + "<path name=\"de/smartics/spi\" /></include-set>"
                    + "<exclude path=\"de/smartics/impl\" /><exclude-set>"

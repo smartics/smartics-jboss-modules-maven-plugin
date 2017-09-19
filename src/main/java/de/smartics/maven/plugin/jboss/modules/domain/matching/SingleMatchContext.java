@@ -18,6 +18,7 @@ package de.smartics.maven.plugin.jboss.modules.domain.matching;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 
+import de.smartics.maven.plugin.jboss.modules.descriptor.ArtifactClusion;
 import de.smartics.maven.plugin.jboss.modules.domain.MatchContext;
 
 /**
@@ -41,6 +42,8 @@ public final class SingleMatchContext implements MatchContext
    */
   private final MatchResult matchResult;
 
+  private final ArtifactClusion clusion;
+
   // ****************************** Initializer *******************************
 
   // ****************************** Constructors ******************************
@@ -50,10 +53,11 @@ public final class SingleMatchContext implements MatchContext
    *
    * @param result the result of the match.
    */
-  public SingleMatchContext(final boolean result)
+  public SingleMatchContext(final boolean result, ArtifactClusion clusion)
   {
     this.result = result;
     this.matchResult = null;
+    this.clusion = clusion;
   }
 
   /**
@@ -61,10 +65,11 @@ public final class SingleMatchContext implements MatchContext
    *
    * @param matcher the matcher to access group information.
    */
-  public SingleMatchContext(final Matcher matcher)
+  public SingleMatchContext(final Matcher matcher, ArtifactClusion clusion)
   {
     this.result = matcher.matches();
     this.matchResult = matcher.toMatchResult();
+    this.clusion = clusion;
   }
 
   // ****************************** Inner Classes *****************************
@@ -85,6 +90,12 @@ public final class SingleMatchContext implements MatchContext
   public MatchResult getMatchResult()
   {
     return matchResult;
+  }
+
+  @Override
+  public ArtifactClusion getClusion()
+  {
+    return clusion;
   }
 
   // --- business -------------------------------------------------------------

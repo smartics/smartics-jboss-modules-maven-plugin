@@ -17,6 +17,7 @@ package de.smartics.maven.plugin.jboss.modules.domain.matching;
 
 import java.util.regex.MatchResult;
 
+import de.smartics.maven.plugin.jboss.modules.descriptor.ArtifactClusion;
 import de.smartics.maven.plugin.jboss.modules.domain.MatchContext;
 
 /**
@@ -87,6 +88,12 @@ public final class DelegationMatchContext implements MatchContext
   public MatchResult getMatchResult()
   {
     return delegateMatchResult.getMatchResult();
+  }
+
+  @Override
+  public ArtifactClusion getClusion()
+  {
+    return delegateMatchResult.getClusion();
   }
 
   // --- business -------------------------------------------------------------

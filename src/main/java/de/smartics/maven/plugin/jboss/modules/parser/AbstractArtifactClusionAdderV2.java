@@ -17,6 +17,8 @@ package de.smartics.maven.plugin.jboss.modules.parser;
 
 import de.smartics.maven.plugin.jboss.modules.descriptor.ArtifactClusion;
 import org.jdom2.Element;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 
 import java.util.List;
 
@@ -44,14 +46,18 @@ abstract class AbstractArtifactClusionAdderV2 extends
           matchElement.getChildren(elementId, NS);
       for (final Element clusionElement : clusionElements)
       {
-        final ArtifactClusion clusion = new ArtifactClusion();
         String artifact = clusionElement.getAttributeValue("artifact");
         String[] split = artifact.split(":", 2);
         final String groupId = split.length >= 1 ? split[0] : null;
         final String artifactId = split.length == 2 ? split[1] : null;
-        clusion.setGroupId(groupId);
-        clusion.setArtifactId(artifactId);
-        add(clusion);
+        Element filterElement = clusionElement.getChild("filter", NS);
+        final String filter;
+        if (filterElement == null) {
+          filter = null;
+        } else {
+          filter = new XMLOutputter(Format.getCompactFormat()).outputString(filterElement);
+        }
+        add(new ArtifactClusion(groupId, artifactId, filter));
       }
     }
   }

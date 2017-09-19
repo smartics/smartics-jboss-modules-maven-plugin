@@ -15,17 +15,25 @@
  */
 package de.smartics.maven.plugin.jboss.modules.parser;
 
-import de.smartics.maven.plugin.jboss.modules.descriptor.*;
-import de.smartics.maven.plugin.jboss.modules.descriptor.DependenciesDescriptor.Builder;
-import de.smartics.maven.plugin.jboss.modules.xml.ModuleXmlBuilder;
+import java.util.List;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.Namespace;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
-import java.util.ArrayList;
-import java.util.List;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ApplyToDependencies;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ApplyToModule;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ArtifactClusion;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ArtifactMatcher;
+import de.smartics.maven.plugin.jboss.modules.descriptor.DependenciesDescriptor;
+import de.smartics.maven.plugin.jboss.modules.descriptor.DependenciesDescriptor.Builder;
+import de.smartics.maven.plugin.jboss.modules.descriptor.Directives;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleClusion;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleDescriptor;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleMatcher;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ModulesDescriptor;
 
 /**
  * The worker to do the parsing on a given document. It provides internal state
@@ -255,32 +263,14 @@ final class ModulesDescriptorBuilderV2
     final Element importElement = dependenciesElement.getChild("imports", NS);
     if (importElement != null)
     {
-      adjustNamespaces(importElement);
       final String imports = outputter.outputString(importElement);
       builder.withImportsXml(imports);
     }
     final Element exportElement = dependenciesElement.getChild("exports", NS);
     if (exportElement != null)
     {
-      adjustNamespaces(exportElement);
       final String exports = outputter.outputString(exportElement);
       builder.withExportsXml(exports);
-    }
-  }
-
-  private void adjustNamespaces(final Element element)
-  {
-    element.setNamespace(null);
-    final List<Namespace> namespaces =
-        new ArrayList<Namespace>(element.getAdditionalNamespaces());
-    for (final Namespace namespace : namespaces)
-    {
-      element.removeNamespaceDeclaration(namespace);
-    }
-    element.setNamespace(ModuleXmlBuilder.NS);
-    for (final Element child : element.getChildren())
-    {
-      adjustNamespaces(child);
     }
   }
 
@@ -293,7 +283,6 @@ final class ModulesDescriptorBuilderV2
 
     final ApplyToModule.Builder mBuilder = new ApplyToModule.Builder();
 
-    adjustNamespaces(applyToModuleElement);
     final XMLOutputter outputter = new XMLOutputter(Format.getCompactFormat());
     for (final Element child : applyToModuleElement.getChildren())
     {
@@ -314,7 +303,7 @@ final class ModulesDescriptorBuilderV2
     else if ("properties".equals(elementName))
     {
       for (final Element propertyElement : child.getChildren("property",
-          ModuleXmlBuilder.NS))
+          NS))
       {
         final String name = propertyElement.getAttributeValue("name");
         final String fragment = outputter.outputString(propertyElement);

@@ -244,6 +244,80 @@
     </xsd:attribute>
   </xsd:complexType>
 
+  <xsd:complexType name="Filter">
+      <annotation xmlns="http://www.w3.org/2001/XMLSchema">
+          <documentation>
+              A filter specification, consisting of zero or more filter items.
+              Adopted from urn:jboss:module:1.6.
+          </documentation>
+      </annotation>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+          <xsd:element name="include" type="PathSpec" minOccurs="0">
+              <annotation xmlns="http://www.w3.org/2001/XMLSchema">
+                  <documentation>
+                      A path to include. The path value can be a path name or a "glob" which may include the special
+                      wildcards "*", "**", and "?".
+                  </documentation>
+              </annotation>
+          </xsd:element>
+          <xsd:element name="exclude" type="PathSpec" minOccurs="0">
+              <annotation xmlns="http://www.w3.org/2001/XMLSchema">
+                  <documentation>
+                      A path to exclude. The path value can be a path name or a "glob" which may include the special
+                      wildcards "*", "**", and "?".
+                  </documentation>
+              </annotation>
+          </xsd:element>
+          <xsd:element name="include-set" type="PathSet" minOccurs="0">
+              <annotation xmlns="http://www.w3.org/2001/XMLSchema">
+                  <documentation>
+                      A set of literal path names to include. Wildcards are not supported.
+                  </documentation>
+              </annotation>
+          </xsd:element>
+          <xsd:element name="exclude-set" type="PathSet" minOccurs="0">
+              <annotation xmlns="http://www.w3.org/2001/XMLSchema">
+                  <documentation>
+                      A set of literal path names to exclude. Wildcards are not supported.
+                  </documentation>
+              </annotation>
+          </xsd:element>
+      </xsd:choice>
+  </xsd:complexType>
+
+
+  <xsd:complexType name="Path">
+      <annotation xmlns="http://www.w3.org/2001/XMLSchema">
+          <documentation>
+              A filesystem path name.
+              Adopted from urn:jboss:module:1.6.
+          </documentation>
+      </annotation>
+      <xsd:attribute name="name" type="xsd:string" use="required">
+          <annotation xmlns="http://www.w3.org/2001/XMLSchema">
+              <documentation>
+                  The path name.
+              </documentation>
+          </annotation>
+      </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="PathSpec">
+      <annotation xmlns="http://www.w3.org/2001/XMLSchema">
+          <documentation>
+              A path specification type, which may include wildcards.
+              Adopted from urn:jboss:module:1.6.
+          </documentation>
+      </annotation>
+      <xsd:attribute name="path" type="xsd:string" use="required">
+          <annotation xmlns="http://www.w3.org/2001/XMLSchema">
+              <documentation>
+                  The path name, which can be a literal path name or it may include the special wildcards "*", "**",
+                  and "?".
+              </documentation>
+          </annotation>
+      </xsd:attribute>
+  </xsd:complexType>
   <xsd:complexType name="MainClass">
     <xsd:annotation>
       <xsd:documentation>
@@ -362,6 +436,16 @@
         The artifacts that should be included within a module.
       </xsd:documentation>
     </xsd:annotation>
+    <xsd:all>
+        <xsd:element name="filter" type="Filter" minOccurs="0">
+            <annotation xmlns="http://www.w3.org/2001/XMLSchema">
+                <documentation>
+                    A path filter specification for this resource root (optional). By default all paths are accepted.
+                    Adopted from urn:jboss:module:1.6.
+                </documentation>
+            </annotation>
+        </xsd:element>
+    </xsd:all>
     <xsd:attribute name="artifact" type="xsd:string" use="required">
       <xsd:annotation>
         <xsd:documentation>
@@ -417,6 +501,24 @@
       <xsd:enumeration value="export"/>
     </xsd:restriction>
   </xsd:simpleType>
+
+  <xsd:complexType name="PathSet">
+      <annotation xmlns="http://www.w3.org/2001/XMLSchema">
+          <documentation>
+              A set of literal path names which can be used for efficient matching against multiple possible values.
+              Adopted from urn:jboss:module:1.6.
+          </documentation>
+      </annotation>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+          <xsd:element name="path" type="Path" minOccurs="0">
+              <annotation xmlns="http://www.w3.org/2001/XMLSchema">
+                  <documentation>
+                      The path name to include in the set.
+                  </documentation>
+              </annotation>
+          </xsd:element>
+      </xsd:choice>
+  </xsd:complexType>
 
   <xsd:complexType name="SystemExports">
     <xsd:annotation>

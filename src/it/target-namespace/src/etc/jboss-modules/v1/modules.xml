@@ -16,8 +16,25 @@
     limitations under the License.
 
 -->
-<modules xmlns="http://smartics.de/ns/jboss-modules-descriptor/2">
-  <module name="org.apache.commons.$1">
-    <include artifact=":commons-(.*)" />
+<modules xmlns="http://smartics.de/ns/jboss-modules-descriptor/1">
+  <module name="org.apache.commons">
+
+    <match>
+      <includes>
+        <include>
+          <artifactId>commons-lang</artifactId>
+        </include>
+        <include>
+          <artifactId>commons-logging</artifactId>
+        </include>
+      </includes>
+    </match>
+
+    <apply-to-module>
+      <dependencies>
+        <module name="javax.api" />
+        <module name="javax.xml.stream.api" />
+      </dependencies>
+    </apply-to-module>
   </module>
 </modules>

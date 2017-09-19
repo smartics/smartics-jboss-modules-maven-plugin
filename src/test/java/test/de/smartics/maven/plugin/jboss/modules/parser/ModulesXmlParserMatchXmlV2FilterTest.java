@@ -24,29 +24,28 @@ import java.util.List;
 
 import org.junit.Test;
 
-import de.smartics.maven.plugin.jboss.modules.descriptor.ApplyToModule;
-import de.smartics.maven.plugin.jboss.modules.descriptor.ArtifactMatcher;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ArtifactClusion;
+import de.smartics.maven.plugin.jboss.modules.descriptor.ArtifactMatcher;
+import de.smartics.maven.plugin.jboss.modules.descriptor.Directives;
 import de.smartics.maven.plugin.jboss.modules.descriptor.ModuleDescriptor;
 
 /**
  * Tests {@link de.smartics.maven.plugin.jboss.modules.parser.ModulesXmlParser}
  * with <code>{@value #ID}</code>.
  */
-public class ModulesXmlParserApplyToModuleXmlTest extends
-    AbstractModulesXmlParserTest
+public class ModulesXmlParserMatchXmlV2FilterTest extends AbstractModulesXmlParserTest
 {
   // ********************************* Fields *********************************
 
   // --- constants ------------------------------------------------------------
 
-  private static final String ID = "apply-to-module.xml";
+  private static final String ID = "match-v2-filter.xml";
 
   // --- members --------------------------------------------------------------
 
   // ****************************** Constructors ******************************
 
-  public ModulesXmlParserApplyToModuleXmlTest()
+  public ModulesXmlParserMatchXmlV2FilterTest()
   {
     super(ID);
   }
@@ -69,39 +68,31 @@ public class ModulesXmlParserApplyToModuleXmlTest extends
     final List<ModuleDescriptor> descriptors = result.getDescriptors();
     assertThat(descriptors.size(), is(equalTo(1)));
     final ModuleDescriptor descriptor = descriptors.get(0);
-    assertThat(descriptor.getName(), is(equalTo("apply-to-modules")));
-    assertThat(descriptor.getSlot(), is(nullValue()));
+    assertThat(descriptor.getName(), is(equalTo("match-module")));
+    assertThat(descriptor.getSlot(), is(equalTo("match")));
+
+    final Directives directives = descriptor.getDirectives();
+    assertThat(directives.getSkip(), is(equalTo(Boolean.FALSE)));
+    assertThat(directives.getInheritSlot(), is(equalTo(Boolean.TRUE)));
 
     final ArtifactMatcher matcher = descriptor.getMatcher();
     final List<ArtifactClusion> includes = matcher.getIncludes();
-    assertThat(includes.size(), is(equalTo(1)));
+    assertThat(includes.size(), is(equalTo(2)));
     final ArtifactClusion include1 = includes.get(0);
     assertThat(include1.getGroupId(), is(equalTo("de.smartics.test")));
-    assertThat(include1.getArtifactId(), is(equalTo("service-test")));
+    assertThat(include1.getArtifactId(), is(equalTo("test-lib")));
+    assertThat(include1.getFilter(), is(equalTo("<filter xmlns=\"http://smartics.de/ns/jboss-modules-descriptor/2\"><include path=\"de/smartics/folder1/**\" /><exclude path=\"de/smartics/folder2\" /><include-set><path name=\"de/smartics/folder3\" /><path name=\"de/smartics/folder4\" /></include-set><exclude-set><path name=\"de/smartics/folder5\" /><path name=\"de/smartics/folder6\" /></exclude-set></filter>")));
 
-    assertApplyToModule(descriptor);
-  }
+    final ArtifactClusion include2 = includes.get(1);
+    assertThat(include2.getGroupId(), is(equalTo("de.smartics.sandbox")));
+    assertThat(include2.getArtifactId(), is(nullValue()));
+    assertThat(include2.getFilter(), is(nullValue()));
 
-  private void assertApplyToModule(final ModuleDescriptor descriptor)
-  {
-    final ApplyToModule apply = descriptor.getApplyToModule();
-    final String mainClassXml = apply.getMainClassXml();
-    assertThat(
-        mainClassXml,
-        is(equalTo("<main-class xmlns=\"http://smartics.de/ns/jboss-modules-descriptor/1\" name=\"de.smartics.test.Main\" />")));
-    final List<String> dependenciesXmls = apply.getDependenciesXml();
-    assertThat(dependenciesXmls.size(), is(equalTo(2)));
-    assertThat(
-        dependenciesXmls.get(0),
-        is(equalTo("<module xmlns=\"http://smartics.de/ns/jboss-modules-descriptor/1\" name=\"javax.api\" />")));
-    assertThat(
-        dependenciesXmls.get(1),
-        is(equalTo("<module xmlns=\"http://smartics.de/ns/jboss-modules-descriptor/1\" name=\"javax.xml.stream.api\">"
-                   + "<imports><exclude-set><path name=\"org.jboss.example.tests\" />"
-                   + "</exclude-set></imports></module>")));
-    final String exportsXml = apply.getExportsXml();
-    assertThat(
-        exportsXml,
-        is(equalTo("<exports xmlns=\"http://smartics.de/ns/jboss-modules-descriptor/1\"><exclude path=\"**/impl/*\" /></exports>")));
+    final List<ArtifactClusion> excludes = matcher.getExcludes();
+    assertThat(excludes.size(), is(equalTo(1)));
+    final ArtifactClusion exclude1 = excludes.get(0);
+    assertThat(exclude1.getGroupId(), is(nullValue()));
+    assertThat(exclude1.getArtifactId(), is(equalTo("sandbox-lib")));
+    assertThat(exclude1.getFilter(), is(nullValue()));
   }
 }

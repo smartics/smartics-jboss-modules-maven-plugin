@@ -66,12 +66,9 @@ abstract class AbstractArtifactClusionAdder extends
           clusionsElement.getChildren(elementId, NS);
       for (final Element clusionElement : clusionElements)
       {
-        final ArtifactClusion clusion = new ArtifactClusion();
         final String groupId = clusionElement.getChildText("groupId", NS);
         final String artifactId = clusionElement.getChildText("artifactId", NS);
-        clusion.setGroupId(groupId);
-        clusion.setArtifactId(artifactId);
-        add(clusion);
+        add(new ArtifactClusion(groupId, artifactId));
       }
     }
   }

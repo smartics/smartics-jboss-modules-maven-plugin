@@ -15,6 +15,9 @@
  */
 package de.smartics.maven.plugin.jboss.modules.descriptor;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -33,7 +36,44 @@ import de.smartics.maven.plugin.jboss.modules.domain.matching.SingleMatchContext
  */
 public class ArtifactClusion
 {
-  // ********************************* Fields *********************************
+  /**
+   * A mutable {@link ArtifactClusion} so that Plexus can instantiate it and set the fields.
+   */
+  public static class Builder
+  {
+    public String groupId;
+
+    public String artifactId;
+
+    public String filter;
+
+    public ArtifactClusion build()
+    {
+      return new ArtifactClusion(groupId, artifactId, filter);
+    }
+
+  }
+
+  /**
+   * Transforms the given {@link List} of mutable {@code builders} to a {@link List} of immutable {@link ArtifactClusion}s.
+   *
+   * @param builders a list of mutable {@link Builder}s
+   * @return a new {@link List} of immutable {@link ArtifactClusion}s
+   */
+  public static List<ArtifactClusion> buildList(List<Builder> builders) {
+    if (builders == null) {
+      return Collections.emptyList();
+    } else {
+      List<ArtifactClusion> result = new ArrayList<ArtifactClusion>(builders.size());
+      for (Builder b : builders)
+      {
+        result.add(b.build());
+      }
+      return Collections.unmodifiableList(result);
+    }
+  }
+
+    // ********************************* Fields *********************************
 
   // --- constants ------------------------------------------------------------
 
@@ -42,34 +82,68 @@ public class ArtifactClusion
   /**
    * The groupId to match. May be a regular expression.
    */
-  private String groupId;
+  private final String groupId;
 
   /**
    * The groupId pattern to match. May be <code>null</code>, if groupId does not
    * specify a pattern.
    */
-  private Pattern groupIdPattern;
+  private final Pattern groupIdPattern;
 
   /**
    * The artifactId to match. May be a regular expression.
    */
-  private String artifactId;
+  private final String artifactId;
 
   /**
    * The artifactId pattern to match. May be <code>null</code>, if artifactId
    * does not specify a pattern.
    */
-  private Pattern artifactIdPattern;
+  private final Pattern artifactIdPattern;
+
+  /**
+   * An XML fragment that represents the {@code filter} sub-element
+   */
+  private final String filter;
 
   // ****************************** Initializer *******************************
 
   // ****************************** Constructors ******************************
 
   /**
-   * Default constructor.
+   * A shorthand for {@code new ArtifactClusion(groupId, artifactId, null)}
+   *
+   * @param groupId the groupId to match. May be a regular expression.
+   * @param artifactId the artifactId to match. May be a regular expression.
    */
-  public ArtifactClusion()
+  public ArtifactClusion(String groupId, String artifactId)
   {
+    this(groupId, artifactId, null);
+  }
+
+  /**
+   * @param groupId the groupId to match. May be a regular expression.
+   * @param artifactId the artifactId to match. May be a regular expression.
+   * @param filter a filter sub-element or {@code null} in case there is no filter set
+   */
+  public ArtifactClusion(String groupId, String artifactId, String filter)
+  {
+    super();
+    if (StringUtils.isNotBlank(groupId)) {
+      this.groupId = groupId;
+      this.groupIdPattern = compilePattern(groupId);
+    } else {
+      this.groupId = null;
+      this.groupIdPattern = null;
+    }
+    if (StringUtils.isNotBlank(artifactId)) {
+      this.artifactId = artifactId;
+      this.artifactIdPattern = compilePattern(artifactId);
+    } else {
+      this.artifactId = null;
+      this.artifactIdPattern = null;
+    }
+    this.filter = filter;
   }
 
   // ****************************** Inner Classes *****************************
@@ -79,21 +153,6 @@ public class ArtifactClusion
   // --- init -----------------------------------------------------------------
 
   // --- factory --------------------------------------------------------------
-
-  /**
-   * Helper to create an instance.
-   *
-   * @param groupId the groupId to match. May be a regular expression.
-   * @param artifactId the artifactId to match. May be a regular expression.
-   * @return the new instance.
-   */
-  public static ArtifactClusion create(final String groupId, final String artifactId)
-  {
-    final ArtifactClusion clusion = new ArtifactClusion();
-    clusion.setGroupId(groupId);
-    clusion.setArtifactId(artifactId);
-    return clusion;
-  }
 
   // --- get&set --------------------------------------------------------------
 
@@ -105,20 +164,6 @@ public class ArtifactClusion
   public String getGroupId()
   {
     return groupId;
-  }
-
-  /**
-   * Sets the groupId to match.May be a regular expression.
-   *
-   * @param groupId the groupId to match.
-   */
-  public void setGroupId(final String groupId)
-  {
-    if (StringUtils.isNotBlank(groupId))
-    {
-      this.groupId = groupId;
-      groupIdPattern = compilePattern(groupId);
-    }
   }
 
   private static Pattern compilePattern(final String pattern)
@@ -148,17 +193,13 @@ public class ArtifactClusion
   }
 
   /**
-   * Sets the artifactId to match. May be a regular expression.
+   * Returns an XML fragment that represents the {@code filter} sub-element.
    *
-   * @param artifactId the artifactId to match.
+   * @return an XML fragment or {@code null}.
    */
-  public void setArtifactId(final String artifactId)
+  public String getFilter()
   {
-    if (StringUtils.isNotBlank(artifactId))
-    {
-      this.artifactId = artifactId;
-      artifactIdPattern = compilePattern(artifactId);
-    }
+    return filter;
   }
 
   // --- business -------------------------------------------------------------
@@ -177,7 +218,7 @@ public class ArtifactClusion
         matches(groupIdPattern, groupId, artifact.getGroupId());
     if (matchesGroupId != null && !matchesGroupId.isMatched())
     {
-      return new SingleMatchContext(false);
+      return new SingleMatchContext(false, this);
     }
     final SingleMatchContext matchesArtifactId =
         matches(artifactIdPattern, artifactId, artifact.getArtifactId());
@@ -188,22 +229,22 @@ public class ArtifactClusion
             || (matchesArtifactId != null && matchesArtifactId.isMatched());
 
     final MatchContext context =
-        new DoubleMatchContext(result, matchesGroupId, matchesArtifactId);
+        new DoubleMatchContext(result, matchesGroupId, matchesArtifactId, this);
     return context;
   }
 
-  private static SingleMatchContext matches(final Pattern pattern,
+  private SingleMatchContext matches(final Pattern pattern,
       final String id, final String inputId)
   {
     if (pattern != null)
     {
       final Matcher matcher = pattern.matcher(inputId);
-      return new SingleMatchContext(matcher);
+      return new SingleMatchContext(matcher, this);
     }
 
     if (StringUtils.isNotBlank(id))
     {
-      return new SingleMatchContext(id.equals(inputId));
+      return new SingleMatchContext(id.equals(inputId), this);
     }
 
     return null;
@@ -215,6 +256,7 @@ public class ArtifactClusion
   public String toString()
   {
     return ObjectUtils.toString(groupId) + ':'
-           + ObjectUtils.toString(artifactId);
+           + ObjectUtils.toString(artifactId) + ':'
+           + ObjectUtils.toString(filter);
   }
 }
