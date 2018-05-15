@@ -338,7 +338,7 @@ public final class ModuleXmlBuilder
             resources.addContent(artifact);
         } else {
             final Element resource = new Element("resource-root", context.getTargetNamespace());
-            final String fileName = element.key;
+            final String fileName = depart.getFile().getName();
             resource.setAttribute("path", fileName);
 
             String filter = module.getMatcher().findFilter(depart);
@@ -367,8 +367,8 @@ public final class ModuleXmlBuilder
       final File file = artifact.getFile();
       if (file != null)
       {
-        final String fileName = file.getName();
-        sorted.add(new SortElement(fileName, dependency));
+        final String sortKey = file.getName() + ":"+ dependency.getArtifact().getGroupId();
+        sorted.add(new SortElement(sortKey, dependency));
       }
     }
     Collections.sort(sorted);
