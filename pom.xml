@@ -174,7 +174,7 @@
     <version.maven-license-plugin>1.9.0</version.maven-license-plugin>
     <version.maven-javadoc-plugin>2.10.3</version.maven-javadoc-plugin>
     <version.maven-source-plugin>2.4</version.maven-source-plugin>
-    <version.maven-enforcer-plugin>1.3.1</version.maven-enforcer-plugin>
+    <version.maven-enforcer-plugin>3.0.0-M2</version.maven-enforcer-plugin>
     <version.maven-gpg-plugin>1.6</version.maven-gpg-plugin>
 
     <!--  Dependency versions -->
