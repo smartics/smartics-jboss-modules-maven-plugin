@@ -5,16 +5,16 @@ Generates an archive of modules based on information in a POM to be copied to an
 
 ## Overview
 
-This plugin for [Maven] (http://maven.apache.org/) creates an archive with [JBoss modules] (https://docs.jboss.org/author/display/MODULES/Home) to be installed to a [JBoss 7] (https://www.jboss.org/jbossas) server installation.
+This plugin for [Maven](http://maven.apache.org/) creates an archive with [JBoss modules](https://docs.jboss.org/author/display/MODULES/Home) to be installed to a [JBoss 7](https://www.jboss.org/jbossas) server installation.
 
-Crafting the modules by hand is more cumbersome than to define a recipe that allows to construct the modules folder with all dependencies already defined by a [Maven POM] (http://maven.apache.org/pom.html).
+Crafting the modules by hand is more cumbersome than to define a recipe that allows to construct the modules folder with all dependencies already defined by a [Maven POM](http://maven.apache.org/pom.html).
 
 ## Documentation
 
 Please visit
 
-  * the [plugin's homepage] (https://www.smartics.eu/confluence/display/SJBMMP/)
-  * the [plugin's report site] (https://www.smartics.eu/smartics-jboss-modules-maven-plugin/)
-  * the [Config smartics JBoss Modules] (https://github.com/smartics/config-smartics-jboss-modules)
+  * the [plugin's homepage](https://www.smartics.eu/confluence/display/SJBMMP/)
+  * the [plugin's report site](https://www.smartics.eu/smartics-jboss-modules-maven-plugin/)
+  * the [Config smartics JBoss Modules](https://github.com/smartics/config-smartics-jboss-modules)
 
 for more information.
