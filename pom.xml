@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<!--suppress UnresolvedMavenProperty -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>de.smartics.maven.plugin</groupId>
@@ -25,7 +28,8 @@
       <name>The Apache Software License, Version 2.0</name>
       <url>http://www.apache.org/licenses/LICENSE-2.0</url>
       <distribution>repo</distribution>
-      <comments>Copyright 2013-2018 Kronseder &amp; Reiner GmbH, smartics</comments>
+      <comments>Copyright 2013-2018 Kronseder &amp; Reiner GmbH, smartics
+      </comments>
     </license>
   </licenses>
 
@@ -87,8 +91,12 @@
    -->
 
   <scm>
-    <connection>scm:git:git@github.com:smartics/smartics-jboss-modules-maven-plugin</connection>
-    <developerConnection>scm:git:git@github.com:smartics/smartics-jboss-modules-maven-plugin</developerConnection>
+    <connection>
+      scm:git:git@github.com:smartics/smartics-jboss-modules-maven-plugin
+    </connection>
+    <developerConnection>
+      scm:git:git@github.com:smartics/smartics-jboss-modules-maven-plugin
+    </developerConnection>
     <url>https://github.com/smartics/smartics-jboss-modules-maven-plugin</url>
     <tag>HEAD</tag>
   </scm>
@@ -105,7 +113,9 @@
     <site>
       <id>${info.project.visibility}-site</id>
       <name>documentation site</name>
-      <url>${build.server.site.upload}/${project.groupId}/${project.artifactId}/${project.version}</url>
+      <url>
+        ${build.server.site.upload}/${project.groupId}/${project.artifactId}/${project.version}
+      </url>
     </site>
   </distributionManagement>
 
@@ -121,25 +131,37 @@
 
     <info.project.visibility>public</info.project.visibility>
 
-    <info.server.web>https://www.smartics.eu/confluence/display</info.server.web>
+    <info.server.web>https://www.smartics.eu/confluence/display
+    </info.server.web>
     <homepage>${info.server.web}/SJBMMP</homepage>
-    <info.server.issues>https://www.smartics.eu/jira/projects</info.server.issues>
+    <info.server.issues>https://www.smartics.eu/jira/projects
+    </info.server.issues>
     <info.server.repo>https://www.smartics.eu/nexus</info.server.repo>
-    <info.server.scm>https://github.com/smartics/smartics-jboss-modules-maven-plugin</info.server.scm>
+    <info.server.scm>
+      https://github.com/smartics/smartics-jboss-modules-maven-plugin
+    </info.server.scm>
     <info.server.site>https://www.smartics.eu</info.server.site>
 
-    <info.server.repo.prefix>${info.server.repo}/content</info.server.repo.prefix>
-    <info.server.repo.group>${info.server.repo.prefix}/groups/public-group</info.server.repo.group>
+    <info.server.repo.prefix>${info.server.repo}/content
+    </info.server.repo.prefix>
+    <info.server.repo.group>${info.server.repo.prefix}/groups/public-group
+    </info.server.repo.group>
 
-    <build.server.site.upload>scp://www.smartics.eu/home/smartics/public_html/${info.project.visibility}</build.server.site.upload>
-    <build.server.repo.upload>dav:${info.server.repo.prefix}/repositories</build.server.repo.upload>
+    <build.server.site.upload>
+      scp://www.smartics.eu/home/smartics/public_html/${info.project.visibility}
+    </build.server.site.upload>
+    <build.server.repo.upload>dav:${info.server.repo.prefix}/repositories
+    </build.server.repo.upload>
 
     <!-- The following properties are accessible from site documentation and therefore contain no dots. -->
     <webroot>${info.server.site}</webroot>
-    <weburl>${info.server.site}/${project.groupId}/${project.artifactId}/${project.version}</weburl>
+    <weburl>
+      ${info.server.site}/${project.groupId}/${project.artifactId}/${project.version}
+    </weburl>
     <webroot-projects>http://www.smartics.de/projects</webroot-projects>
 
-    <maven-fluido-smartics-skin_version>2.1.0</maven-fluido-smartics-skin_version>
+    <maven-fluido-smartics-skin_version>2.1.0
+    </maven-fluido-smartics-skin_version>
 
     <!--
     <ci-url>http://www.smartics.eu/hudson</ci-url>
@@ -157,7 +179,8 @@
     <config-smartics-hudson.version>0.3.0</config-smartics-hudson.version>
      -->
 
-    <version.buildmetadata-maven-plugin>1.6.1</version.buildmetadata-maven-plugin>
+    <version.buildmetadata-maven-plugin>1.6.1
+    </version.buildmetadata-maven-plugin>
 
     <version.maven-compiler-plugin>3.1</version.maven-compiler-plugin>
     <version.maven-clean-plugin>2.5</version.maven-clean-plugin>
@@ -168,7 +191,8 @@
     <version.maven-release-plugin>2.5.2</version.maven-release-plugin>
     <version.maven-install-plugin>2.5.1</version.maven-install-plugin>
     <version.maven-scm-plugin>1.8.1</version.maven-scm-plugin>
-    <version.maven-project-info-reports-plugin>2.7</version.maven-project-info-reports-plugin>
+    <version.maven-project-info-reports-plugin>2.7
+    </version.maven-project-info-reports-plugin>
     <version.versions-maven-plugin>2.1</version.versions-maven-plugin>
     <version.maven-site-plugin>3.3</version.maven-site-plugin>
     <version.maven-license-plugin>1.9.0</version.maven-license-plugin>
@@ -368,20 +392,27 @@
           <artifactId>maven-jar-plugin</artifactId>
           <version>${version.maven-jar-plugin}</version>
           <configuration>
-            <index>true</index>
             <archive>
+              <index>true</index>
               <manifest>
-                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                <addDefaultImplementationEntries>true
+                </addDefaultImplementationEntries>
+                <addDefaultSpecificationEntries>true
+                </addDefaultSpecificationEntries>
               </manifest>
               <manifestEntries>
-                <Implementation-SCM-Revision-Number>${build.scmRevision.id}</Implementation-SCM-Revision-Number>
-                <Implementation-SCM-Revision-Date>${build.scmRevision.date}</Implementation-SCM-Revision-Date>
+                <Implementation-SCM-Revision-Number>${build.scmRevision.id}
+                </Implementation-SCM-Revision-Number>
+                <Implementation-SCM-Revision-Date>${build.scmRevision.date}
+                </Implementation-SCM-Revision-Date>
                 <Implementation-URL>${project.url}</Implementation-URL>
                 <Implementation-Date>${build.date}</Implementation-Date>
-                <Implementation-Timestamp>${build.timestamp.millis}</Implementation-Timestamp>
-                <Implementation-DatePattern>${build.date.pattern}</Implementation-DatePattern>
-                <Implementation-Full-Version>${build.version.full}</Implementation-Full-Version>
+                <Implementation-Timestamp>${build.timestamp.millis}
+                </Implementation-Timestamp>
+                <Implementation-DatePattern>${build.date.pattern}
+                </Implementation-DatePattern>
+                <Implementation-Full-Version>${build.version.full}
+                </Implementation-Full-Version>
                 <Built-OS>${os.name} / ${os.arch} / ${os.version}</Built-OS>
                 <Built-By>${build.user}</Built-By>
                 <Maven-Version>${build.maven.version}</Maven-Version>
@@ -494,6 +525,7 @@
           No plugin involved:
             http://dev.eclipse.org/mhonarc/lists/m2e-users/msg00657.html
           -->
+        <!--
         <plugin>
           <groupId>org.eclipse.m2e</groupId>
           <artifactId>lifecycle-mapping</artifactId>
@@ -511,7 +543,7 @@
                     </goals>
                   </pluginExecutionFilter>
                   <action>
-                    <ignore />
+                    <ignore/>
                   </action>
                 </pluginExecution>
 
@@ -525,7 +557,7 @@
                     </goals>
                   </pluginExecutionFilter>
                   <action>
-                    <ignore />
+                    <ignore/>
                   </action>
                 </pluginExecution>
 
@@ -540,7 +572,7 @@
                     </goals>
                   </pluginExecutionFilter>
                   <action>
-                    <ignore />
+                    <ignore/>
                   </action>
                 </pluginExecution>
 
@@ -554,7 +586,7 @@
                     </goals>
                   </pluginExecutionFilter>
                   <action>
-                    <ignore />
+                    <ignore/>
                   </action>
                 </pluginExecution>
 
@@ -570,14 +602,10 @@
                     </goals>
                   </pluginExecutionFilter>
                   <action>
-                    <ignore />
+                    <ignore/>
                   </action>
                 </pluginExecution>
 
-                <!--
-                  This plugin's configuration is used to store Eclipse m2e
-                  settings only. It has no influence on the Maven build itself.
-                  -->
                 <pluginExecution>
                   <pluginExecutionFilter>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -588,13 +616,13 @@
                     </goals>
                   </pluginExecutionFilter>
                   <action>
-                    <ignore />
+                    <ignore/>
                   </action>
                 </pluginExecution>
               </pluginExecutions>
             </lifecycleMappingMetadata>
           </configuration>
-        </plugin>
+        </plugin> -->
       </plugins>
     </pluginManagement>
 
@@ -730,10 +758,14 @@
             </goals>
             <configuration>
               <target>
-                <xslt in="${basedir}/src/main/resources/xsd/jboss-modules-descriptor.xsd" out="${project.build.directory}/generated-site/xdoc/jboss-modules-descriptor-doc.xml" style="${basedir}/src/etc/xsl/create-modules-doc.xsl" />
-                <copy todir="${project.build.directory}/generated-site/resources/download">
+                <xslt
+                    in="${basedir}/src/main/resources/xsd/jboss-modules-descriptor.xsd"
+                    out="${project.build.directory}/generated-site/xdoc/jboss-modules-descriptor-doc.xml"
+                    style="${basedir}/src/etc/xsl/create-modules-doc.xsl"/>
+                <copy
+                    todir="${project.build.directory}/generated-site/resources/download">
                   <fileset dir="${basedir}/src/main/resources/">
-                    <include name="**/*.xsd" />
+                    <include name="**/*.xsd"/>
                   </fileset>
                 </copy>
               </target>
@@ -763,7 +795,8 @@
               <goal>copy-resources</goal>
             </goals>
             <configuration>
-              <outputDirectory>${project.build.outputDirectory}/META-INF</outputDirectory>
+              <outputDirectory>${project.build.outputDirectory}/META-INF
+              </outputDirectory>
               <resources>
                 <resource>
                   <directory>${basedir}</directory>
@@ -993,20 +1026,20 @@
       </dependencies>
 
       <repositories>
-          <repository>
-              <id>smartics-public-repository</id>
-              <name>Smartics Public Repository</name>
-              <url>https://www.smartics.eu/nexus/content/repositories/public/</url>
-              <layout>default</layout>
-              <releases>
-                  <enabled>true</enabled>
-                  <updatePolicy>never</updatePolicy>
-              </releases>
-              <snapshots>
-                  <enabled>true</enabled>
-                  <updatePolicy>never</updatePolicy>
-              </snapshots>
-          </repository>
+        <repository>
+          <id>smartics-public-repository</id>
+          <name>Smartics Public Repository</name>
+          <url>https://www.smartics.eu/nexus/content/repositories/public/</url>
+          <layout>default</layout>
+          <releases>
+            <enabled>true</enabled>
+            <updatePolicy>never</updatePolicy>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>never</updatePolicy>
+          </snapshots>
+        </repository>
       </repositories>
 
       <build>
@@ -1046,7 +1079,8 @@
                     <targetDir>target/jboss-modules/v1</targetDir>
                   </scriptVariables>
                   <pomExcludes>
-                    <pomExclude>resource-filter/pom.xml</pomExclude> <!-- resource filters are not supported in v1 -->
+                    <pomExclude>resource-filter/pom.xml</pomExclude>
+                    <!-- resource filters are not supported in v1 -->
                   </pomExcludes>
                 </configuration>
                 <goals>
@@ -1058,8 +1092,10 @@
                 <id>integration-test-v2</id>
                 <configuration>
                   <properties>
-                    <module.source.dir>src/etc/jboss-modules/v2</module.source.dir>
-                    <module.target.dir>target/jboss-modules/v2</module.target.dir>
+                    <module.source.dir>src/etc/jboss-modules/v2
+                    </module.source.dir>
+                    <module.target.dir>target/jboss-modules/v2
+                    </module.target.dir>
                   </properties>
                   <scriptVariables>
                     <targetDir>target/jboss-modules/v2</targetDir>
